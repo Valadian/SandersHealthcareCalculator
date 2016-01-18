@@ -1,0 +1,67 @@
+body { 
+	padding-top: 80px; 
+}
+
+.slider-selection {
+	background: #149bdf;
+}
+
+.advanced-toggle {
+	text-align: right
+}
+
+
+.has_error>label{
+	color:#a94442;
+}
+div.rounded {
+    border-radius: 20px;
+	border-style: solid;
+	padding: 3px 10px;
+}
+.panel-footer{
+	height:50px;
+}
+/* .input-group input.form_control {
+	max-width:200px;
+} */
+.input-group,.form-group>input {
+	width: 100%;
+}
+@media (min-width: 650px){
+	.form-group label,
+	.form-group input { float:left; display:inline;   }
+
+	.advanced {
+		display:none;
+	}
+	.form-group { margin-right:5px }
+
+	.form-group label { line-height:29px; }
+
+	.input-group,.form-group>input {
+		margin-left:250px;
+		width: -moz-calc(100% - 250px);
+		width: -webkit-calc(100% - 250px);
+		width: calc(100% - 250px);
+	}
+}
+
+.input-group-addon.success {
+    color: rgb(255, 255, 255);
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+}
+.input-group-addon.info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(57, 179, 215);
+    border-color: rgb(38, 154, 188);
+}
+.input-group-addon.currency {
+    color: rgb(255, 255, 255);
+    background-color: rgb(133, 187, 101);
+    border-color: rgb(110, 150, 80);
+}
+.whoLabel{
+    width:100px;
+}
