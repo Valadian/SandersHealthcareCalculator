@@ -79,7 +79,8 @@ p, div {
 }
 
 .advanced-toggle {
-	text-align: right
+	text-align: right;
+	cusor: pointer;
 }
 
 
