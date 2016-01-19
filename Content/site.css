@@ -1,3 +1,13 @@
+/*h1, h2, h3, h4, h5, h6 {
+        font-family: jubilat;
+}
+p, div {
+        font-family: freight-sans-pro;
+        font-style: normal;
+        font-weight: 300;
+        color: #364350;
+}*/
+
 .navbar-inverse{
     background-color: #185378;
 }
@@ -135,14 +145,14 @@ div.rounded {
     text-align: center;
 }
 
-.savings-top{
+.rounded-top{
     border-radius: 20px 20px 0px 0px;
     -moz-border-radius: 20px 20px 0px 0px;
     -webkit-border-radius: 20px 20px 0px 0px;
     border: 1px solid #000000;
     border-bottom-style: none;
 }
-.savings-bottom{
+.rounded-bottom{
     border-radius: 0px 0px 20px 20px;
     -moz-border-radius: 0px 0px 20px 20px;
     -webkit-border-radius: 0px 0px 20px 20px;
@@ -151,4 +161,22 @@ div.rounded {
 }
 .shareLinks{
     padding-bottom:7px;
+}
+/*.bernieText{
+    color: #185378;
+}*/
+.bernieReplacing{
+    background-color: #555555;
+    color: #fff;
+    padding: 10px 15px 10px 10px;
+    margin: 0px -10px 0px -10px;
+}
+.bernieNew{
+    background-color: #185378;
+    color: #fff;
+    padding: 10px 15px 10px 10px;
+    margin: 0px -10px 0px -10px;
+}
+.bernieNew.rounded-bottom{
+    margin-bottom: 15px;
 }

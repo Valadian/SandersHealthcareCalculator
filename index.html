@@ -76,12 +76,12 @@
                 <div class="row savings-spaceholder">
                     <div class="row savings-container">
                         <div class="col-sm-6 savings ">
-                            <div class="savings-top" data-bind="text: employeeSavingsText(), css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
-                            <div class="savings-bottom" data-bind="text: employeeSavingsFormatted(), css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                            <div class="rounded-top" data-bind="text: employeeSavingsText(), css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                            <div class="rounded-bottom" data-bind="text: employeeSavingsFormatted(), css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
                         </div>
                         <div class="col-sm-6 savings">
-                            <div class="savings-top" data-bind="text: employerSavingsText(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                            <div class="savings-bottom" data-bind="text: employerSavingsFormatted(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                            <div class="rounded-top" data-bind="text: employerSavingsText(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                            <div class="rounded-bottom" data-bind="text: employerSavingsFormatted(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
                         </div>
                     </div>
                 </div>
@@ -182,16 +182,40 @@
                                     <input data-bind="value: taxableIncome()" class="form-control currency" name="taxableIncome" readonly />
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group  advanced">
-                                <label for="federalWithholding">Federal Withholding:</label>
+                            <fieldset class="form-group  advanced bernieReplacing rounded-top">
+                                <label for="federalWithholding">Old Federal Withholding:</label>
                                 <div class="input-group">
                                     <input data-bind="value: federalWithholding()" class="form-control currency" name="federalWithholding" readonly />
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="longCapGainsTax">Long Term Capital Gains Taxes:</label>
+                            <fieldset class="form-group advanced bernieReplacing">
+                                <label for="longCapGainsTax">Old Long Term Cap Gains Taxes:</label>
                                 <div class="input-group">
                                     <input data-bind="value: longCapGainsTax()" class="form-control currency" name="longCapGainsTax" readonly />
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group advanced bernieReplacing">
+                                <label for="effectiveTaxRate">Old Effective Tax Rate:</label>
+                                <div class="input-group">
+                                    <input data-bind="value: effectiveTaxRate()" class="form-control" name="effectiveTaxRate" readonly />
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group  advanced bernieNew">
+                                <label for="newFederalWithholding">New Federal Withholding:</label>
+                                <div class="input-group">
+                                    <input data-bind="value: newFederalWithholding()" class="form-control currency" name="newFederalWithholding" readonly />
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group advanced bernieNew">
+                                <label for="newLongCapGainsTax">New Long Term Cap Gains Taxes:</label>
+                                <div class="input-group">
+                                    <input data-bind="value: newLongCapGainsTax()" class="form-control currency" name="newLongCapGainsTax" readonly />
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group advanced bernieNew rounded-bottom">
+                                <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
+                                <div class="input-group">
+                                    <input data-bind="value: newEffectiveTaxRate()" class="form-control" name="newEffectiveTaxRate" readonly />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group advanced">
@@ -324,7 +348,7 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="form-group">
+                            <fieldset class="form-group bernieReplacing rounded-top">
                                 <label for="employeeHealthCareCost">Estimated ObamaCare Costs:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon info whoLabel">Employee</div>
@@ -336,8 +360,8 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="form-group">
-                                <label for="employeeBernieCareTax">Estimated BernieCare Costs:</label>
+                            <fieldset class="form-group bernieNew rounded-bottom">
+                                <label for="employeeBernieCareTax" class="bernieText">Estimated BernieCare Costs:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon info whoLabel">Employee</div>
                                     <input data-bind="value: employeeBernieCareTax()" class="form-control currency" name="employeeBernieCareTax" readonly />
