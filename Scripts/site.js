@@ -1,7 +1,9 @@
 function clamp(num, min, max) {
   return num < min ? min : num > max && max!=null ? max : num;
 }
-
+function formatCurrency(value){
+    return "$ "+value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
 $(function(){
 	$('form').validate({
         rules: {},
@@ -252,6 +254,12 @@ $(function(){
         return self.employerHealthCareCost() - + self.employerBernieCareTax()
     },self);
 
+    self.employeeSavingsFormatted = ko.pureComputed(function(){
+        return formatCurrency(self.employeeSavings());
+    },self);
+    self.employerSavingsFormatted = ko.pureComputed(function(){
+        return formatCurrency(self.employerSavings());
+    },self);
     self.employeeSavingsText = ko.pureComputed(function(){
         if(self.employeeSavings()>0){
             return "You will Save: "

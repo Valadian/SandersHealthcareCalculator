@@ -23,6 +23,17 @@
         </div>
         <div class="container body-content">
             <form>
+
+                <div class="row">
+                    <div class="col-md-6 savings">
+                        <div data-bind="text: employeeSavingsText()"></div>
+                        <div data-bind="text: employeeSavingsFormatted(), css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                    </div>
+                    <div class="col-md-6 savings">
+                        <div data-bind="text: employerSavingsText()"></div>
+                        <div data-bind="text: employerSavingsFormatted(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading">Income & Tax information</div>
@@ -283,17 +294,6 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 savings">
-                        <div data-bind="text: employeeSavingsText()"></div>
-                        <div data-bind="text: employeeSavings(), css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
-                    </div>
-                    <div class="col-md-6 savings">
-                        <div data-bind="text: employerSavingsText()"></div>
-                        <div data-bind="text: employerSavings(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
                     </div>
                 </div>
             </form>

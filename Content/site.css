@@ -65,6 +65,9 @@ div.rounded {
 .whoLabel{
     width:100px;
 }
+.savings{
+    padding-bottom: 20px;
+}
 .savings>div{
     font-size: 250%;
     text-align: center;
