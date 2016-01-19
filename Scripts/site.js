@@ -31,6 +31,18 @@ $(function(){
 		digits: true,
 		min: 0
 	});
+
+	$(window).scroll(function(){
+	    if($(window).scrollTop() > $('.savings-spaceholder').offset().top - $('.navbar').height() - 5){
+	        $('.savings-container').addClass("floating");
+	        $('.savings-container').css(
+	            { 'width':$('.savings-spaceholder').width()+30})
+	    } else {
+	        $('.savings-container').removeClass("floating");
+	        $('.savings-container').css(
+	            { 'width':''})
+	    }
+	})
 	
 	$('#deductiblePercentage').slider({
 		formatter: function(value) {
@@ -279,9 +291,9 @@ $(function(){
     },self);
     self.employerSavingsText = ko.pureComputed(function(){
         if(self.employerSavings()>0){
-            return "Your Employer Saves: "
+            return "Employer Saves: "
         }
-        return "Your Employer Loses: "
+        return "Employer Loses: "
     },self);
 
     self.employeeSavingsClass = ko.pureComputed(function(){

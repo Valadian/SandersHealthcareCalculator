@@ -11,6 +11,14 @@
     body {
         padding-top: 107px;
     }
+    .floating {
+        position: fixed;
+        top: 107px;
+    }
+
+    .savings-spaceholder{
+        height: 70px;
+    }
 }
 @media (max-width: 992px){
     .title img{
@@ -19,6 +27,14 @@
 
     body {
         padding-top: 80px;
+    }
+    .floating {
+        position: fixed;
+        top: 80px;
+    }
+    .savings-spaceholder{
+        height: 70px;
+        bac
     }
 }
 @media (max-width: 768px){
@@ -30,6 +46,14 @@
     }
     body {
         padding-top: 55px;
+    }
+    .floating {
+        position: fixed;
+        top: 55px;
+    }
+
+    .savings-spaceholder{
+        height: 150px;
     }
  }
 
@@ -99,7 +123,23 @@ div.rounded {
 .savings{
     padding-bottom: 20px;
 }
+.savings-placeholder, .savings-container{
+    z-index:9999;
+}
 .savings>div{
-    font-size: 250%;
+    font-size: 150%;
     text-align: center;
+}
+
+.savings-top{
+    border-radius: 20px 20px 0px 0px;
+    -moz-border-radius: 20px 20px 0px 0px;
+    -webkit-border-radius: 20px 20px 0px 0px;
+    border: 0px solid #000000;
+}
+.savings-bottom{
+    border-radius: 0px 0px 20px 20px;
+    -moz-border-radius: 0px 0px 20px 20px;
+    -webkit-border-radius: 0px 0px 20px 20px;
+    border: 0px solid #000000;
 }
