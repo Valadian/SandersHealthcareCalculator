@@ -270,7 +270,7 @@ $(function(){
     },self);
 
     self.effectiveTaxRate = ko.pureComputed(function(){
-        return (100*(+self.federalWithholding() + +self.longCapGainsTax())/self.income()).toFixed(1) +"%";
+        return (100*(+self.federalWithholding() + +self.longCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax())/self.income()).toFixed(1) +"%";
     });
 
     self.newFederalWithholding = ko.pureComputed(function(){
@@ -280,7 +280,7 @@ $(function(){
         return calculateCapitalGains(taxTableBernie2016[self.filingStatus()]);
     });
     self.newEffectiveTaxRate = ko.pureComputed(function(){
-        return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax())/self.income()).toFixed(1) +"%";
+        return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax() + +self.employeeBernieCareTax())/self.income()).toFixed(1) +"%";
     });
     self.employeeMediTax = ko.pureComputed(function(){
         if(+self.selfEmployed()){
@@ -299,12 +299,13 @@ $(function(){
         }
     },self);
 
+    var socSecTaxableMaximum = 118500;
     self.employeeSocSecTax = ko.pureComputed(function(){
         if(+self.selfEmployed()){
-            return (0.9235 * self.income() * 0.062 * 2).toFixed(0);
+            return (0.9235 * Math.min(self.income(),socSecTaxableMaximum) * 0.062 * 2).toFixed(0);
         }
         else{
-            return (self.income() * 0.062).toFixed(0);
+            return (Math.min(self.income(),socSecTaxableMaximum) * 0.062).toFixed(0);
         }
     },self);
 
@@ -312,7 +313,7 @@ $(function(){
         if(+self.selfEmployed()){
             return 0;
         } else {
-            return (self.income() * 0.062).toFixed(0);
+            return (Math.min(self.income(),socSecTaxableMaximum) * 0.062).toFixed(0);
         }
     },self);
 

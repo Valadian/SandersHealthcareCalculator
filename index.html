@@ -182,6 +182,28 @@
                                     <input data-bind="value: taxableIncome()" class="form-control currency" name="taxableIncome" readonly />
                                 </div>
                             </fieldset>
+                            <fieldset class="form-group advanced">
+                                <label for="employeeMediTax">Medicare Taxes:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon info whoLabel">Employee</div>
+                                    <input data-bind="value: employeeMediTax(), tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}" class="form-control currency" name="employeeMediTax" readonly />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon success whoLabel">Employer</div>
+                                    <input data-bind="value: employerMediTax(), tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}" class="form-control currency" name="employerMediTax" readonly />
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group advanced">
+                                <label for="employeeSocSecTax">Social Security Taxes:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon info whoLabel">Employee</div>
+                                    <input data-bind="value: employeeSocSecTax(), tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}" class="form-control currency" name="employeeSocSecTax" readonly />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon success whoLabel">Employer</div>
+                                    <input data-bind="value: employerSocSecTax(), tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}" class="form-control currency" name="employerSocSecTax" readonly />
+                                </div>
+                            </fieldset>
                             <fieldset class="form-group  advanced bernieReplacing rounded-top">
                                 <label for="federalWithholding">Old Federal Withholding:</label>
                                 <div class="input-group">
@@ -216,28 +238,6 @@
                                 <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
                                 <div class="input-group">
                                     <input data-bind="value: newEffectiveTaxRate()" class="form-control" name="newEffectiveTaxRate" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="employeeMediTax">Medicare Taxes:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeMediTax()" class="form-control currency" name="employeeMediTax" readonly />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerMediTax()" class="form-control currency" name="employerMediTax" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="employeeSocSecTax">Social Security Taxes:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeSocSecTax()" class="form-control currency" name="employeeSocSecTax" readonly />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerSocSecTax()" class="form-control currency" name="employerSocSecTax" readonly />
                                 </div>
                             </fieldset>
                         </div>
@@ -352,11 +352,11 @@
                                 <label for="employeeHealthCareCost">Old ObamaCare Costs:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeHealthCareCost()" class="form-control currency" name="employeeHealthCareCost" readonly />
+                                    <input data-bind="value: employeeHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }" class="form-control currency" name="employeeHealthCareCost" readonly />
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerHealthCareCost()" class="form-control currency" name="employerHealthCareCost" readonly />
+                                    <input data-bind="value: employerHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }" class="form-control currency" name="employerHealthCareCost" readonly />
                                 </div>
                             </fieldset>
 
@@ -364,11 +364,11 @@
                                 <label for="employeeBernieCareTax" class="bernieText">New BernieCare Costs:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeBernieCareTax()" class="form-control currency" name="employeeBernieCareTax" readonly />
+                                    <input data-bind="value: employeeBernieCareTax(), tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }" class="form-control currency" name="employeeBernieCareTax" readonly />
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerBernieCareTax()" class="form-control currency" name="employerBernieCareTax" readonly />
+                                    <input data-bind="value: employerBernieCareTax(), tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }" class="form-control currency" name="employerBernieCareTax" readonly />
                                 </div>
                             </fieldset>
                         </div>
