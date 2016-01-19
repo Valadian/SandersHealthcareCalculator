@@ -52,6 +52,12 @@ $(function(){
 		}
 		 event.stopPropagation();
 	});
+
+	$('.changelog-toggle').click(function(event){
+		//var children = $(this).prev().children('.advanced')
+		$(this).closest('.panel').find('.panel-body').toggle();
+		 event.stopPropagation();
+	});
 	$('.currency').after("<div class='input-group-addon currency'>$</div>");
 	var taxTable = [];
 	
@@ -95,7 +101,7 @@ $(function(){
 	},self);
 
 	self.taxableIncome = ko.pureComputed(function(){
-	    return +self.income() + +self.incomeShortCapGains() - +self.totalDeductions();
+	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions());
 	},self);
 
 	var taxTable2016 = [

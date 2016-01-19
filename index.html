@@ -12,8 +12,27 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/css/bootstrap-slider.min.css" rel="stylesheet" />
         <link href="Content/site.css" rel="stylesheet" />
         <script src="Scripts/site.js"></script>
+        <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+        <link rel="shortcut icon" href="https://berniesanders.com/wp-content/themes/berniesanders2016/favicon.ico">
+        <meta property="og:url"           content="valadian.github.io/SandersHealthcareCalculator" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Bernie Healthcare Calculator" />
+        <meta property="og:description"   content="Javascript calculator to compare Bernie Sanders Single-Payer Healthcare plan to the Affordable Care Act" />
+        <meta property="og:image"         content="https://s.bsd.net/bernie16/main/page/-/website/fb-share.png" />
+
     </head>
 	<body>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -23,7 +42,17 @@
         </div>
         <div class="container body-content">
             <form>
-
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="https://twitter.com/share" class="twitter-share-button"{count} data-size="large">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                        <!--<div class="g-plus" data-action="share" data-annotation="bubble"></div>-->
+                        <div class="fb-share-button" data-href="http://valadian.github.io/SandersHealthcareCalculator" data-layout="button_count"></div>
+                        <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
+                        <!--<span class='st_pinterest_large' displayText='Pinterest'></span>-->
+                        <!--<span class='st_email_large' displayText='Email'></span>-->
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 savings">
                         <div data-bind="text: employeeSavingsText()"></div>
@@ -103,7 +132,7 @@
 
 
 
-                            <hr />
+                            <hr class="advanced" />
 
 
 
@@ -125,7 +154,7 @@
                                     <input data-bind="value: totalDeductions()" class="form-control currency" name="totalDeductions" readonly />
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group">
+                            <fieldset class="form-group advanced">
                                 <label for="taxableIncome">Taxable Income:</label>
                                 <div class="input-group">
                                     <input data-bind="value: taxableIncome()" class="form-control currency" name="taxableIncome" readonly />
@@ -251,7 +280,7 @@
                                 </div>
                             </fieldset>
 
-                            <fieldset class="form-group">
+                            <fieldset class="form-group advanced">
                                 <label for="includeVariableCosts">Include Variable Costs?:</label>
                                 <div class="input-group">
                                     <select data-bind="value: includeVariableCosts, tooltip: {title: 'Deductibles and Co-pays', trigger: 'focus' }" class="form-control">
@@ -305,6 +334,12 @@
                             </div>
                         </div>
 
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading changelog-toggle">ChangeLog</div>
+                        <div class="panel-body" style="display:none">
+                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/65e67ecdd4eb609a050509bf6b5578304a7178bf">2016.01.18.1849</a> v0.1 Initial Release</p>
+                        </div>
                     </div>
                 </div>
             </form>
