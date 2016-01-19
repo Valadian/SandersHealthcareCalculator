@@ -1,6 +1,37 @@
-body { 
-	padding-top: 80px; 
+.navbar-inverse{
+    background-color: #185378;
 }
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+@media (min-width: 993px){
+    .title img{
+        height: 100px;
+    }
+    body {
+        padding-top: 150px;
+    }
+}
+@media (max-width: 992px){
+    .title img{
+        height: 75px;
+    }
+
+    body {
+        padding-top: 110px;
+    }
+}
+@media (max-width: 768px){
+    .title img{
+        height: 50px;
+    }
+    .navbar-brand{
+        padding: 0px;
+    }
+    body {
+        padding-top: 75px;
+    }
+ }
 
 .slider-selection {
 	background: #149bdf;
