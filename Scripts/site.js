@@ -374,10 +374,10 @@ $(function(){
     },self);
 
     self.employeeSavingsFormatted = ko.pureComputed(function(){
-        return formatCurrency(self.employeeSavings());
+        return formatCurrency(Math.abs(self.employeeSavings()));
     },self);
     self.employerSavingsFormatted = ko.pureComputed(function(){
-        return formatCurrency(self.employerSavings());
+        return formatCurrency(Math.abs(self.employerSavings()));
     },self);
     self.employeeSavingsText = ko.pureComputed(function(){
         if(self.employeeSavings()>0){
