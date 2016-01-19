@@ -59,19 +59,25 @@ $(function(){
 		incomeLongCapGains: 0, 
 		filingStatus:1,
 		selfEmployed: 0,
-		familySize: 4,
+		adults: 2,
+		children: 2,
 		itemizedDeductions: 0,
 		insured: 1,
 		premium: 4955,
 		premiumPeriod: 1,
 		premiumEmployer: 12591,
 		premiumEmployerPeriod: 1,
-		copays: 500,
+		copays: 0,
 		copaysPeriod: 1,
 		deductible: 1318,
 		deductiblePercentage: 1,
 	};
+
 	var self = ko.mapping.fromJS(jsModel);
+
+	self.familySize = ko.pureComputed(function(){
+        return self.adults() + + self.children();
+    },self);
 	var standardDeductionTable = [6300,12600,6300,9250]
 	self.standardDeduction = ko.pureComputed(function(){
 	    return standardDeductionTable[self.filingStatus()];
@@ -192,6 +198,84 @@ $(function(){
         } else {
             return (self.income() * 0.062).toFixed(0);
         }
+    },self);
+
+
+    var filingThreshold = [10300,20600,4000,13250,16600]
+    var avgBronze = 200 * 12;
+    self.uninsuredPenalty = ko.pureComputed(function(){
+        if(!+self.insured()){
+            var percentage = Math.min((self.income()-filingThreshold[self.filingStatus()]) * 0.025, avgBronze);
+            var perPerson = Math.min(self.adults() * 695 + +self.children() * 347.5, 2085);
+            return Math.max(percentage, perPerson);
+        } else{
+            return 0;
+        }
+    },self);
+
+    self.employeeHealthCareCost = ko.pureComputed(function(){
+        if(!+self.insured()){
+            return self.uninsuredPenalty();
+        } else {
+            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage();
+        }
+    },self);
+
+    self.employerHealthCareCost = ko.pureComputed(function(){
+        if(!+self.insured()){
+            return 0;
+        } else {
+            return self.premiumEmployer() * self.premiumEmployerPeriod();
+        }
+    },self);
+
+    self.employeeBernieCareTax = ko.pureComputed(function(){
+        if(+self.selfEmployed()){
+            return (0.9235 * self.income() * 0.062 + self.taxableIncome() * 0.022).toFixed(0);
+        } else {
+            return (self.taxableIncome() * 0.022).toFixed(0);
+        }
+    },self);
+
+    self.employerBernieCareTax = ko.pureComputed(function(){
+        if(+self.selfEmployed()){
+            return 0;
+        } else {
+            return (self.income() * 0.062).toFixed(0);
+        }
+    },self);
+
+    self.employeeSavings = ko.pureComputed(function(){
+        return self.employeeHealthCareCost() - + self.employeeBernieCareTax()
+    },self);
+    self.employerSavings = ko.pureComputed(function(){
+        return self.employerHealthCareCost() - + self.employerBernieCareTax()
+    },self);
+
+    self.employeeSavingsText = ko.pureComputed(function(){
+        if(self.employeeSavings()>0){
+            return "You will Save: "
+        }
+        return "You will Lose: "
+    },self);
+    self.employerSavingsText = ko.pureComputed(function(){
+        if(self.employerSavings()>0){
+            return "Your Employer Saves: "
+        }
+        return "Your Employer Loses: "
+    },self);
+
+    self.employeeSavingsClass = ko.pureComputed(function(){
+        if(self.employeeSavings()>0){
+            return "success"
+        }
+        return "danger"
+    },self);
+    self.employerSavingsClass = ko.pureComputed(function(){
+        if(self.employerSavings()>0){
+            return "success"
+        }
+        return "danger"
     },self);
 
 	ko.bindingHandlers.tooltip = {

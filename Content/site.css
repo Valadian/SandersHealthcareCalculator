@@ -39,7 +39,7 @@ div.rounded {
 
 	.form-group label { line-height:29px; }
 
-	.input-group,.form-group>input {
+	.input-group,.form-group>input,.form-group>span.help-block {
 		margin-left:250px;
 		width: -moz-calc(100% - 250px);
 		width: -webkit-calc(100% - 250px);
@@ -64,4 +64,8 @@ div.rounded {
 }
 .whoLabel{
     width:100px;
+}
+.savings>div{
+    font-size: 250%;
+    text-align: center;
 }
