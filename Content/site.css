@@ -19,6 +19,9 @@
     .savings-spaceholder{
         height: 70px;
     }
+    .savings{
+        padding-bottom: 20px;
+    }
 }
 @media (max-width: 992px){
     .title img{
@@ -53,7 +56,11 @@
     }
 
     .savings-spaceholder{
-        height: 150px;
+        height: 140px;
+    }
+
+    .savings{
+        padding-bottom: 7px;
     }
  }
 
@@ -120,9 +127,6 @@ div.rounded {
 .whoLabel{
     width:100px;
 }
-.savings{
-    padding-bottom: 20px;
-}
 .savings-placeholder, .savings-container{
     z-index:9999;
 }
@@ -144,4 +148,7 @@ div.rounded {
     -webkit-border-radius: 0px 0px 20px 20px;
     border: 1px solid #000000;
     border-top-style: none;
+}
+.shareLinks{
+    padding-bottom:7px;
 }
