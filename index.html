@@ -187,12 +187,13 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Insurance information</div>
                         <div class="panel-body">
-                            <fieldset class="form-group advanced">
+                            <fieldset class="form-group">
                                 <label for="insured">Have Insurance?:</label>
                                 <div class="input-group">
                                     <select data-bind="value: insured" class="form-control">
                                         <option value="0">No</option>
                                         <option value="1">Yes</option>
+                                        <option value="2">Yes, On someone else's plan</option>
                                     </select>
                                 </div>
                             </fieldset>
@@ -247,6 +248,16 @@
                                 <label for="deductiblePercentage">Percentage of used Deductible:</label>
                                 <div class="input-group">
                                     <input id="deductiblePercentage" data-slider-id="deductiblePercentage" type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.05" data-slider-value="1" />
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <label for="includeVariableCosts">Include Variable Costs?:</label>
+                                <div class="input-group">
+                                    <select data-bind="value: includeVariableCosts, tooltip: {title: 'Deductibles and Co-pays', trigger: 'focus' }" class="form-control">
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
                                 </div>
                             </fieldset>
 

@@ -73,6 +73,7 @@ $(function(){
 		copaysPeriod: 1,
 		deductible: 1318,
 		deductiblePercentage: 1,
+		includeVariableCosts: 1
 	};
 
 	var self = ko.mapping.fromJS(jsModel);
@@ -216,18 +217,22 @@ $(function(){
     },self);
 
     self.employeeHealthCareCost = ko.pureComputed(function(){
-        if(!+self.insured()){
+        if(+self.insured() == 0){
             return self.uninsuredPenalty();
-        } else {
-            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage();
+        } else if(+self.insured() == 1) {
+            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage() * self.includeVariableCosts();
+        } else{
+            return 0;
         }
     },self);
 
     self.employerHealthCareCost = ko.pureComputed(function(){
-        if(!+self.insured()){
+        if(!+self.insured() || +self.selfEmployed()){
             return 0;
-        } else {
+        } else if(+self.insured() == 1) {
             return self.premiumEmployer() * self.premiumEmployerPeriod();
+        } else {
+            return 0;
         }
     },self);
 
