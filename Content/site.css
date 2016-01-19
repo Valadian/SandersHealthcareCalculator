@@ -135,11 +135,13 @@ div.rounded {
     border-radius: 20px 20px 0px 0px;
     -moz-border-radius: 20px 20px 0px 0px;
     -webkit-border-radius: 20px 20px 0px 0px;
-    border: 0px solid #000000;
+    border: 1px solid #000000;
+    border-bottom-style: none;
 }
 .savings-bottom{
     border-radius: 0px 0px 20px 20px;
     -moz-border-radius: 0px 0px 20px 20px;
     -webkit-border-radius: 0px 0px 20px 20px;
-    border: 0px solid #000000;
+    border: 1px solid #000000;
+    border-top-style: none;
 }
