@@ -9,7 +9,7 @@
         height: 100px;
     }
     body {
-        padding-top: 150px;
+        padding-top: 107px;
     }
 }
 @media (max-width: 992px){
@@ -18,7 +18,7 @@
     }
 
     body {
-        padding-top: 110px;
+        padding-top: 80px;
     }
 }
 @media (max-width: 768px){
@@ -29,7 +29,7 @@
         padding: 0px;
     }
     body {
-        padding-top: 75px;
+        padding-top: 55px;
     }
  }
 
