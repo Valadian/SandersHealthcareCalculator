@@ -78,7 +78,7 @@ $(function(){
 	var self = ko.mapping.fromJS(jsModel);
 
 	self.familySize = ko.pureComputed(function(){
-        return self.adults() + + self.children();
+        return +self.adults() + + self.children();
     },self);
 	var standardDeductionTable = [6300,12600,6300,9250]
 	self.standardDeduction = ko.pureComputed(function(){
