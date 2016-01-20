@@ -243,7 +243,7 @@ $(function(){
         return sum;
 	}
 	self.federalWithholding = ko.pureComputed(function(){
-	    return calculateFederalWithholding(taxTable2016[self.filingStatus()]);
+	    return calculateFederalWithholding(taxTable2016[self.filingStatus()]).toFixed(2);
 //	    var sum = 0;
 //	    var array = taxTable2016[self.filingStatus()];
 //	    for(var i=0, n=array.length; i< n; i++){
@@ -254,7 +254,7 @@ $(function(){
     },self);
 
 	self.longCapGainsTax = ko.pureComputed(function(){
-	    return calculateCapitalGains(taxTable2016[self.filingStatus()]);
+	    return calculateCapitalGains(taxTable2016[self.filingStatus()]).toFixed(2);
 //	    var sum = 0
 //        var taxed = 0
 //        var array = taxTable2016[self.filingStatus()];

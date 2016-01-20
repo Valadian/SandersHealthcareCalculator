@@ -167,7 +167,7 @@
                             <fieldset class="form-group advanced">
                                 <label for="exemptions">Exemptions:</label>
                                 <div class="input-group">
-                                    <input data-bind="value: exemptions(), tooltip: {title: 'Family Size ('+familySize()+') x $4000', trigger: 'focus' }" class="form-control currency" name="exemptions" readonly />
+                                    <input data-bind="value: exemptions(), tooltip: {title: 'Family Size x $4000', trigger: 'focus' }" class="form-control currency" name="exemptions" readonly />
                                 </div>
                             </fieldset>
                             <fieldset class="form-group advanced">
@@ -344,7 +344,7 @@
                             <fieldset class="form-group advanced">
                                 <label for="uninsuredPenalty">Uninsured penalty:</label>
                                 <div class="input-group">
-                                    <input data-bind="value: uninsuredPenalty" class="form-control currency" name="uninsuredPenalty" />
+                                    <input data-bind="value: uninsuredPenalty" class="form-control currency" name="uninsuredPenalty" readonly/>
                                 </div>
                             </fieldset>
 
@@ -398,7 +398,8 @@
         </div>
         <hr />
         <footer>
-            <p align="center">&copy; 2016 - <a href="mailto:berger_jesse@yahoo.com">Jesse Berger</a>, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
+            <p align="center">&copy; 2016 - Jesse Berger, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
+            <p align="center">Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
         </footer>
 	</body>
 </html>
