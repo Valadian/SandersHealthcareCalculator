@@ -79,7 +79,8 @@ p, div {
 }
 
 .advanced-toggle {
-	text-align: right
+	text-align: right;
+	cursor: pointer;
 }
 
 
@@ -133,6 +134,7 @@ div.rounded {
     color: rgb(255, 255, 255);
     background-color: rgb(133, 187, 101);
     border-color: rgb(110, 150, 80);
+	cursor: default;
 }
 .whoLabel{
     width:100px;
