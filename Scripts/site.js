@@ -405,6 +405,8 @@ $(function(){
         return "danger"
     },self);
 
+    self.twitterUrl = "https://twitter.com/intent/tweet?button_hashtag=BernieCare&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Berniecare.%20See%20how%20much%20will%20you%20save%3F%0D%0A%20";
+
 	ko.bindingHandlers.tooltip = {
         init: function(element, valueAccessor) {
             var local = ko.utils.unwrapObservable(valueAccessor()),
