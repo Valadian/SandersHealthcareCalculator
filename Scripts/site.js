@@ -5,6 +5,7 @@ function formatCurrency(value){
     return "$ "+value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 }
 $(function(){
+    ko.options.deferUpdates = true;
 	$('form').validate({
         rules: {},
         highlight: function(element) {
@@ -100,19 +101,19 @@ $(function(){
         return +self.adults() + + self.children();
     },self);
 	var standardDeductionTable = [6300,12600,6300,9250]
-	self.standardDeduction = ko.pureComputed(function(){
+	self.standardDeduction = ko.computed(function(){
 	    return standardDeductionTable[self.filingStatus()];
 	},self);
 
-	self.exemptions = ko.pureComputed(function(){
+	self.exemptions = ko.computed(function(){
         return 4000*self.familySize();
     },self);
 
-	self.totalDeductions = ko.pureComputed(function(){
+	self.totalDeductions = ko.computed(function(){
 	    return Math.max(self.standardDeduction(),self.itemizedDeductions())+ +self.exemptions();
 	},self);
 
-	self.taxableIncome = ko.pureComputed(function(){
+	self.taxableIncome = ko.computed(function(){
 	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions());
 	},self);
 
@@ -242,7 +243,7 @@ $(function(){
         }
         return sum;
 	}
-	self.federalWithholding = ko.pureComputed(function(){
+	self.federalWithholding = ko.computed(function(){
 	    return calculateFederalWithholding(taxTable2016[self.filingStatus()]);
 //	    var sum = 0;
 //	    var array = taxTable2016[self.filingStatus()];
@@ -253,7 +254,7 @@ $(function(){
 //        return sum;
     },self);
 
-	self.longCapGainsTax = ko.pureComputed(function(){
+	self.longCapGainsTax = ko.computed(function(){
 	    return calculateCapitalGains(taxTable2016[self.filingStatus()]);
 //	    var sum = 0
 //        var taxed = 0
@@ -273,10 +274,10 @@ $(function(){
         return (100*(+self.federalWithholding() + +self.longCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax())/self.income()).toFixed(1) +"%";
     });
 
-    self.newFederalWithholding = ko.pureComputed(function(){
+    self.newFederalWithholding = ko.computed(function(){
         return calculateFederalWithholding(taxTableBernie2016[self.filingStatus()]);
     });
-    self.newLongCapGainsTax = ko.pureComputed(function(){
+    self.newLongCapGainsTax = ko.computed(function(){
         return calculateCapitalGains(taxTableBernie2016[self.filingStatus()]);
     });
     self.newEffectiveTaxRate = ko.pureComputed(function(){
@@ -330,7 +331,7 @@ $(function(){
         }
     },self);
 
-    self.employeeHealthCareCost = ko.pureComputed(function(){
+    self.employeeHealthCareCost = ko.computed(function(){
         if(+self.insured() == 0){
             return self.uninsuredPenalty();
         } else if(+self.insured() == 1) {
@@ -350,11 +351,11 @@ $(function(){
         }
     },self);
 
-    self.employeeBernieCareTax = ko.pureComputed(function(){
+    self.employeeBernieCareTax = ko.computed(function(){
         if(+self.selfEmployed()){
-            return (0.9235 * self.income() * 0.062 + self.taxableIncome() * 0.022).toFixed(0);
+            return +(0.9235 * self.income() * 0.062 + self.taxableIncome() * 0.022).toFixed(0);
         } else {
-            return (self.taxableIncome() * 0.022).toFixed(0);
+            return +(self.taxableIncome() * 0.022).toFixed(0);
         }
     },self);
 
@@ -366,11 +367,30 @@ $(function(){
         }
     },self);
 
-    self.employeeSavings = ko.pureComputed(function(){
-        return self.employeeHealthCareCost() - + self.employeeBernieCareTax() + + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax()
+    self.employeeSavings = ko.computed(function(){
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax();
+        return savings;
     },self);
+    self.employeeSavings.subscribe(function(savings) {
+    //self.updateTweetButton = function(){
+        //var savings = self.employeeSavings();
+        var text = "";
+        if(savings>0){
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+        } else{
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+        }
+        if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
+            //$('#twitter-widget-0').attr('src',iframesrc);
+            $('[id^=twitter-widget]').before("<a id='twitterButton' href='"+text+"' class='twitter-hashtag-button'>Tweet #BernieCare</a>")
+            $('[id^=twitter-widget]').remove();
+            //ko.applyBindings(self,$('#twitterButton')[0])
+            twttr.widgets.load()
+        }
+    //}
+    });
     self.employerSavings = ko.pureComputed(function(){
-        return self.employerHealthCareCost() - + self.employerBernieCareTax()
+        return self.employerHealthCareCost() - + self.employerBernieCareTax();
     },self);
 
     self.employeeSavingsFormatted = ko.pureComputed(function(){
@@ -405,7 +425,23 @@ $(function(){
         return "danger"
     },self);
 
-    self.twitterUrl = "https://twitter.com/intent/tweet?button_hashtag=BernieCare&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Berniecare.%20See%20how%20much%20will%20you%20save%3F%0D%0A%20";
+    self.twitterUrl = ko.pureComputed(function() {
+        var text = "";
+        if(self.employeeSavings()>0){
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+        } else{
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+        }
+        //var iframesrc = "https://platform.twitter.com/widgets/tweet_button.baa54ded21a982344c4ced326592f3de.en.html#button_hashtag=MedicareForAll&dnt=false&id=twitter-widget-0&lang=en&original_referer=file%3A%2F%2F%2FC%3A%2FUsers%2FJesse%2FDocuments%2FGitHub%2FSandersHealthcareCalculator%2Findex.html&size=m&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie's%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%3F%0D%0A%20&time=1453419200680&type=hashtag"
+//        if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
+//            //$('#twitter-widget-0').attr('src',iframesrc);
+//            $('[id^=twitter-widget]').before("<a id='twitterButton' href='"+text+"' class='twitter-hashtag-button'>Tweet #BernieCare</a>")
+//            $('[id^=twitter-widget]').remove();
+//            //ko.applyBindings(self,$('#twitterButton')[0])
+//            twttr.widgets.load()
+//        }
+        return text;
+    },self);
 
 	ko.bindingHandlers.tooltip = {
         init: function(element, valueAccessor) {
