@@ -182,3 +182,12 @@ div.rounded {
 .bernieNew.rounded-bottom{
     margin-bottom: 15px;
 }
+.dollarSign{
+    position: absolute;
+    left: 8px;
+    top: 7px;
+    z-index: 4
+}
+.form-control{
+    padding: 6px 18px;
+}

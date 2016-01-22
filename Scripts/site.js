@@ -71,7 +71,8 @@ $(function(){
 		$(this).closest('.panel').find('.panel-body').toggle();
 		 event.stopPropagation();
 	});
-	$('.currency').after("<div class='input-group-addon currency'>$</div>");
+//	$('.currency').before("<div class='input-group-addon currency'>$</div>");
+    $('.currency').before("<div class='dollarSign'>$</div>");
 	var taxTable = [];
 	
 	var jsModel = { 
