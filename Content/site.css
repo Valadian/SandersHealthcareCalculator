@@ -101,7 +101,7 @@ div.rounded {
 .input-group,.form-group>input {
 	width: 100%;
 }
-@media (min-width: 650px){
+@media (min-width: 768px){
 	.form-group label,
 	.form-group input { float:left; display:inline;   }
 
@@ -184,10 +184,17 @@ div.rounded {
 }
 .dollarSign{
     position: absolute;
-    left: 8px;
+    z-index: 4;
     top: 7px;
-    z-index: 4
+    color: rgb(133, 187, 101);
 }
+.dollarSign:first-child {
+    left: 8px;
+}
+.dollarSign:nth-child(2){
+    left: 105px;
+}
+
 .form-control{
     padding: 6px 18px;
 }
