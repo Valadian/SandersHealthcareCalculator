@@ -60,9 +60,9 @@
                 <div class="row">
                     <p>Calculated according to: <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">Medicare-for-All.pdf</a> Released by Bernie's campaign on 1/17/2016</p>
                 </div>
-                <div class="row shareLinks">
+                <div class="row shareLinks" style="height:25px">
                     <div class="col-sm-6">
-                        <a href="https://twitter.com/share" class="twitter-share-button"{count}>Tweet</a>
+                        <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
                         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
                         <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col-sm-6 savings">
                             <div class="rounded-top" data-bind="text: employerSavingsText(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                            <div class="rounded-bottom" data-bind="text: employerSavingsFormatted(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                            <div class="rounded-bottom" data-bind="text: employerSavingsFormatted(), css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 },"></div>
                         </div>
                     </div>
                 </div>
