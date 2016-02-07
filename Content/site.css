@@ -8,11 +8,48 @@ p, div {
         color: #364350;
 }*/
 
+/*#147FD7*/
+body {
+    font-size: 16px;
+    line-height: 1.4;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+}
+img {
+    max-width: 100%;
+    display: block;
+}
+.bernie-calc {
+    padding-top: 150px;
+}
+a,
+a:hover,
+a:visited,
+a:focus {
+    color: #0076d7;
+}
 .navbar-inverse{
-    background-color: #185378;
+    background-color: #147FD7;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
+    border: none;
+    height: 100px;
 }
 .navbar-inverse .navbar-brand {
     color: #fff;
+    float: left;
+}
+.savings-placeholder, .savings-container{
+    z-index:9999;
+}
+.savings>div{
+    font-size: 150%;
+    text-align: center;
+}
+.savings > div > div {
+    padding: 15px 0;
+}
+.savings:first-child {
+    border-right: 1px solid #d3d3d3;
 }
 @media (min-width: 993px){
     .title img{
@@ -27,10 +64,10 @@ p, div {
     }
 
     .savings-spaceholder{
-        height: 70px;
+        
     }
     .savings{
-        padding-bottom: 20px;
+        margin-bottom: 25px;
     }
 }
 @media (max-width: 992px){
@@ -47,7 +84,6 @@ p, div {
     }
     .savings-spaceholder{
         height: 70px;
-        bac
     }
 }
 @media (max-width: 768px){
@@ -74,6 +110,12 @@ p, div {
     }
  }
 
+.bernie-calc .jumbotron {
+    background-color: #185378;
+    color: #fff;
+    border-radius: 0;
+}
+
 .slider-selection {
 	background: #149bdf;
 }
@@ -88,12 +130,24 @@ p, div {
 	color:#a94442;
 }
 div.rounded {
-    border-radius: 20px;
-	border-style: solid;
-	padding: 3px 10px;
+    color: #fff;
+    border-radius: 3px;
+	background-color: #147FD7;
+	padding: 9px 15px;
+    text-transform: uppercase;
 }
-.panel-footer{
-	height:50px;
+.bernie-calc .panel {
+    background-color: #edf0f7;
+}
+.bernie-calc .panel-heading {
+    font-size: 23px;
+    font-weight: 200;
+    text-transform: uppercase;
+    background-color: #147FD7;
+    color: #fff;
+}
+.bernie-calc .panel-footer{
+	height: 60px;
 }
 /* .input-group input.form_control {
 	max-width:200px;
@@ -119,10 +173,12 @@ div.rounded {
 		width: calc(100% - 250px);
 	}
 }
-
+.input-group-addon {
+    border-radius: 0;
+}
 .input-group-addon.success {
     color: rgb(255, 255, 255);
-    background-color: rgb(92, 184, 92);
+    background-color: rgb(69, 211, 99);
     border-color: rgb(76, 174, 76);
 }
 .input-group-addon.info {
@@ -139,30 +195,12 @@ div.rounded {
 .whoLabel{
     width:100px;
 }
-.savings-placeholder, .savings-container{
-    z-index:9999;
-}
-.savings>div{
-    font-size: 150%;
-    text-align: center;
-}
 
-.rounded-top{
-    border-radius: 20px 20px 0px 0px;
-    -moz-border-radius: 20px 20px 0px 0px;
-    -webkit-border-radius: 20px 20px 0px 0px;
-    border: 1px solid #000000;
-    border-bottom-style: none;
-}
-.rounded-bottom{
-    border-radius: 0px 0px 20px 20px;
-    -moz-border-radius: 0px 0px 20px 20px;
-    -webkit-border-radius: 0px 0px 20px 20px;
-    border: 1px solid #000000;
-    border-top-style: none;
-}
 .shareLinks{
-    padding-bottom:7px;
+    padding: 25px 5px 5px;
+    display: block;
+    float: left;
+    position: relative;
 }
 /*.bernieText{
     color: #185378;
@@ -194,7 +232,31 @@ div.rounded {
 .dollarSign:nth-child(2){
     left: 105px;
 }
-
+.bernie-calc select {
+    border-radius: 0;
+}
 .form-control{
     padding: 6px 18px;
+    height: 45px;
+    border-radius: 0;
+}
+.sanders-logo {
+    width: 175px;
+    fill: #fff;
+    display: block;
+    stroke: #fff;
+    stroke-width: 0;
+}
+.bg-success {
+    color: #fff;
+    background-color: #45d363;
+    text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);
+}
+.bg-danger {
+    color: #fff;
+    background-color: #F55B5B;
+    text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);
+}
+.btn {
+    background-color: #F55B5B;
 }
