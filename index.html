@@ -1,22 +1,16 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Bernie Healthcare Calculator</title>
-        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/bootstrap-slider.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/css/bootstrap-slider.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
         <link href="Content/site.css" rel="stylesheet" />
-        <script src="Scripts/site.js"></script>
-        <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+        
         <link rel="shortcut icon" href="https://berniesanders.com/wp-content/themes/berniesanders2016/favicon.ico">
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        
         <meta property="og:url"           content="valadian.github.io/SandersHealthcareCalculator" />
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content="Bernie Healthcare Calculator" />
@@ -33,71 +27,84 @@
           ga('send', 'pageview');
 
         </script>
+         <!-- Load Facebook SDK for JavaScript -->
+        <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+        </script>
+
     </head>
-	<body>
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
+	<body class="bernie-calc">
+        <div id="fb-root"></div>
         <div class="navbar navbar-inverse navbar-fixed-top">
+            
             <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="https://berniesanders.com">
-                        <img src="Content/Bernie2016.png" style="width:100px;">
-                    </a>
-                    <div class="col-xs-6 title"><img src="Content/Title.png"></div>
-
-                    <!--<a class="navbar-brand" href="/">Bernie Sanders Healthcare Calculator</a>-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="navbar-brand" href="https://berniesanders.com">
+                            <img class="sanders-logo" src="Content/sanders-logo.svg#logo">
+                        </a>        
+                    </div>
                 </div>
             </div>
+            
         </div>
         <div class="container body-content">
             <form>
-                <div class="row">
-                    <p>Calculated according to:
-                        <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">
-                            Medicare-for-All.pdf
-                        </a> Released by Bernie's campaign on 1/17/2016</p>
-                </div>
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">
+                            <img src="Content/Title.png">
+                            <p class="lead text-center">Calculated according to:
+                                <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">
+                                    Medicare-for-All.pdf
+                                </a> 
+                                Released by Bernie's campaign on 1/17/2016
+                            </p>
+                            <!--<a class="navbar-brand" href="/">Bernie Sanders Healthcare Calculator</a>-->
+                
+                            <div class="shareLinks">
+                                <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
+                                
+                                <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
+                            </div>
+                            
 
-                <div class="row shareLinks" style="height:25px">
-                    <div class="col-sm-6">
-                        <div style="height:20px;width:150px;float:left;">
-                            <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
-                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                        </div>
-                        <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
-
-                        <!--<div class="g-plus" data-action="share" data-annotation="none"></div>-->
-                        <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
-                        <!--<span class='st_pinterest_large' displayText='Pinterest'></span>-->
-                        <!--<span class='st_email_large' displayText='Email'></span>-->
+                            <!--<div class="g-plus" data-action="share" data-annotation="none"></div>-->
+                            <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
+                            <!--<span class='st_pinterest_large' displayText='Pinterest'></span>-->
+                            <!--<span class='st_email_large' displayText='Email'></span>-->
+                            </div>
+                        
                     </div>
                 </div>
+
                 <div class="row savings-spaceholder">
-                    <div class="row savings-container">
-                        <div class="col-sm-6 savings ">
-                            <div class="rounded-top" data-bind="text: employeeSavingsText(),
-                            css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
-                            </div>
-                            <div class="rounded-bottom" data-bind="text: employeeSavingsFormatted(),
+                    <div class="savings-container">
+                        <div class="col-sm-6 savings">
+                            <div class="row">
+                                <div data-bind="text: employeeSavingsText(),
                                 css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                                </div>
                             </div>
+                            <div class="row">
+                                <div data-bind="text: employeeSavingsFormatted(),
+                                    css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                                </div>
+                            </div> 
                         </div>
                         <div class="col-sm-6 savings">
                             <div class="row">
-                                <div class="rounded-top" data-bind="text: employerSavingsText(),
+                                <div data-bind="text: employerSavingsText(),
                                     css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
                                 <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
                             </div>
                             <div class="row">
-                                <div class="rounded-bottom" data-bind="text: employerSavingsFormatted(),
+                                <div data-bind="text: employerSavingsFormatted(),
                                     css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
                                 <!--<div class="col-xs-3" style="height:30px">-->
                                     <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
@@ -109,7 +116,7 @@
                 </div>
                 <div class="row">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Income & Tax information</div>
+                        <div class="panel-heading">Income &amp; Tax information</div>
                         <div class="panel-body">
                             <fieldset class="form-group">
                                 <label for="income">Wage Income:</label>
@@ -477,8 +484,22 @@
         </div>
         <hr />
         <footer>
-            <p align="center">&copy; 2016 - Jesse Berger, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
-            <p align="center">Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
+            <p class="text-center">&copy; 2016 - Jesse Berger, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
+            <p class="text-center">"Bernie Sanders" logo and "Medicare for All" logo &copy; <a href="https://berniesanders.com">Bernie Sanders</a></p>
+            <p class="text-center">Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
         </footer>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        <!-- Scripts added to reduce page-blocking scripts -->
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/bootstrap-slider.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="Scripts/site.js"></script>
+
 	</body>
 </html>
