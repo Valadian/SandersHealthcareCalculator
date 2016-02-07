@@ -44,12 +44,16 @@ a:focus {
 .savings>div{
     font-size: 150%;
     text-align: center;
+    margin: 15px 0;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
 }
 .savings > div > div {
+    text-transform: uppercase;
     padding: 15px 0;
+    border-bottom: 1px solid #fff
 }
-.savings:first-child {
-    border-right: 1px solid #d3d3d3;
+.savings {
+
 }
 @media (min-width: 993px){
     .title img{
@@ -60,30 +64,20 @@ a:focus {
     }
     .floating {
         position: fixed;
-        top: 107px;
+        top: 100px;
     }
 
-    .savings-spaceholder{
-        
-    }
     .savings{
         margin-bottom: 25px;
     }
 }
 @media (max-width: 992px){
-    .title img{
-        height: 75px;
-    }
-
     body {
         padding-top: 80px;
     }
     .floating {
         position: fixed;
-        top: 80px;
-    }
-    .savings-spaceholder{
-        height: 70px;
+        top: 100px;
     }
 }
 @media (max-width: 768px){
@@ -98,11 +92,7 @@ a:focus {
     }
     .floating {
         position: fixed;
-        top: 55px;
-    }
-
-    .savings-spaceholder{
-        height: 140px;
+        top: 100px;
     }
 
     .savings{
