@@ -40,70 +40,82 @@ a:focus {
 }
 .savings-placeholder, .savings-container{
     z-index:9999;
+    transition: all .3s linear;
 }
-.savings>div{
-    font-size: 150%;
+.savings .savings-text,
+.savings .savings-amount {
+    margin-left: -15px;
+    margin-right: -15px;
     text-align: center;
-    margin: 15px 0;
+}
+.savings .savings-amount{
+    font-size: 150%;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
+}
+.savings>div:last-child {
+    margin-bottom: 5px;
 }
 .savings > div > div {
     text-transform: uppercase;
-    padding: 15px 0;
-    border-bottom: 1px solid #fff
+    padding: 5px 0;
+}
+.savings > div:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 .savings {
 
 }
-@media (min-width: 993px){
-    .title img{
-        height: 100px;
-    }
-    body {
-        padding-top: 107px;
-    }
-    .floating {
-        position: fixed;
-        top: 100px;
-    }
-
-    .savings{
-        margin-bottom: 25px;
-    }
+.floating {
+    position: fixed;
+    top: 100px;
+    margin: 0 -15px;
 }
-@media (max-width: 992px){
+@media (max-width: 990px){
     body {
         padding-top: 80px;
     }
     .floating {
-        position: fixed;
-        top: 100px;
+        margin: 0;
     }
 }
-@media (max-width: 768px){
-    .title img{
-        height: 50px;
+@media (max-width: 480px) {
+    .savings {
+        float: left !important;
     }
-    .navbar-brand{
-        padding: 0px;
+    [class^="col-"] {
+        float: none;
     }
-    body {
-        padding-top: 55px;
+    .bernie-calc .navbar-inverse {
+        height: 65px;
+    }
+    .bernie-calc .navbar-brand img {
+        width: 65px;
+
+    }
+    .bernie-calc .navbar-brand {
+        float: none;
+    }
+    .savings>div>div {
+        font-size: 14px;
+        /*margin: 0 2px;*/
+    }
+    .navbar-inverse .navbar-brand {
+        float: none;
+        margin: 0 auto;
     }
     .floating {
-        position: fixed;
-        top: 100px;
+        top: 60px;
     }
-
-    .savings{
-        padding-bottom: 7px;
-    }
- }
+}
 
 .bernie-calc .jumbotron {
     background-color: #185378;
     color: #fff;
     border-radius: 0;
+}
+.bernie-calc .jumbotron .lead {
+    padding: 15px 0;
 }
 
 .slider-selection {
@@ -130,7 +142,7 @@ div.rounded {
     background-color: #edf0f7;
 }
 .bernie-calc .panel-heading {
-    font-size: 23px;
+    font-size: 22px;
     font-weight: 200;
     text-transform: uppercase;
     background-color: #147FD7;
@@ -139,9 +151,7 @@ div.rounded {
 .bernie-calc .panel-footer{
 	height: 60px;
 }
-/* .input-group input.form_control {
-	max-width:200px;
-} */
+
 .input-group,.form-group>input {
 	width: 100%;
 }
@@ -169,12 +179,12 @@ div.rounded {
 .input-group-addon.success {
     color: rgb(255, 255, 255);
     background-color: rgb(69, 211, 99);
-    border-color: rgb(76, 174, 76);
+    border-color: rgb(42, 179, 71);
 }
 .input-group-addon.info {
-    color: rgb(255, 255, 255);
-    background-color: rgb(57, 179, 215);
-    border-color: rgb(38, 154, 188);
+    color: #fff;
+    background-color: #185378;
+    border-color: #154868;
 }
 .input-group-addon.currency {
     color: rgb(255, 255, 255);
@@ -195,14 +205,18 @@ div.rounded {
 /*.bernieText{
     color: #185378;
 }*/
+.bernieReplacing,
+.bernieNew {
+    text-transform: uppercase;
+}
 .bernieReplacing{
-    background-color: #555555;
+    background-color: #F55B5B;
     color: #fff;
     padding: 10px 15px 10px 10px;
     margin: 0px -10px 0px -10px;
 }
 .bernieNew{
-    background-color: #185378;
+    background-color: #147FD7;
     color: #fff;
     padding: 10px 15px 10px 10px;
     margin: 0px -10px 0px -10px;
@@ -240,12 +254,12 @@ div.rounded {
 .bg-success {
     color: #fff;
     background-color: #45d363;
-    text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);
+    /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
 }
 .bg-danger {
     color: #fff;
     background-color: #F55B5B;
-    text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);
+    /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
 }
 .btn {
     background-color: #F55B5B;
