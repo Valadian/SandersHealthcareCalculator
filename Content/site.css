@@ -109,7 +109,7 @@ a:focus {
         margin: 0 auto;
     }
     .floating {
-        top: 60px;
+        top: 0px;
     }
 }
 
