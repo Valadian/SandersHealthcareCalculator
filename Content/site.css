@@ -176,14 +176,15 @@ div.rounded {
 
 .bernie-calc .result-panel {
     border: 1px solid #ddd;
-    background-color: rgb(69, 211, 99);
+    /*rgb(69, 211, 99)*/
+    background-color: #898989; 
     color: #fff;
 }
 .bernie-calc .result-panel-heading {
     font-size: 16px;
     font-weight: 300;
     text-transform: uppercase;
-    background-color: rgb(42, 179, 71);
+    background-color: #7c7c7c;
     padding: 10px 0;
     margin: 0;
 }
@@ -191,7 +192,22 @@ div.rounded {
     padding: 5px;
     font-size: 26px;
 }
+.bernie-calc .result-panel .input-group-addon.currency {
+    background-color: #7c7c7c;
+    border-color: #7c7c7c;
+}
 
+.bernie-calc .bernieNew .result-panel-heading {
+    background-color: #147FD7;
+}
+.bernie-calc .bernieNew .result-panel-body {
+    background-color: #1271c0;
+}
+.bernie-calc .bernieNew .result-panel .input-group-addon.currency,
+.bernie-calc .bernieNew .result-panel {
+    background-color: #147FD7;
+    border-color: #147FD7;
+}
 .input-group,.form-group>input {
 	width: 100%;
 }
@@ -250,7 +266,7 @@ div.rounded {
     text-transform: uppercase;
 }
 .bernieReplacing{
-    color: #F55B5B;
+    color: #898989;
     background-color: transparent;
 }
 .bernieNew{
