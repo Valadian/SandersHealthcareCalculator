@@ -89,26 +89,26 @@
                 <div class="col-md-3">
                     <div class="row savings-spaceholder">
                         <div class="savings-container">
-                            <div class="col-sm-12 col-xs-6 savings">
+                            <div class="col-md-12 col-xs-6 savings">
                                 <div class="row">
                                     <div class="savings-text"data-bind="text: employeeSavingsText(),
                                     css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="savings-text" data-bind="text: employeeSavingsFormatted(),
+                                    <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
                                         css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
                                     </div>
                                 </div> 
                             </div>
-                            <div class="col-sm-12 col-xs-6 savings">
+                            <div class="col-md-12 col-xs-6 savings">
                                 <div class="row">
-                                    <div data-bind="text: employerSavingsText(),
+                                    <div class="savings-text" data-bind="text: employerSavingsText(),
                                         css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
                                     <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
                                 </div>
                                 <div class="row">
-                                    <div data-bind="text: employerSavingsFormatted(),
+                                    <div class="savings-amount" data-bind="text: employerSavingsFormatted(),
                                         css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
                                     <!--<div class="col-xs-3" style="height:30px">-->
                                         <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
