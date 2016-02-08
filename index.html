@@ -8,7 +8,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/css/bootstrap-slider.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
-        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,300,400,600,700' rel='stylesheet' type='text/css'>
         <link href="Content/site.css" rel="stylesheet" />
         
         <link rel="shortcut icon" href="https://berniesanders.com/wp-content/themes/berniesanders2016/favicon.ico">
@@ -58,35 +58,38 @@
         </div>
         <div class="container body-content">
             <form>
+                <div class="row">
+
+                </div>
                 <div class="jumbotron">
                     <div class="row">
-                        <div class="col-md-offset-1 col-md-10">
-                            <img src="Content/Title.png">
-                            <p class="lead text-center">Calculated according to:
-                                <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">
-                                    Medicare-for-All.pdf
-                                </a> 
-                                Released by Bernie's campaign on 1/17/2016
-                            </p>
-                            <!--<a class="navbar-brand" href="/">Bernie Sanders Healthcare Calculator</a>-->
-                
+                        <img src="Content/Title.png">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                        </div>
+                        <div class="col-md-5">
                             <div class="shareLinks">
                                 <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
                                 
                                 <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
                                 <div id="fb-root"></div>
                             </div>
-                            
-
-                            <!--<div class="g-plus" data-action="share" data-annotation="none"></div>-->
-                            <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
-                            <!--<span class='st_pinterest_large' displayText='Pinterest'></span>-->
-                            <!--<span class='st_email_large' displayText='Email'></span>-->
-                            </div>
+                        </div>
+                        
+                        
+                        <!--<a class="navbar-brand" href="/">Bernie Sanders Healthcare Calculator</a>-->
+            
+                
+                        <!--<div class="g-plus" data-action="share" data-annotation="none"></div>-->
+                        <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
+                        <!-- <span class='st_pinterest_large' displayText='Pinterest'></span> -->
+                        <!--<span class='st_email_large' displayText='Email'></span>-->
                         
                     </div>
                 </div>
                 <div class="col-md-3">
+                    
                     <div class="row savings-spaceholder">
                         <div class="savings-container">
                             <div class="col-md-12 col-xs-6 savings">
@@ -118,10 +121,21 @@
                             </div>
                         </div>
                     </div>
-                        
                 </div>
+
+
+
+
                 <div class="col-md-9">
                     <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead">Calculated according to
+                                <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">
+                                    Medicare for All PDF
+                                </a> 
+                                Released by Bernie's campaign on 1/17/2016
+                            </p>
+                        </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">Income &amp; Tax information</div>
                             <div class="panel-body">
@@ -312,12 +326,6 @@
 
 
 
-
-
-
-
-
-
                         <div class="panel panel-default">
                             <div class="panel-heading">Insurance information</div>
                             <div class="panel-body">
@@ -405,12 +413,7 @@
                                         </select>
                                     </div>
                                 </fieldset>
-
-
-
                                 <hr />
-
-
                                 <fieldset class="form-group advanced">
                                     <label for="uninsuredPenalty">Uninsured penalty:</label>
                                     <div class="input-group">
@@ -427,51 +430,55 @@
     							</div>
     						</div>
     					</div>
-
     					<div class="panel panel-default">
                             <div class="panel-heading">Result</div>
                             <div class="panel-body">
+                                <div class="col-md-6">
+                                    <div class="row bernieReplacing">
+                                        <h3 class="text-center">ObamaCare</h3>
+                                        <hr/>
+                                        <div class="col-sm-6 ">
+                                            <div class="result-panel">
+                                                <h4 class="result-panel-heading text-center">Employee</h4>
+                                                <div class="result-panel-body text-center currency" class="text-center" data-bind="text: employeeHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }"></div>    
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="result-panel">
+                                                <h4 class="result-panel-heading text-center">Employer</h4>
+                                                <div class="result-panel-body text-center currency" class="text-center" data-bind="text: employerHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }"></div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-md-6">
+                                    <div class="row bernieNew">
+                                        <h3 class="text-center">Medicare for All</h3>
+                                        <hr/>
+                                        <div class="col-sm-6">
+                                            <div class="result-panel">
+                                                <h4 class="result-panel-heading text-center">Employee</h4>
+                                                <div class="result-panel-body text-center currency" data-bind="text: employeeBernieCareTax(),tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="result-panel">
+                                                <h4 class="result-panel-heading text-center">Employer</h4>
+                                                <div class="result-panel-body text-center currency" data-bind="text: employerBernieCareTax(),tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }"></div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>    
+                                
 
-                                <fieldset class="form-group bernieReplacing rounded-top">
-                                    <label for="employeeHealthCareCost">Old ObamaCare Costs:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon info whoLabel">Employee</div>
-                                        <input data-bind="value: employeeHealthCareCost(),
-                                            tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }"
-                                               class="form-control currency" name="employeeHealthCareCost" readonly />
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon success whoLabel">Employer</div>
-                                        <input data-bind="value: employerHealthCareCost(),
-                                            tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }"
-                                               class="form-control currency" name="employerHealthCareCost" readonly />
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-group bernieNew rounded-bottom">
-                                    <label for="employeeBernieCareTax" class="bernieText">New "Medicare for All" Costs:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon info whoLabel">Employee</div>
-                                        <input data-bind="value: employeeBernieCareTax(),
-                                            tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }"
-                                               class="form-control currency" name="employeeBernieCareTax" readonly />
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon success whoLabel">Employer</div>
-                                        <input data-bind="value: employerBernieCareTax(),
-                                            tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }"
-                                               class="form-control currency" name="employerBernieCareTax" readonly />
-                                    </div>
-                                </fieldset>
-
-                            </div>
-                            <div class="panel-footer">
                             </div>
 
                         </div>
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" style="display:none;">
                             <div class="panel-heading changelog-toggle">ChangeLog</div>
-                            <div class="panel-body" style="display:none">
+                            <div class="panel-body">
                                 <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/65e67ecdd4eb609a050509bf6b5578304a7178bf">
                                     2016.01.18.1849</a> v0.1.0 Initial Release</p>
                                 <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/3c90a44c4532c49a28b8df41858097a06dcd1214">
@@ -492,9 +499,21 @@
         </div>
         <hr />
         <footer>
-            <p class="text-center">&copy; 2016 - Jesse Berger, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
-            <p class="text-center">"Bernie Sanders" logo and "Medicare for All" logo &copy; <a href="https://berniesanders.com">Bernie Sanders</a></p>
-            <p class="text-center">Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong>&copy; 2016 - Jesse Berger</strong>, <a href="https://www.reddit.com/user/valadian">/u/valadian</a><br />Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>"Bernie Sanders"</strong> logo and <strong>"Medicare for All"</strong> logo &copy; <a href="https://berniesanders.com">Bernie Sanders</a></p>
+                        
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <iframe src="http://www.bernrate.com/active?host=sandershealthcare.com" width="200" height="40"></iframe>
+                    </div>
+                </div>
+            </div> 
         </footer>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         <!-- Scripts added to reduce page-blocking scripts -->
