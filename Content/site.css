@@ -48,15 +48,12 @@ a:focus {
     margin-left: -15px;
     margin-right: -15px;
 }
-.savings>div:first-child {
-    margin-top: 5px;
-}
 .savings>div:last-child {
     margin-bottom: 5px;
 }
 .savings > div > div {
     text-transform: uppercase;
-    padding: 15px 0;
+    padding: 5px 0;
 }
 .savings > div:last-child {
     border-bottom-left-radius: 4px;
@@ -87,7 +84,7 @@ a:focus {
     }
     .savings>div>div {
         font-size: 14px;
-        margin: 0 2px;
+        /*margin: 0 2px;*/
     }
     .navbar-inverse .navbar-brand {
         float: none;
@@ -168,12 +165,12 @@ div.rounded {
 .input-group-addon.success {
     color: rgb(255, 255, 255);
     background-color: rgb(69, 211, 99);
-    border-color: rgb(76, 174, 76);
+    border-color: rgb(42, 179, 71);
 }
 .input-group-addon.info {
-    color: rgb(255, 255, 255);
-    background-color: rgb(57, 179, 215);
-    border-color: rgb(38, 154, 188);
+    color: #fff;
+    background-color: #185378;
+    border-color: #154868;
 }
 .input-group-addon.currency {
     color: rgb(255, 255, 255);
@@ -199,7 +196,7 @@ div.rounded {
     text-transform: uppercase;
 }
 .bernieReplacing{
-    background-color: #555555;
+    background-color: #F55B5B;
     color: #fff;
     padding: 10px 15px 10px 10px;
     margin: 0px -10px 0px -10px;
