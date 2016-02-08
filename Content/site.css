@@ -203,10 +203,12 @@ div.rounded {
 .bernie-calc .bernieNew .result-panel-body {
     background-color: #1271c0;
 }
-.bernie-calc .bernieNew .result-panel .input-group-addon.currency,
-.bernie-calc .bernieNew .result-panel {
+.bernie-calc .bernieNew .result-panel .input-group-addon.currency {
     background-color: #147FD7;
     border-color: #147FD7;
+}
+.bernie-calc .bernieNew .result-panel {
+    border: 1px solid #ddd;
 }
 .input-group,.form-group>input {
 	width: 100%;
