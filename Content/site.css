@@ -28,6 +28,9 @@ a:visited,
 a:focus {
     color: #0076d7;
 }
+iframe {
+    border: none;
+}
 .navbar-inverse{
     background-color: #147FD7;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
@@ -52,6 +55,9 @@ a:focus {
     margin-right: -15px;*/
     text-align: center;
 }
+.savings .savings-text {
+    background-color: rgb(42, 179, 71);
+}
 .savings .savings-amount{
     font-size: 150%;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
@@ -73,7 +79,7 @@ a:focus {
 .floating {
     position: fixed;
     top: 100px;
-    margin: 0 -15px;
+    /*margin: 0 -15px;*/
 }
 @media (max-width: 990px){
     body {
@@ -111,6 +117,9 @@ a:focus {
     .floating {
         top: 0px;
     }
+    footer {
+        text-align: center;
+    }
 }
 
 .bernie-calc .jumbotron {
@@ -143,17 +152,44 @@ div.rounded {
     text-transform: uppercase;
 }
 .bernie-calc .panel {
-    background-color: #edf0f7;
+    background-color: transparent;
+    border: none;
+}
+.bernie-calc .panel-body {
+    border: none;
+    background: transparent;
+    padding: 15px;
 }
 .bernie-calc .panel-heading {
     font-size: 22px;
     font-weight: 200;
     text-transform: uppercase;
-    background-color: #147FD7;
-    color: #fff;
+    color: #147FD7;
+    border: none;
+    border-bottom: 2px solid #147FD7;
+    background-color: transparent;
 }
 .bernie-calc .panel-footer{
 	height: 60px;
+    background-color: transparent;
+}
+
+.bernie-calc .result-panel {
+    border: 1px solid #ddd;
+    background-color: rgb(69, 211, 99);
+    color: #fff;
+}
+.bernie-calc .result-panel-heading {
+    font-size: 16px;
+    font-weight: 300;
+    text-transform: uppercase;
+    background-color: rgb(42, 179, 71);
+    padding: 10px 0;
+    margin: 0;
+}
+.bernie-calc .result-panel-body {
+    padding: 5px;
+    font-size: 26px;
 }
 
 .input-group,.form-group>input {
@@ -192,8 +228,8 @@ div.rounded {
 }
 .input-group-addon.currency {
     color: rgb(255, 255, 255);
-    background-color: rgb(133, 187, 101);
-    border-color: rgb(110, 150, 80);
+    background-color: rgb(42, 179, 71);
+    border-color: rgb(42, 179, 71);
 	cursor: default;
 }
 .whoLabel{
@@ -214,16 +250,12 @@ div.rounded {
     text-transform: uppercase;
 }
 .bernieReplacing{
-    background-color: #F55B5B;
-    color: #fff;
-    padding: 10px 15px 10px 10px;
-    margin: 0px -10px 0px -10px;
+    color: #F55B5B;
+    background-color: transparent;
 }
 .bernieNew{
-    background-color: #147FD7;
-    color: #fff;
-    padding: 10px 15px 10px 10px;
-    margin: 0px -10px 0px -10px;
+    color: #147FD7;
+    background-color: transparent;
 }
 .bernieNew.rounded-bottom{
     margin-bottom: 15px;
@@ -271,4 +303,14 @@ div.rounded {
 }
 .btn:hover {
     color: #fff;
+}
+
+footer {
+    padding: 15px 0;
+    color: #147FD7;
+    background-color: transparent;
+}
+
+footer p {
+    font-weight: 300;
 }
