@@ -42,7 +42,7 @@
 
     </head>
 	<body class="bernie-calc">
-        <div id="fb-root"></div>
+        
         <div class="navbar navbar-inverse navbar-fixed-top">
             
             <div class="container">
@@ -74,6 +74,7 @@
                                 <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
                                 
                                 <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
+                                <div id="fb-root"></div>
                             </div>
                             
 
@@ -88,19 +89,19 @@
                 <div class="col-md-3">
                     <div class="row savings-spaceholder">
                         <div class="savings-container">
-                            <div class="col-sm-12 savings">
+                            <div class="col-sm-12 col-xs-6 savings">
                                 <div class="row">
-                                    <div data-bind="text: employeeSavingsText(),
+                                    <div class="savings-text"data-bind="text: employeeSavingsText(),
                                     css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div data-bind="text: employeeSavingsFormatted(),
+                                    <div class="savings-text" data-bind="text: employeeSavingsFormatted(),
                                         css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
                                     </div>
                                 </div> 
                             </div>
-                            <div class="col-sm-12 savings">
+                            <div class="col-sm-12 col-xs-6 savings">
                                 <div class="row">
                                     <div data-bind="text: employerSavingsText(),
                                         css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
