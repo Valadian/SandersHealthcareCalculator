@@ -44,66 +44,67 @@ a:focus {
 .savings>div{
     font-size: 150%;
     text-align: center;
-    margin: 15px 0;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.savings>div:first-child {
+    margin-top: 5px;
+}
+.savings>div:last-child {
+    margin-bottom: 5px;
 }
 .savings > div > div {
     text-transform: uppercase;
     padding: 15px 0;
-    border-bottom: 1px solid #fff
+}
+.savings > div:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 .savings {
 
 }
-@media (min-width: 993px){
-    .title img{
-        height: 100px;
-    }
-    body {
-        padding-top: 107px;
-    }
-    .floating {
-        position: fixed;
-        top: 100px;
-    }
-
-    .savings{
-        margin-bottom: 25px;
-    }
+.floating {
+    position: fixed;
+    top: 100px;
 }
-@media (max-width: 992px){
+@media (max-width: 990px){
     body {
         padding-top: 80px;
     }
+}
+@media (max-width: 480px) {
+    .bernie-calc .navbar-inverse {
+        height: 65px;
+    }
+    .bernie-calc .navbar-brand img {
+        width: 65px;
+
+    }
+    .bernie-calc .navbar-brand {
+        float: none;
+    }
+    .savings>div>div {
+        font-size: 14px;
+        margin: 0 2px;
+    }
+    .navbar-inverse .navbar-brand {
+        float: none;
+        margin: 0 auto;
+    }
     .floating {
-        position: fixed;
-        top: 100px;
+        top: 60px;
     }
 }
-@media (max-width: 768px){
-    .title img{
-        height: 50px;
-    }
-    .navbar-brand{
-        padding: 0px;
-    }
-    body {
-        padding-top: 55px;
-    }
-    .floating {
-        position: fixed;
-        top: 100px;
-    }
-
-    .savings{
-        padding-bottom: 7px;
-    }
- }
 
 .bernie-calc .jumbotron {
     background-color: #185378;
     color: #fff;
     border-radius: 0;
+}
+.bernie-calc .jumbotron .lead {
+    padding: 15px 0;
 }
 
 .slider-selection {
@@ -139,9 +140,7 @@ div.rounded {
 .bernie-calc .panel-footer{
 	height: 60px;
 }
-/* .input-group input.form_control {
-	max-width:200px;
-} */
+
 .input-group,.form-group>input {
 	width: 100%;
 }
@@ -195,6 +194,10 @@ div.rounded {
 /*.bernieText{
     color: #185378;
 }*/
+.bernieReplacing,
+.bernieNew {
+    text-transform: uppercase;
+}
 .bernieReplacing{
     background-color: #555555;
     color: #fff;
@@ -202,7 +205,7 @@ div.rounded {
     margin: 0px -10px 0px -10px;
 }
 .bernieNew{
-    background-color: #185378;
+    background-color: #147FD7;
     color: #fff;
     padding: 10px 15px 10px 10px;
     margin: 0px -10px 0px -10px;
@@ -240,12 +243,12 @@ div.rounded {
 .bg-success {
     color: #fff;
     background-color: #45d363;
-    text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);
+    /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
 }
 .bg-danger {
     color: #fff;
     background-color: #F55B5B;
-    text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);
+    /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
 }
 .btn {
     background-color: #F55B5B;
