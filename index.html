@@ -1,22 +1,19 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Bernie Healthcare Calculator</title>
-        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/bootstrap-slider.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/css/bootstrap-slider.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
         <link href="Content/site.css" rel="stylesheet" />
-        <script src="Scripts/site.js"></script>
-        <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+        
         <link rel="shortcut icon" href="https://berniesanders.com/wp-content/themes/berniesanders2016/favicon.ico">
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        
+
         <meta property="og:url"           content="valadian.github.io/SandersHealthcareCalculator" />
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content="Bernie Healthcare Calculator" />
@@ -33,267 +30,283 @@
           ga('send', 'pageview');
 
         </script>
+         <!-- Load Facebook SDK for JavaScript -->
+        <script>(function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+        </script>
+
     </head>
-	<body>
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
+	<body class="bernie-calc">
+        <div id="fb-root"></div>
         <div class="navbar navbar-inverse navbar-fixed-top">
+            
             <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="https://berniesanders.com">
-                        <img src="Content/Bernie2016.png" style="width:100px;">
-                    </a>
-                    <div class="col-xs-6 title"><img src="Content/Title.png"></div>
-
-                    <!--<a class="navbar-brand" href="/">Bernie Sanders Healthcare Calculator</a>-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="navbar-brand" href="https://berniesanders.com">
+                            <img class="sanders-logo" src="Content/sanders-logo.svg#logo">
+                        </a>        
+                    </div>
                 </div>
             </div>
+            
         </div>
         <div class="container body-content">
             <form>
-                <div class="row">
-                    <p>Calculated according to:
-                        <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">
-                            Medicare-for-All.pdf
-                        </a> Released by Bernie's campaign on 1/17/2016</p>
-                </div>
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">
+                            <img src="Content/Title.png">
+                            <p class="lead text-center">Calculated according to:
+                                <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf">
+                                    Medicare-for-All.pdf
+                                </a> 
+                                Released by Bernie's campaign on 1/17/2016
+                            </p>
+                            <!--<a class="navbar-brand" href="/">Bernie Sanders Healthcare Calculator</a>-->
+                
+                            <div class="shareLinks">
+                                <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
+                                
+                                <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
+                            </div>
+                            
 
-                <div class="row shareLinks" style="height:25px">
-                    <div class="col-sm-6">
-                        <div style="height:20px;width:150px;float:left;">
-                            <a id="twitterButton" data-bind="attr: { href: twitterUrl() }" class="twitter-hashtag-button">Tweet #BernieCare</a>
-                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                        </div>
-                        <div class="fb-share-button" data-href="https://valadian.github.io/SandersHealthcareCalculator" data-layout="button"></div>
-
-                        <!--<div class="g-plus" data-action="share" data-annotation="none"></div>-->
-                        <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
-                        <!--<span class='st_pinterest_large' displayText='Pinterest'></span>-->
-                        <!--<span class='st_email_large' displayText='Email'></span>-->
+                            <!--<div class="g-plus" data-action="share" data-annotation="none"></div>-->
+                            <!--<span class='st_twitter_large' displayText='Tweet'></span>-->
+                            <!--<span class='st_pinterest_large' displayText='Pinterest'></span>-->
+                            <!--<span class='st_email_large' displayText='Email'></span>-->
+                            </div>
+                        
                     </div>
                 </div>
-                <div class="row savings-spaceholder">
-                    <div class="row savings-container">
-                        <div class="col-sm-6 savings ">
-                            <div class="rounded-top" data-bind="text: employeeSavingsText(),
-                            css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                <div class="col-md-3">
+                    <div class="row savings-spaceholder">
+                        <div class="savings-container">
+                            <div class="col-sm-12 savings">
+                                <div class="row">
+                                    <div data-bind="text: employeeSavingsText(),
+                                    css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div data-bind="text: employeeSavingsFormatted(),
+                                        css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                                    </div>
+                                </div> 
                             </div>
-                            <div class="rounded-bottom" data-bind="text: employeeSavingsFormatted(),
-                                css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 savings">
-                            <div class="row">
-                                <div class="rounded-top" data-bind="text: employerSavingsText(),
-                                    css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                                <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
-                            </div>
-                            <div class="row">
-                                <div class="rounded-bottom" data-bind="text: employerSavingsFormatted(),
-                                    css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                                <!--<div class="col-xs-3" style="height:30px">-->
-                                    <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
-                                        <!--data-on-text="Yes" data-off-text="No">-->
-                                <!--</div>-->
+                            <div class="col-sm-12 savings">
+                                <div class="row">
+                                    <div data-bind="text: employerSavingsText(),
+                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                    <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
+                                </div>
+                                <div class="row">
+                                    <div data-bind="text: employerSavingsFormatted(),
+                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                    <!--<div class="col-xs-3" style="height:30px">-->
+                                        <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
+                                            <!--data-on-text="Yes" data-off-text="No">-->
+                                    <!--</div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
+                        
                 </div>
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Income & Tax information</div>
-                        <div class="panel-body">
-                            <fieldset class="form-group">
-                                <label for="income">Wage Income:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: income" class="form-control currency"
-                                           placeholder="Enter Wage Income" name="income" required />
-                                </div>
-                            </fieldset>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Income &amp; Tax information</div>
+                            <div class="panel-body">
+                                <fieldset class="form-group">
+                                    <label for="income">Wage Income:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: income" class="form-control currency"
+                                               placeholder="Enter Wage Income" name="income" required />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="incomeShortCapGains">Short Term Capital Gains:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: incomeShortCapGains" class="form-control currency"
-                                           placeholder="Enter ShortTermCapGains" name="incomeShortCapGains" />
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="incomeShortCapGains">Short Term Capital Gains:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: incomeShortCapGains" class="form-control currency"
+                                               placeholder="Enter ShortTermCapGains" name="incomeShortCapGains" />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="incomeLongCapGains">Long Term Capital Gains:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: incomeLongCapGains" class="form-control currency"
-                                           placeholder="Enter LongTermCapGains" name="incomeLongCapGains" />
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="incomeLongCapGains">Long Term Capital Gains:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: incomeLongCapGains" class="form-control currency"
+                                               placeholder="Enter LongTermCapGains" name="incomeLongCapGains" />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group">
-                                <label for="filingStatus">Filing Status:</label>
-                                <div class="input-group">
-                                    <select data-bind="value: filingStatus" class="form-control">
-                                        <option value="0">Single</option>
-                                        <option value="1">Married filing Jointly</option>
-                                        <option value="2">Married filing Separately</option>
-                                        <option value="3">Head of Household</option>
-                                        <option value="1">Qualified Widow(er)</option>
-                                    </select>
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="filingStatus">Filing Status:</label>
+                                    <div class="input-group">
+                                        <select data-bind="value: filingStatus" class="form-control">
+                                            <option value="0">Single</option>
+                                            <option value="1">Married filing Jointly</option>
+                                            <option value="2">Married filing Separately</option>
+                                            <option value="3">Head of Household</option>
+                                            <option value="1">Qualified Widow(er)</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="selfEmployed">Self-Employed:</label>
-                                <div class="input-group">
-                                    <select data-bind="value: selfEmployed" class="form-control">
-                                        <option value="false">No</option>
-                                        <option value="true">Yes</option>
-                                    </select>
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="selfEmployed">Self-Employed:</label>
+                                    <div class="input-group">
+                                        <select data-bind="value: selfEmployed" class="form-control">
+                                            <option value="false">No</option>
+                                            <option value="true">Yes</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group">
-                                <label for="familySize">Family Size:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon whoLabel">Adults</div>
-                                    <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon whoLabel">Children</div>
-                                    <input data-bind="value: children" class="form-control naturalNumber" name="children" />
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="familySize">Family Size:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon whoLabel">Adults</div>
+                                        <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon whoLabel">Children</div>
+                                        <input data-bind="value: children" class="form-control naturalNumber" name="children" />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="itemizedDeductions">Itemized Deductions:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: itemizedDeductions" class="form-control currency"
-                                           placeholder="Enter Itemized Deductions" name="itemizedDeductions" />
-                                </div>
-                            </fieldset>
-
-
-
-                            <hr class="advanced" />
+                                <fieldset class="form-group advanced">
+                                    <label for="itemizedDeductions">Itemized Deductions:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: itemizedDeductions" class="form-control currency"
+                                               placeholder="Enter Itemized Deductions" name="itemizedDeductions" />
+                                    </div>
+                                </fieldset>
 
 
 
-                            <fieldset class="form-group advanced">
-                                <label for="standardDeduction">Standard Deduction:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: standardDeduction()" class="form-control currency"
-                                           name="standardDeduction" readonly />
+                                <hr class="advanced" />
+
+
+
+                                <fieldset class="form-group advanced">
+                                    <label for="standardDeduction">Standard Deduction:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: standardDeduction()" class="form-control currency"
+                                               name="standardDeduction" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="exemptions">Exemptions:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: exemptions(),
+                                            tooltip: {title: 'Family Size x $4000', trigger: 'focus' }"
+                                               class="form-control currency" name="exemptions" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="totalDeductions">Total Deductions:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: totalDeductions()" class="form-control currency"
+                                               name="totalDeductions" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="taxableIncome">Taxable Income:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: taxableIncome()" class="form-control currency"
+                                               name="taxableIncome" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="employeeMediTax">Medicare Taxes:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeMediTax(),
+                                                tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
+                                               class="form-control currency" name="employeeMediTax" readonly />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerMediTax(),
+                                                tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
+                                               class="form-control currency" name="employerMediTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="employeeSocSecTax">Social Security Taxes:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeSocSecTax(),
+                                            tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
+                                               class="form-control currency" name="employeeSocSecTax" readonly />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerSocSecTax(),
+                                            tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
+                                               class="form-control currency" name="employerSocSecTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group  advanced bernieReplacing rounded-top">
+                                    <label for="federalWithholding">Old Federal Withholding:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: federalWithholding()" class="form-control currency"
+                                               name="federalWithholding" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieReplacing">
+                                    <label for="longCapGainsTax">Old Long Term Cap Gains Taxes:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: longCapGainsTax()" class="form-control currency"
+                                               name="longCapGainsTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieReplacing">
+                                    <label for="effectiveTaxRate">Old Effective Tax Rate:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: effectiveTaxRate()" class="form-control"
+                                               name="effectiveTaxRate" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group  advanced bernieNew">
+                                    <label for="newFederalWithholding">New Federal Withholding:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newFederalWithholding()" class="form-control currency"
+                                               name="newFederalWithholding" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieNew">
+                                    <label for="newLongCapGainsTax">New Long Term Cap Gains Taxes:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newLongCapGainsTax()" class="form-control currency"
+                                               name="newLongCapGainsTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieNew rounded-bottom">
+                                    <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newEffectiveTaxRate()" class="form-control"
+                                               name="newEffectiveTaxRate" readonly />
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="advanced-toggle rounded pull-right">
+                                    Advanced
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                    <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
                                 </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="exemptions">Exemptions:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: exemptions(),
-                                        tooltip: {title: 'Family Size x $4000', trigger: 'focus' }"
-                                           class="form-control currency" name="exemptions" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="totalDeductions">Total Deductions:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: totalDeductions()" class="form-control currency"
-                                           name="totalDeductions" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="taxableIncome">Taxable Income:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: taxableIncome()" class="form-control currency"
-                                           name="taxableIncome" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="employeeMediTax">Medicare Taxes:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeMediTax(),
-                                            tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
-                                           class="form-control currency" name="employeeMediTax" readonly />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerMediTax(),
-                                            tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
-                                           class="form-control currency" name="employerMediTax" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced">
-                                <label for="employeeSocSecTax">Social Security Taxes:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeSocSecTax(),
-                                        tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
-                                           class="form-control currency" name="employeeSocSecTax" readonly />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerSocSecTax(),
-                                        tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
-                                           class="form-control currency" name="employerSocSecTax" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group  advanced bernieReplacing rounded-top">
-                                <label for="federalWithholding">Old Federal Withholding:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: federalWithholding()" class="form-control currency"
-                                           name="federalWithholding" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced bernieReplacing">
-                                <label for="longCapGainsTax">Old Long Term Cap Gains Taxes:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: longCapGainsTax()" class="form-control currency"
-                                           name="longCapGainsTax" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced bernieReplacing">
-                                <label for="effectiveTaxRate">Old Effective Tax Rate:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: effectiveTaxRate()" class="form-control"
-                                           name="effectiveTaxRate" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group  advanced bernieNew">
-                                <label for="newFederalWithholding">New Federal Withholding:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: newFederalWithholding()" class="form-control currency"
-                                           name="newFederalWithholding" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced bernieNew">
-                                <label for="newLongCapGainsTax">New Long Term Cap Gains Taxes:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: newLongCapGainsTax()" class="form-control currency"
-                                           name="newLongCapGainsTax" readonly />
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group advanced bernieNew rounded-bottom">
-                                <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: newEffectiveTaxRate()" class="form-control"
-                                           name="newEffectiveTaxRate" readonly />
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="advanced-toggle rounded pull-right">
-                                Advanced
-                                <span class="glyphicon glyphicon-chevron-down"></span>
-                                <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
                             </div>
                         </div>
-                    </div>
 
 
 
@@ -304,172 +317,173 @@
 
 
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Insurance information</div>
-                        <div class="panel-body">
-                            <fieldset class="form-group">
-                                <label for="insured">Have Insurance?:</label>
-                                <div class="input-group">
-                                    <select data-bind="value: insured" class="form-control">
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">Yes, On someone else's plan</option>
-                                    </select>
-                                </div>
-                            </fieldset>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Insurance information</div>
+                            <div class="panel-body">
+                                <fieldset class="form-group">
+                                    <label for="insured">Have Insurance?:</label>
+                                    <div class="input-group">
+                                        <select data-bind="value: insured" class="form-control">
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                            <option value="2">Yes, On someone else's plan</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group">
-                                <label for="premium">Insurance Premiums:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: premium, enable: hasInsurance(),
-                                        tooltip: {title: 'Premiums paid by YOU minus any Obamacare subsidies', trigger: 'focus' }"
-                                           class="form-control currency" placeholder="Enter Insurance Premium"
-                                           name="premium" />
-                                    <select class="form-control" data-bind="value: premiumPeriod, enable: hasInsurance()">
-                                        <option value="52">Weekly</option>
-                                        <option value="26">Biweekly</option>
-                                        <option value="12">Monthly</option>
-                                        <option value="1">Yearly</option>
-                                    </select>
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="premium">Insurance Premiums:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: premium, enable: hasInsurance(),
+                                            tooltip: {title: 'Premiums paid by YOU minus any Obamacare subsidies', trigger: 'focus' }"
+                                               class="form-control currency" placeholder="Enter Insurance Premium"
+                                               name="premium" />
+                                        <select class="form-control" data-bind="value: premiumPeriod, enable: hasInsurance()">
+                                            <option value="52">Weekly</option>
+                                            <option value="26">Biweekly</option>
+                                            <option value="12">Monthly</option>
+                                            <option value="1">Yearly</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: premiumEmployer, enable: employerPayingInsurance()"
-                                           class="form-control currency" placeholder="Enter Employer paid Insurance Premium"
-                                           name="premiumEmployer" />
-                                    <select class="form-control" data-bind="value: premiumEmployerPeriod,
-                                        enable: employerPayingInsurance()">
-                                        <option value="52">Weekly</option>
-                                        <option value="26">Biweekly</option>
-                                        <option value="12">Monthly</option>
-                                        <option value="1">Yearly</option>
-                                    </select>
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: premiumEmployer, enable: employerPayingInsurance()"
+                                               class="form-control currency" placeholder="Enter Employer paid Insurance Premium"
+                                               name="premiumEmployer" />
+                                        <select class="form-control" data-bind="value: premiumEmployerPeriod,
+                                            enable: employerPayingInsurance()">
+                                            <option value="52">Weekly</option>
+                                            <option value="26">Biweekly</option>
+                                            <option value="12">Monthly</option>
+                                            <option value="1">Yearly</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="copays">Average Copays:</label>
-                                <div class="input-group form-inline">
-                                    <input data-bind="value: copays, enable: hasInsurance()" class="form-control currency"
-                                           placeholder="Enter Average Copays" name="copays" />
-                                    <select class="form-control pull-right" data-bind="value: copaysPeriod, enable: hasInsurance()">
-                                        <option value="52">Weekly</option>
-                                        <option value="26">Biweekly</option>
-                                        <option value="12">Monthly</option>
-                                        <option value="1">Yearly</option>
-                                    </select>
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="copays">Average Copays:</label>
+                                    <div class="input-group form-inline">
+                                        <input data-bind="value: copays, enable: hasInsurance()" class="form-control currency"
+                                               placeholder="Enter Average Copays" name="copays" />
+                                        <select class="form-control pull-right" data-bind="value: copaysPeriod, enable: hasInsurance()">
+                                            <option value="52">Weekly</option>
+                                            <option value="26">Biweekly</option>
+                                            <option value="12">Monthly</option>
+                                            <option value="1">Yearly</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group">
-                                <label for="deductible">Deductible:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
-                                           placeholder="Enter Deductible" name="deductible" />
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group">
+                                    <label for="deductible">Deductible:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
+                                               placeholder="Enter Deductible" name="deductible" />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="deductiblePercentage">Percentage of used Deductible:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: deductiblePercentage" id="deductiblePercentage" data-slider-id="deductiblePercentage" type="text"
-                                           data-slider-min="0" data-slider-max="1" data-slider-step="0.05" data-slider-value="1" />
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="deductiblePercentage">Percentage of used Deductible:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: deductiblePercentage" id="deductiblePercentage" data-slider-id="deductiblePercentage" type="text"
+                                               data-slider-min="0" data-slider-max="1" data-slider-step="0.05" data-slider-value="1" />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset class="form-group advanced">
-                                <label for="includeVariableCosts">Include Variable Costs?:</label>
-                                <div class="input-group">
-                                    <select data-bind="value: includeVariableCosts, enable: hasInsurance(),
-                                        tooltip: {title: 'Deductibles and Co-pays', trigger: 'focus' }" class="form-control">
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </fieldset>
-
-
-
-                            <hr />
+                                <fieldset class="form-group advanced">
+                                    <label for="includeVariableCosts">Include Variable Costs?:</label>
+                                    <div class="input-group">
+                                        <select data-bind="value: includeVariableCosts, enable: hasInsurance(),
+                                            tooltip: {title: 'Deductibles and Co-pays', trigger: 'focus' }" class="form-control">
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
 
 
-                            <fieldset class="form-group advanced">
-                                <label for="uninsuredPenalty">Uninsured penalty:</label>
-                                <div class="input-group">
-                                    <input data-bind="value: uninsuredPenalty" class="form-control currency"
-                                           name="uninsuredPenalty" readonly/>
-                                </div>
-                            </fieldset>
-						</div>
-						<div class="panel-footer">
-							<div class="advanced-toggle rounded pull-right">
-								Advanced
-								<span class="glyphicon glyphicon-chevron-down"></span>
-								<span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
-							</div>
-						</div>
-					</div>
 
-					<div class="panel panel-default">
-                        <div class="panel-heading">Result</div>
-                        <div class="panel-body">
+                                <hr />
 
-                            <fieldset class="form-group bernieReplacing rounded-top">
-                                <label for="employeeHealthCareCost">Old ObamaCare Costs:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeHealthCareCost(),
-                                        tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }"
-                                           class="form-control currency" name="employeeHealthCareCost" readonly />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerHealthCareCost(),
-                                        tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }"
-                                           class="form-control currency" name="employerHealthCareCost" readonly />
-                                </div>
-                            </fieldset>
 
-                            <fieldset class="form-group bernieNew rounded-bottom">
-                                <label for="employeeBernieCareTax" class="bernieText">New "Medicare for All" Costs:</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon info whoLabel">Employee</div>
-                                    <input data-bind="value: employeeBernieCareTax(),
-                                        tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }"
-                                           class="form-control currency" name="employeeBernieCareTax" readonly />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon success whoLabel">Employer</div>
-                                    <input data-bind="value: employerBernieCareTax(),
-                                        tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }"
-                                           class="form-control currency" name="employerBernieCareTax" readonly />
-                                </div>
-                            </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="uninsuredPenalty">Uninsured penalty:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: uninsuredPenalty" class="form-control currency"
+                                               name="uninsuredPenalty" readonly/>
+                                    </div>
+                                </fieldset>
+    						</div>
+    						<div class="panel-footer">
+    							<div class="advanced-toggle rounded pull-right">
+    								Advanced
+    								<span class="glyphicon glyphicon-chevron-down"></span>
+    								<span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
+    							</div>
+    						</div>
+    					</div>
+
+    					<div class="panel panel-default">
+                            <div class="panel-heading">Result</div>
+                            <div class="panel-body">
+
+                                <fieldset class="form-group bernieReplacing rounded-top">
+                                    <label for="employeeHealthCareCost">Old ObamaCare Costs:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeHealthCareCost(),
+                                            tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }"
+                                               class="form-control currency" name="employeeHealthCareCost" readonly />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerHealthCareCost(),
+                                            tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }"
+                                               class="form-control currency" name="employerHealthCareCost" readonly />
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-group bernieNew rounded-bottom">
+                                    <label for="employeeBernieCareTax" class="bernieText">New "Medicare for All" Costs:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeBernieCareTax(),
+                                            tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }"
+                                               class="form-control currency" name="employeeBernieCareTax" readonly />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerBernieCareTax(),
+                                            tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }"
+                                               class="form-control currency" name="employerBernieCareTax" readonly />
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                            <div class="panel-footer">
+                            </div>
 
                         </div>
-                        <div class="panel-footer">
-                        </div>
-
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading changelog-toggle">ChangeLog</div>
-                        <div class="panel-body" style="display:none">
-                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/65e67ecdd4eb609a050509bf6b5578304a7178bf">
-                                2016.01.18.1849</a> v0.1.0 Initial Release</p>
-                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/3c90a44c4532c49a28b8df41858097a06dcd1214">
-                                2016.01.18.1955</a> v0.1.1 Fixed negative taxable income. Added Share buttons</p>
-                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/699492e42fb0c7570fc848c8996667fa4782305e">
-                                2016.01.18.2059</a> v0.2.0 Bernie Branded Header!</p>
-                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/f81a4cfcec95b35ba2037a2934160b261ca5db6f">
-                                2016.01.18.2122</a> v0.2.1 Added Link to original Proposal PDF</p>
-                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/4cd14103703d4dc9b8b3a139b2e3582c8ed30d30">
-                                2016.01.18.2251</a> v0.2.2 Floated savings</p>
-                            <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/385b8db09b36005d6732089ebef33b7d0160902c">
-                                2016.01.19.0031</a> v0.3.0 New Comparison Boxes, New Tax Brackets, & Capital Gains Changes</p>
+                        <div class="panel panel-default">
+                            <div class="panel-heading changelog-toggle">ChangeLog</div>
+                            <div class="panel-body" style="display:none">
+                                <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/65e67ecdd4eb609a050509bf6b5578304a7178bf">
+                                    2016.01.18.1849</a> v0.1.0 Initial Release</p>
+                                <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/3c90a44c4532c49a28b8df41858097a06dcd1214">
+                                    2016.01.18.1955</a> v0.1.1 Fixed negative taxable income. Added Share buttons</p>
+                                <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/699492e42fb0c7570fc848c8996667fa4782305e">
+                                    2016.01.18.2059</a> v0.2.0 Bernie Branded Header!</p>
+                                <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/f81a4cfcec95b35ba2037a2934160b261ca5db6f">
+                                    2016.01.18.2122</a> v0.2.1 Added Link to original Proposal PDF</p>
+                                <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/4cd14103703d4dc9b8b3a139b2e3582c8ed30d30">
+                                    2016.01.18.2251</a> v0.2.2 Floated savings</p>
+                                <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/385b8db09b36005d6732089ebef33b7d0160902c">
+                                    2016.01.19.0031</a> v0.3.0 New Comparison Boxes, New Tax Brackets, & Capital Gains Changes</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -477,8 +491,22 @@
         </div>
         <hr />
         <footer>
-            <p align="center">&copy; 2016 - Jesse Berger, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
-            <p align="center">Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
+            <p class="text-center">&copy; 2016 - Jesse Berger, <a href="https://www.reddit.com/user/valadian">/u/valadian</a>, </p>
+            <p class="text-center">"Bernie Sanders" logo and "Medicare for All" logo &copy; <a href="https://berniesanders.com">Bernie Sanders</a></p>
+            <p class="text-center">Need an web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
         </footer>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        <!-- Scripts added to reduce page-blocking scripts -->
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/bootstrap-slider.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="Scripts/site.js"></script>
+
 	</body>
 </html>
