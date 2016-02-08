@@ -40,6 +40,7 @@ a:focus {
 }
 .savings-placeholder, .savings-container{
     z-index:9999;
+    transition: all .3s linear;
 }
 .savings .savings-text,
 .savings .savings-amount {
