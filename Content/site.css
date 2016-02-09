@@ -359,7 +359,7 @@ span.glyphicon.glyphicon-chevron-up {
     stroke: #fff;
     stroke-width: 0;
 }
-.bg-success {
+.bg-success,.alert-bg-success {
     color: #fff;
     background-color: #45d363;
     /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
@@ -375,6 +375,9 @@ span.glyphicon.glyphicon-chevron-up {
 }
 .btn:hover {
     color: #fff;
+}
+.btn-info,.btn-info:hover {
+    background-color: #147FD7;
 }
 
 footer {

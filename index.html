@@ -9,7 +9,10 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/css/bootstrap-slider.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,300,400,600,700' rel='stylesheet' type='text/css'>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <link href="Content/animate.css" rel="stylesheet" />
         <link href="Content/site.css" rel="stylesheet" />
         
         <link rel="shortcut icon" href="https://berniesanders.com/wp-content/themes/berniesanders2016/favicon.ico">
@@ -94,6 +97,10 @@
                                             <!--data-on-text="Yes" data-off-text="No">-->
                                     <!--</div>-->
                                 </div>
+                            </div>
+                            <div data-bind="click: copyShareLink()" class="col-md-12 hidden-sm hidden-xs btn btn-info">
+                                    Copy Url to Your Results
+                                <input id="shareLink" data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
                             </div>
                         </div>
                     </div>
@@ -528,6 +535,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script src="Scripts/jquery.sharrre.min.js"></script>
+        <script src="Scripts/bootstrap-notify.min.js"></script>
         <script src="Scripts/site.js"></script>
 
 	</body>

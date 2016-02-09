@@ -4,6 +4,7 @@ function clamp(num, min, max) {
 function formatCurrency(value){
     return "$ "+value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 }
+
 $(function(){
     // Share icons
     $('#facebook').sharrre({
@@ -97,7 +98,7 @@ $(function(){
 	$('.currency').after("<div class='input-group-addon currency'>$</div>");
     //$('.currency').before("<div class='dollarSign'>$</div>");
 	var taxTable = [];
-	
+
 	var jsModel = { 
 		income: 50000, 
 		incomeShortCapGains: 0, 
@@ -119,8 +120,56 @@ $(function(){
 		includeVariableCosts: 1
 	};
 
+	if(location.search.length>1){
+	    var values = atob(location.search.substring(6)).split(",");
+	    Object.keys(jsModel).forEach(function(key,index) {
+	        jsModel[key] = values[index];
+        });
+	}
+
 	var self = ko.mapping.fromJS(jsModel);
 
+    self.copyShareLink = function(){
+        target = $('#shareLink')[0];
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+        try {
+              succeed = document.execCommand("copy");
+              if(succeed){
+                  $.notify({
+                    // options
+                    message: 'Link Copied to Clipboard',
+                    url: self.shareLink(),
+                    target: '_blank'
+                  },{
+                    // settings
+                    type: 'bg-success',
+	                delay: 3000,
+                    animate: {
+                       enter: 'animated fadeInRight',
+                       exit: 'animated fadeOutRight'
+                    }
+                  });
+              }
+        } catch(e) {
+            succeed = false;
+        }
+    };
+
+    self.shareLink = ko.computed(function(){
+        var model = ko.mapping.toJS(self);
+        var str = "";
+        Object.keys(model).forEach(function(key,index) {
+            if(index!=0){
+                str +=  ",";
+            }
+            str += +model[key];
+        });
+        return location.protocol + '//' + location.host + location.pathname + "?data="+btoa(str);
+    });
     self.employerPayingInsurance = ko.pureComputed(function(){
         return !(self.selfEmployed()=='true' || self.insured() == 0);
     });
