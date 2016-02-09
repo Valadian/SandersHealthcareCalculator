@@ -146,7 +146,7 @@ $(function(){
             }
             str += +model[key];
         });
-        return document.location.pathname + "?data="+btoa(str);
+        return location.protocol + '//' + location.host + location.pathname + "?data="+btoa(str);
     });
     self.employerPayingInsurance = ko.pureComputed(function(){
         return !(self.selfEmployed()=='true' || self.insured() == 0);
