@@ -6,6 +6,19 @@ function formatCurrency(value){
 }
 
 $(function(){
+    // Share icons
+    $('#facebook').sharrre({
+      share: {
+        facebook: true
+      },
+      enableHover: false,
+      enableTracking: true,
+      click: function(api, options){
+        api.simulateClick();
+        api.openPopup('facebook');
+      }
+    });
+
     ko.options.deferUpdates = true;
 	$('form').validate({
         rules: {},
@@ -35,7 +48,7 @@ $(function(){
 	});
 
 	$(window).scroll(function(){
-	    if($(window).scrollTop() > $('.savings-spaceholder').offset().top - $('.navbar').height() - 5){
+	    if($(window).scrollTop() > $('.savings-spaceholder').offset().top - $('.navbar').height()){
 	        $('.savings-container').addClass("floating");
 	        $('.savings-container').css(
 	            { 'width':$('.savings-spaceholder').width()})
@@ -44,6 +57,15 @@ $(function(){
 	        $('.savings-container').css(
 	            { 'width':''})
 	    }
+        if($(window).scrollTop() > $('.social-container').offset().top - $('.navbar').height()){
+            $('.social').addClass("floating");
+            $('.social').css(
+                { 'width':$('.social-container').width()})
+        } else {
+            $('.social').removeClass("floating");
+            $('.social').css(
+                { 'width':''})
+        }
 	})
 	
 	$('#deductiblePercentage').slider({
