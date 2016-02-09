@@ -20,7 +20,7 @@ img {
     display: block;
 }
 .bernie-calc {
-    padding-top: 150px;
+    padding-top: 100px;
 }
 a,
 a:hover,
@@ -30,6 +30,9 @@ a:focus {
 }
 iframe {
     border: none;
+}
+.container-fluid {
+    padding: 0;
 }
 .navbar-inverse{
     background-color: #147FD7;
@@ -93,9 +96,9 @@ iframe {
     .savings {
         float: left !important;
     }
-    [class^="col-"] {
+    /*[class^="col-"] {
         float: none;
-    }
+    }*/
     .bernie-calc .navbar-inverse {
         height: 65px;
     }
@@ -241,8 +244,8 @@ div.rounded {
 }
 .input-group-addon.info {
     color: #fff;
-    background-color: #185378;
-    border-color: #154868;
+    background-color: #1271c0;
+    border-color: #147FD7;
 }
 .input-group-addon.currency {
     color: rgb(255, 255, 255);
@@ -260,6 +263,54 @@ div.rounded {
     float: left;
     position: relative;
 }
+.social {
+    padding: 0;
+}
+.social li {
+    list-style: none;
+}
+#fa-facebook {
+    color: #3a5795;
+}
+#twitter .count {
+    font-size: 13px;
+}
+.social .box{
+    width: 100%;
+    display: block;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
+    margin-bottom: 15px;
+}
+.social .count {
+    color: #fff;
+    display: block;
+    font-size: 24px;
+    padding: 10px 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    background-color: #1271c0;
+}
+.social .share {
+    display:block;
+    font-size: 18px;
+    padding: 10px 0;
+    border: 1px solid #eee;
+    text-align:center;
+    text-decoration:none;
+
+    background-color:#fff;
+}
+.social .buttons {
+    display:none;
+    width:300px;
+}
+.social .button {
+    max-width:50px;
+    height:50px;
+    margin-left:10px;
+}
+
 /*.bernieText{
     color: #185378;
 }*/
@@ -277,6 +328,9 @@ div.rounded {
 }
 .bernieNew.rounded-bottom{
     margin-bottom: 15px;
+}
+span.glyphicon.glyphicon-chevron-up {
+    padding-left: 7px;
 }
 .dollarSign{
     position: absolute;
