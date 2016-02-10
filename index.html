@@ -131,8 +131,51 @@
                                     </div>
                                 </fieldset>
 
+                                <fieldset class="form-group">
+                                    <label for="filingStatus">Filing Status:</label>
+                                    <div class="input-group">
+                                        <select data-bind="value: filingStatus" class="form-control">
+                                            <option value="0">Single</option>
+                                            <option value="1">Married filing Jointly</option>
+                                            <option value="2">Married filing Separately</option>
+                                            <option value="3">Head of Household</option>
+                                            <option value="1">Qualified Widow(er)</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-group">
+                                    <label for="familySize">Family Size:</label>
+                                    <div class="row input-group">
+                                        <div class="col-md-6 nopadding">
+                                            <div class="input-group">
+                                                <div class="input-group-addon whoLabel">Adults</div>
+                                                <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
+                                            </div>
+                                        </div>
+                                        <div class=" col-md-5 col-md-offset-1 nopadding">
+                                            <div class="input-group">
+                                                <div class="input-group-addon whoLabel">Children</div>
+                                                <input data-bind="value: children" class="form-control naturalNumber" name="children" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <hr class="advanced" />
+
                                 <fieldset class="form-group advanced">
-                                    <label for="incomeShortCapGains">Short Term Capital Gains:</label>
+                                    <label for="selfEmployed">Self-Employed/Retired:</label>
+                                    <div class="input-group">
+                                        <select data-bind="value: selfEmployed" class="form-control">
+                                            <option value="false">No</option>
+                                            <option value="true">Yes</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset class="form-group advanced">
+                                    <label for="incomeShortCapGains">Non-Wage Income:</label>
                                     <div class="input-group">
                                         <input data-bind="value: incomeShortCapGains" class="form-control currency"
                                                placeholder="Enter ShortTermCapGains" name="incomeShortCapGains" />
@@ -147,154 +190,11 @@
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="form-group">
-                                    <label for="filingStatus">Filing Status:</label>
-                                    <div class="input-group">
-                                        <select data-bind="value: filingStatus" class="form-control">
-                                            <option value="0">Single</option>
-                                            <option value="1">Married filing Jointly</option>
-                                            <option value="2">Married filing Separately</option>
-                                            <option value="3">Head of Household</option>
-                                            <option value="1">Qualified Widow(er)</option>
-                                        </select>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-group advanced">
-                                    <label for="selfEmployed">Self-Employed:</label>
-                                    <div class="input-group">
-                                        <select data-bind="value: selfEmployed" class="form-control">
-                                            <option value="false">No</option>
-                                            <option value="true">Yes</option>
-                                        </select>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-group">
-                                    <label for="familySize">Family Size:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon whoLabel">Adults</div>
-                                        <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon whoLabel">Children</div>
-                                        <input data-bind="value: children" class="form-control naturalNumber" name="children" />
-                                    </div>
-                                </fieldset>
-
                                 <fieldset class="form-group advanced">
                                     <label for="itemizedDeductions">Itemized Deductions:</label>
                                     <div class="input-group">
                                         <input data-bind="value: itemizedDeductions" class="form-control currency"
                                                placeholder="Enter Itemized Deductions" name="itemizedDeductions" />
-                                    </div>
-                                </fieldset>
-
-
-
-                                <hr class="advanced" />
-
-
-
-                                <fieldset class="form-group advanced">
-                                    <label for="standardDeduction">Standard Deduction:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: standardDeduction()" class="form-control currency"
-                                               name="standardDeduction" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced">
-                                    <label for="exemptions">Exemptions:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: exemptions(),
-                                            tooltip: {title: 'Family Size x $4000', trigger: 'focus' }"
-                                               class="form-control currency" name="exemptions" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced">
-                                    <label for="totalDeductions">Total Deductions:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: totalDeductions()" class="form-control currency"
-                                               name="totalDeductions" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced">
-                                    <label for="taxableIncome">Taxable Income:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: taxableIncome()" class="form-control currency"
-                                               name="taxableIncome" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced">
-                                    <label for="employeeMediTax">Medicare Taxes:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon info whoLabel">Employee</div>
-                                        <input data-bind="value: employeeMediTax(),
-                                                tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
-                                               class="form-control currency" name="employeeMediTax" readonly />
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon success whoLabel">Employer</div>
-                                        <input data-bind="value: employerMediTax(),
-                                                tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
-                                               class="form-control currency" name="employerMediTax" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced">
-                                    <label for="employeeSocSecTax">Social Security Taxes:</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon info whoLabel">Employee</div>
-                                        <input data-bind="value: employeeSocSecTax(),
-                                            tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
-                                               class="form-control currency" name="employeeSocSecTax" readonly />
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-addon success whoLabel">Employer</div>
-                                        <input data-bind="value: employerSocSecTax(),
-                                            tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
-                                               class="form-control currency" name="employerSocSecTax" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group  advanced bernieReplacing rounded-top">
-                                    <label for="federalWithholding">Old Federal Withholding:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: federalWithholding()" class="form-control currency"
-                                               name="federalWithholding" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced bernieReplacing">
-                                    <label for="longCapGainsTax">Old Long Term Cap Gains Taxes:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: longCapGainsTax()" class="form-control currency"
-                                               name="longCapGainsTax" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced bernieReplacing">
-                                    <label for="effectiveTaxRate">Old Effective Tax Rate:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: effectiveTaxRate()" class="form-control"
-                                               name="effectiveTaxRate" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group  advanced bernieNew">
-                                    <label for="newFederalWithholding">New Federal Withholding:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: newFederalWithholding()" class="form-control currency"
-                                               name="newFederalWithholding" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced bernieNew">
-                                    <label for="newLongCapGainsTax">New Long Term Cap Gains Taxes:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: newLongCapGainsTax()" class="form-control currency"
-                                               name="newLongCapGainsTax" readonly />
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group advanced bernieNew rounded-bottom">
-                                    <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: newEffectiveTaxRate()" class="form-control"
-                                               name="newEffectiveTaxRate" readonly />
                                     </div>
                                 </fieldset>
                             </div>
@@ -357,6 +257,14 @@
                                     </div>
                                 </fieldset>
 
+                                <fieldset class="form-group">
+                                    <label for="deductible">Deductible:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
+                                               placeholder="Enter Deductible" name="deductible" />
+                                    </div>
+                                </fieldset>
+
                                 <fieldset class="form-group advanced">
                                     <label for="copays">Average Copays:</label>
                                     <div class="input-group form-inline">
@@ -371,21 +279,13 @@
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="form-group">
-                                    <label for="deductible">Deductible:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
-                                               placeholder="Enter Deductible" name="deductible" />
-                                    </div>
-                                </fieldset>
-
-                                <fieldset class="form-group advanced">
-                                    <label for="deductiblePercentage">Percentage of used Deductible:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: deductiblePercentage" id="deductiblePercentage" data-slider-id="deductiblePercentage" type="text"
-                                               data-slider-min="0" data-slider-max="1" data-slider-step="0.05" data-slider-value="1" />
-                                    </div>
-                                </fieldset>
+                                <!--<fieldset class="form-group advanced">-->
+                                    <!--<label for="deductiblePercentage">Percentage of used Deductible:</label>-->
+                                    <!--<div class="input-group">-->
+                                        <!--<input data-bind="value: deductiblePercentage" id="deductiblePercentage" data-slider-id="deductiblePercentage" type="text"-->
+                                               <!--data-slider-min="0" data-slider-max="1" data-slider-step="0.05" data-slider-value="1" />-->
+                                    <!--</div>-->
+                                <!--</fieldset>-->
 
                                 <fieldset class="form-group advanced">
                                     <label for="includeVariableCosts">Include Variable Costs?:</label>
@@ -395,14 +295,6 @@
                                             <option value="0">No</option>
                                             <option value="1">Yes</option>
                                         </select>
-                                    </div>
-                                </fieldset>
-                                <hr />
-                                <fieldset class="form-group advanced">
-                                    <label for="uninsuredPenalty">Uninsured penalty:</label>
-                                    <div class="input-group">
-                                        <input data-bind="value: uninsuredPenalty" class="form-control currency"
-                                               name="uninsuredPenalty" readonly/>
                                     </div>
                                 </fieldset>
     						</div>
@@ -417,6 +309,7 @@
     					<div class="panel panel-default">
                             <div class="panel-heading">Result</div>
                             <div class="panel-body">
+                                <fieldset class="form-group">
                                 <div class="col-md-6">
                                     <div class="row bernieReplacing">
                                         <h3 class="text-center">ObamaCare</h3>
@@ -454,9 +347,152 @@
                                             </div>
                                         </div>
                                     </div>    
-                                </div>    
-                                
+                                </div>
+                                </fieldset>
 
+
+
+
+                                <hr class="advanced" />
+
+
+
+                                <fieldset class="form-group advanced">
+                                    <label for="standardDeduction">Standard Deduction:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: standardDeduction()" class="form-control currency"
+                                               name="standardDeduction" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="exemptions">Exemptions:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: exemptions(),
+                                            tooltip: {title: 'Family Size x $4000', trigger: 'focus' }"
+                                               class="form-control currency" name="exemptions" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="totalDeductions">Total Deductions:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: totalDeductions()" class="form-control currency"
+                                               name="totalDeductions" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="employeeMediTax">Medicare Taxes:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeMediTax(),
+                                                tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
+                                               class="form-control currency" name="employeeMediTax" readonly />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerMediTax(),
+                                                tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
+                                               class="form-control currency" name="employerMediTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="employeeSocSecTax">Social Security Taxes:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeSocSecTax(),
+                                            tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
+                                               class="form-control currency" name="employeeSocSecTax" readonly />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerSocSecTax(),
+                                            tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
+                                               class="form-control currency" name="employerSocSecTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieReplacing">
+                                    <label for="taxableIncome">Old Taxable Income:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: taxableIncome()" class="form-control currency"
+                                               name="taxableIncome" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group  advanced bernieReplacing rounded-top">
+                                    <label for="federalWithholding">Old Federal Withholding:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: federalWithholding()" class="form-control currency"
+                                               name="federalWithholding" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieReplacing">
+                                    <label for="longCapGainsTax">Old Long Term Cap Gains Taxes:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: longCapGainsTax()" class="form-control currency"
+                                               name="longCapGainsTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieReplacing">
+                                    <label for="effectiveTaxRate">Old Effective Tax Rate:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: effectiveTaxRate()" class="form-control"
+                                               name="effectiveTaxRate" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieReplacing">
+                                    <label for="employerHealthcareTaxBreak">Old Healthcare Tax Break:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon info whoLabel">Employee</div>
+                                        <input data-bind="value: employeeHealthcareTaxBreak()" class="form-control currency"
+                                               name="employerHealthcareTaxBreak" readonly/>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon success whoLabel">Employer</div>
+                                        <input data-bind="value: employerHealthcareTaxBreak()" class="form-control currency"
+                                               name="employerHealthcareTaxBreak" readonly/>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieNew">
+                                    <label for="taxableIncome">New Taxable Income:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newTaxableIncome()" class="form-control currency"
+                                               name="taxableIncome" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group  advanced bernieNew">
+                                    <label for="newFederalWithholding">New Federal Withholding:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newFederalWithholding()" class="form-control currency"
+                                               name="newFederalWithholding" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieNew">
+                                    <label for="newLongCapGainsTax">New Long Term Cap Gains Taxes:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newLongCapGainsTax()" class="form-control currency"
+                                               name="newLongCapGainsTax" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced bernieNew rounded-bottom">
+                                    <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: newEffectiveTaxRate()" class="form-control"
+                                               name="newEffectiveTaxRate" readonly />
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group advanced">
+                                    <label for="uninsuredPenalty">Uninsured penalty:</label>
+                                    <div class="input-group">
+                                        <input data-bind="value: uninsuredPenalty" class="form-control currency"
+                                               name="uninsuredPenalty" readonly/>
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                            <div class="panel-footer">
+                                <div class="advanced-toggle rounded pull-right">
+                                    Advanced
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                    <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
+                                </div>
                             </div>
 
                         </div>

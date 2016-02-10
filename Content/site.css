@@ -230,8 +230,8 @@ div.rounded {
 
 	.form-group label { line-height:29px; }
 
-	.input-group,.form-group>input,.form-group>span.help-block {
-		margin-left:250px;
+	.form-group>.input-group,.form-group>input,.form-group>span.help-block {
+		margin-left:260px;
 		width: -moz-calc(100% - 250px);
 		width: -webkit-calc(100% - 250px);
 		width: calc(100% - 250px);
@@ -392,3 +392,7 @@ footer {
 footer p {
     font-weight: 300;
 }
+
+.nopadding {
+    padding: 0 !important;
+ }

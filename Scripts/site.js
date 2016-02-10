@@ -193,6 +193,11 @@ $(function(){
 	},self);
 
 	self.taxableIncome = ko.computed(function(){
+	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions() - (self.premium() * self.premiumPeriod()));
+	},self);
+
+
+	self.newTaxableIncome = ko.computed(function(){
 	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions());
 	},self);
 
@@ -301,21 +306,21 @@ $(function(){
             {start: 10000000,   stop:null,      rate:0.52,  capGainsRate: 0.52}
         ]
 	];
-	var calculateFederalWithholding = function(array){
+	var calculateFederalWithholding = function(taxable, array){
 	    var sum = 0;
         for(var i=0, n=array.length; i< n; i++){
             curr = array[i];
-            sum = sum + (clamp(self.taxableIncome(),curr.start,curr.stop) - curr.start) * curr.rate;
+            sum = sum + (clamp(taxable,curr.start,curr.stop) - curr.start) * curr.rate;
         }
         return sum;
 	}
-	var calculateCapitalGains = function(array){
+	var calculateCapitalGains = function(taxable, array){
 	    var sum = 0;
         var taxed = 0;
         for(var i=0, n=array.length; i< n; i++){
             curr = array[i];
-            var clampedIncome = clamp(self.taxableIncome(),curr.start,curr.stop);
-            var clampedLongGains = clamp(self.taxableIncome()+ +self.incomeLongCapGains(),curr.start,curr.stop);
+            var clampedIncome = clamp(taxable,curr.start,curr.stop);
+            var clampedLongGains = clamp(taxable+ +self.incomeLongCapGains(),curr.start,curr.stop);
             var taxableLongGains = Math.min(clampedLongGains - +clampedIncome,self.incomeLongCapGains()-taxed);
             sum = sum + +taxableLongGains * curr.capGainsRate;
             taxed = taxed + +taxableLongGains;
@@ -323,7 +328,7 @@ $(function(){
         return sum;
 	}
 	self.federalWithholding = ko.computed(function(){
-	    return calculateFederalWithholding(taxTable2016[self.filingStatus()]);
+	    return calculateFederalWithholding(self.taxableIncome(), taxTable2016[self.filingStatus()]);
 
 //	    var sum = 0;
 //	    var array = taxTable2016[self.filingStatus()];
@@ -336,7 +341,7 @@ $(function(){
 
 
 	self.longCapGainsTax = ko.computed(function(){
-	    return calculateCapitalGains(taxTable2016[self.filingStatus()]);
+	    return calculateCapitalGains(self.taxableIncome(), taxTable2016[self.filingStatus()]);
 //	    var sum = 0
 //        var taxed = 0
 //        var array = taxTable2016[self.filingStatus()];
@@ -356,10 +361,10 @@ $(function(){
     });
 
     self.newFederalWithholding = ko.computed(function(){
-        return calculateFederalWithholding(taxTableBernie2016[self.filingStatus()]);
+        return calculateFederalWithholding(self.newTaxableIncome(), taxTableBernie2016[self.filingStatus()]);
     });
     self.newLongCapGainsTax = ko.computed(function(){
-        return calculateCapitalGains(taxTableBernie2016[self.filingStatus()]);
+        return calculateCapitalGains(self.newTaxableIncome(), taxTableBernie2016[self.filingStatus()]);
     });
     self.newEffectiveTaxRate = ko.pureComputed(function(){
         return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax() + +self.employeeBernieCareTax())/self.income()).toFixed(1) +"%";
@@ -412,12 +417,32 @@ $(function(){
         }
     },self);
 
+
+    self.employeeHealthcareTaxBreak = ko.pureComputed(function(){
+
+        var oldTax = calculateFederalWithholding(self.taxableIncome(), taxTable2016[self.filingStatus()]);
+        var newTax = calculateFederalWithholding(self.newTaxableIncome(), taxTable2016[self.filingStatus()]);
+
+        return (newTax - oldTax).toFixed(0);;
+    },self);
+
     self.employeeHealthCareCost = ko.computed(function(){
         if(+self.insured() == 0){
             return self.uninsuredPenalty();
         } else if(+self.insured() == 1) {
             return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage() * self.includeVariableCosts();
         } else{
+            return 0;
+        }
+    },self);
+
+    var CORPORATE_TAX_RATE = 0.15;
+    self.employerHealthcareTaxBreak = ko.pureComputed(function(){
+        if(self.selfEmployed()=='true'){
+            return 0;
+        } else if(+self.insured() == 1) {
+            return (self.premiumEmployer() * self.premiumEmployerPeriod() * CORPORATE_TAX_RATE).toFixed(0);;
+        } else {
             return 0;
         }
     },self);
@@ -434,9 +459,9 @@ $(function(){
 
     self.employeeBernieCareTax = ko.pureComputed(function(){
         if(self.selfEmployed()=='true'){
-            return (0.9235 * self.income() * 0.062 + self.taxableIncome() * 0.022).toFixed(0);
+            return (0.9235 * self.income() * 0.062 + self.newTaxableIncome() * 0.022).toFixed(0);
         } else {
-            return +(self.taxableIncome() * 0.022).toFixed(0);
+            return +(self.newTaxableIncome() * 0.022).toFixed(0);
         }
     },self);
 
@@ -449,7 +474,7 @@ $(function(){
     },self);
 
     self.employeeSavings = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax();
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();
         return savings;
     },self);
     self.employeeSavings.subscribe(function(savings) {
@@ -471,7 +496,7 @@ $(function(){
     //}
     });
     self.employerSavings = ko.pureComputed(function(){
-        return self.employerHealthCareCost() - + self.employerBernieCareTax();
+        return self.employerHealthCareCost() - + self.employerBernieCareTax() - + self.employerHealthcareTaxBreak();
     },self);
 
     self.employeeSavingsFormatted = ko.pureComputed(function(){
