@@ -171,10 +171,10 @@ $(function(){
         return location.protocol + '//' + location.host + location.pathname + "?data="+btoa(str);
     });
     self.employerPayingInsurance = ko.pureComputed(function(){
-        return !(self.selfEmployed()=='true' || self.insured() == 0);
+        return !(self.selfEmployed()=='true' || self.insured() == 0 || self.insured() == 2);
     });
     self.hasInsurance = ko.pureComputed(function(){
-        return !(self.insured() == 0);
+        return self.insured() == 1;
     });
 	self.familySize = ko.pureComputed(function(){
         return +self.adults() + + self.children();

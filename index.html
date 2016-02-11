@@ -177,7 +177,7 @@
                                 <fieldset class="form-group advanced">
                                     <label for="incomeShortCapGains">Non-Wage Income:</label>
                                     <div class="input-group">
-                                        <input data-bind="value: incomeShortCapGains" class="form-control currency"
+                                        <input data-bind="value: incomeShortCapGains, tooltip: {title: 'Short term capital gains, 401k distributions, and other non-wage income', trigger: 'focus' }" class="form-control currency"
                                                placeholder="Enter ShortTermCapGains" name="incomeShortCapGains" />
                                     </div>
                                 </fieldset>
@@ -185,7 +185,7 @@
                                 <fieldset class="form-group advanced">
                                     <label for="incomeLongCapGains">Long Term Capital Gains:</label>
                                     <div class="input-group">
-                                        <input data-bind="value: incomeLongCapGains" class="form-control currency"
+                                        <input data-bind="value: incomeLongCapGains, tooltip: {title: 'Profits from selling assets held for over a year', trigger: 'focus' }" class="form-control currency"
                                                placeholder="Enter LongTermCapGains" name="incomeLongCapGains" />
                                     </div>
                                 </fieldset>
@@ -193,7 +193,7 @@
                                 <fieldset class="form-group advanced">
                                     <label for="itemizedDeductions">Itemized Deductions:</label>
                                     <div class="input-group">
-                                        <input data-bind="value: itemizedDeductions" class="form-control currency"
+                                        <input data-bind="value: itemizedDeductions, tooltip: {title: 'Sum of all Itemized Deductions. Will be used if larger than standard deduction.', trigger: 'focus' }" class="form-control currency"
                                                placeholder="Enter Itemized Deductions" name="itemizedDeductions" />
                                     </div>
                                 </fieldset>
@@ -204,7 +204,7 @@
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                     <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
                                 </div>
-                                <div class="pull-right" style="height: 40px;line-height: 40px;">Self-Employed/Retired? Click here <span class="glyphicon glyphicon-arrow-right"></span></div>
+                                <div class="pull-right" style="height: 40px;line-height: 40px;">Self-Employed/Retired? Click here <span class="glyphicon glyphicon-menu-right"></span></div>
                             </div>
                         </div>
 
