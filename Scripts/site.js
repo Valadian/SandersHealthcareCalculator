@@ -104,7 +104,7 @@ $(function(){
 		incomeShortCapGains: 0, 
 		incomeLongCapGains: 0, 
 		filingStatus:1,
-		selfEmployed: false,
+		selfEmployed: 0,
 		adults: 2,
 		children: 2,
 		itemizedDeductions: 0,
@@ -171,7 +171,7 @@ $(function(){
         return location.protocol + '//' + location.host + location.pathname + "?data="+btoa(str);
     });
     self.employerPayingInsurance = ko.pureComputed(function(){
-        return !(self.selfEmployed()=='true' || self.insured() == 0 || self.insured() == 2);
+        return !(self.selfEmployed()==1 || self.insured() == 0 || self.insured() == 2);
     });
     self.hasInsurance = ko.pureComputed(function(){
         return self.insured() == 1;
@@ -370,7 +370,7 @@ $(function(){
         return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax() + +self.employeeBernieCareTax())/self.income()).toFixed(1) +"%";
     });
     self.employeeMediTax = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return (0.9235 * self.income() * 0.0145 * 2).toFixed(0);
         }
         else{
@@ -379,7 +379,7 @@ $(function(){
     },self);
 
     self.employerMediTax = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return 0;
         } else {
             return (self.income() * 0.0145).toFixed(0);
@@ -388,7 +388,7 @@ $(function(){
 
     var socSecTaxableMaximum = 118500;
     self.employeeSocSecTax = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return (0.9235 * Math.min(self.income(),socSecTaxableMaximum) * 0.062 * 2).toFixed(0);
         }
         else{
@@ -397,7 +397,7 @@ $(function(){
     },self);
 
     self.employerSocSecTax = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return 0;
         } else {
             return (Math.min(self.income(),socSecTaxableMaximum) * 0.062).toFixed(0);
@@ -438,7 +438,7 @@ $(function(){
 
     var CORPORATE_TAX_RATE = 0.15;
     self.employerHealthcareTaxBreak = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
             return (self.premiumEmployer() * self.premiumEmployerPeriod() * CORPORATE_TAX_RATE).toFixed(0);;
@@ -448,7 +448,7 @@ $(function(){
     },self);
 
     self.employerHealthCareCost = ko.pureComputed(function(){
-        if(!+self.insured() || self.selfEmployed()=='true'){
+        if(!+self.insured() || self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
             return self.premiumEmployer() * self.premiumEmployerPeriod();
@@ -458,7 +458,7 @@ $(function(){
     },self);
 
     self.employeeBernieCareTax = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return (0.9235 * self.income() * 0.062 + self.newTaxableIncome() * 0.022).toFixed(0);
         } else {
             return +(self.newTaxableIncome() * 0.022).toFixed(0);
@@ -466,7 +466,7 @@ $(function(){
     },self);
 
     self.employerBernieCareTax = ko.pureComputed(function(){
-        if(self.selfEmployed()=='true'){
+        if(self.selfEmployed()==1){
             return 0;
         } else {
             return (self.income() * 0.062).toFixed(0);
