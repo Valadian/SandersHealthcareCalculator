@@ -170,6 +170,10 @@ $(function(){
         });
         return location.protocol + '//' + location.host + location.pathname + "?data="+btoa(str);
     });
+
+    self.allIncome = ko.pureComputed(function(){
+        return +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
+    });
     self.employerPayingInsurance = ko.pureComputed(function(){
         return !(self.selfEmployed()==1 || self.insured() == 0 || self.insured() == 2);
     });
@@ -357,7 +361,7 @@ $(function(){
     },self);
 
     self.effectiveTaxRate = ko.pureComputed(function(){
-        return (100*(+self.federalWithholding() + +self.longCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax())/self.income()).toFixed(1) +"%";
+        return (100*(+self.federalWithholding() + +self.longCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax())/self.allIncome()).toFixed(1) +"%";
     });
 
     self.newFederalWithholding = ko.computed(function(){
@@ -367,7 +371,7 @@ $(function(){
         return calculateCapitalGains(self.newTaxableIncome(), taxTableBernie2016[self.filingStatus()]);
     });
     self.newEffectiveTaxRate = ko.pureComputed(function(){
-        return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax() + +self.employeeBernieCareTax())/self.income()).toFixed(1) +"%";
+        return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax() + +self.employeeBernieCareTax())/self.allIncome()).toFixed(1) +"%";
     });
     self.employeeMediTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
