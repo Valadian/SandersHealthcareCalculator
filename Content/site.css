@@ -107,14 +107,14 @@ h4 {
     /*margin: 0 -15px;*/
 }
 @media (max-width: 990px){
-    body {
-        padding-top: 80px;
-    }
     .floating {
         margin: 0;
     }
 }
 @media (max-width: 480px) {
+    .bernie-calc {
+        padding-top: 65px;
+    }
     .savings {
         float: left !important;
     }
@@ -159,6 +159,7 @@ h4 {
 }
 .bernie-calc .jumbotron img {
     margin: 0 auto;
+    width: 80%; 
 }
 .bernie-calc .cta {
     color: rgba(255,255,255,.6);
