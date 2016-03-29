@@ -474,7 +474,7 @@ $(function(){
         if(+self.insured() == 0){
             return self.uninsuredPenalty();
         } else if(+self.insured() == 1 || +self.insured() == 3) {
-            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage() * self.includeVariableCosts();
+            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage();
         } else{
             return 0;
         }
