@@ -120,7 +120,9 @@ $(function(){
 		copaysPeriod: 1,
 		deductible: 1318,
 		deductiblePercentage: 1,
-		includeVariableCosts: 1
+		includeVariableCosts: 1,
+		age: 0,
+		insuranceCategory: 0
 	};
 
 	if(location.search.length>1){
@@ -178,10 +180,10 @@ $(function(){
         return +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
     });
     self.employerPayingInsurance = ko.pureComputed(function(){
-        return !(self.selfEmployed()==1 || self.insured() == 0 || self.insured() == 2);
+        return (self.selfEmployed()==0 && self.insured() == 1);
     });
     self.hasInsurance = ko.pureComputed(function(){
-        return self.insured() == 1;
+        return self.insured() == 1 || self.insured() == 3;
     });
 	self.familySize = ko.pureComputed(function(){
         return +self.adults() + + self.children();
@@ -208,6 +210,31 @@ $(function(){
 	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions());
 	},self);
 
+    //Source: https://www.healthpocket.com/individual-health-insurance/
+    var premiumTable = [
+        [258,312,381,483],//30
+        [290,351,429,544],//40
+        [405,491,599,760],//50
+        [615,745,909,1155],//60
+    ]
+    var singleDeductibleTable = [5731, 3177,1165,233]
+    var familyDeductibleTable = [11601,6480,2535,468]
+
+    function updateACAPremiums(){
+        if(self.insured() == 3){
+            self.premium(premiumTable[+self.age()][+self.insuranceCategory()]);
+            self.premiumPeriod(12);
+            if(self.filingStatus()==0){
+                self.deductible(singleDeductibleTable[+self.insuranceCategory()]);
+            } else {
+                self.deductible(familyDeductibleTable[+self.insuranceCategory()]);
+            }
+        }
+    }
+    self.filingStatus.subscribe(updateACAPremiums);
+    self.insured.subscribe(updateACAPremiums);
+    self.age.subscribe(updateACAPremiums);
+    self.insuranceCategory.subscribe(updateACAPremiums);
 	var taxTable2016 = [
 	    [//Single
 	        {start: 0,      stop:9275,      rate:0.10,  capGainsRate: 0},
@@ -433,10 +460,20 @@ $(function(){
         return (newTax - oldTax).toFixed(0);;
     },self);
 
+    self.employeeHealthCareCostNoDeductible = ko.computed(function(){
+      if(+self.insured() == 0){
+          return self.uninsuredPenalty();
+      } else if(+self.insured() == 1 || +self.insured() == 3) {
+          return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod();
+      } else{
+          return 0;
+      }
+    },self);
+
     self.employeeHealthCareCost = ko.computed(function(){
         if(+self.insured() == 0){
             return self.uninsuredPenalty();
-        } else if(+self.insured() == 1) {
+        } else if(+self.insured() == 1 || +self.insured() == 3) {
             return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage() * self.includeVariableCosts();
         } else{
             return 0;
@@ -455,7 +492,7 @@ $(function(){
     },self);
 
     self.employerHealthCareCost = ko.pureComputed(function(){
-        if(!+self.insured() || self.selfEmployed()==1){
+        if(+self.insured()!=1 || self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
             return self.premiumEmployer() * self.premiumEmployerPeriod();
@@ -480,6 +517,10 @@ $(function(){
         }
     },self);
 
+    self.employeeSavingsNoDeductible = ko.computed(function(){
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();
+        return savings;
+    },self);
     self.employeeSavings = ko.computed(function(){
         var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();
         return savings;
@@ -505,7 +546,9 @@ $(function(){
     self.employerSavings = ko.pureComputed(function(){
         return self.employerHealthCareCost() - + self.employerBernieCareTax() - + self.employerHealthcareTaxBreak();
     },self);
-
+    self.employeeSavingsNoDeductibleFormatted = ko.pureComputed(function(){
+        return formatCurrency(Math.abs(self.employeeSavingsNoDeductible()));
+    },self);
     self.employeeSavingsFormatted = ko.pureComputed(function(){
         return formatCurrency(Math.abs(self.employeeSavings()));
     },self);
@@ -513,7 +556,7 @@ $(function(){
         return formatCurrency(Math.abs(self.employerSavings()));
     },self);
     self.employeeSavingsText = ko.pureComputed(function(){
-        if(self.employeeSavings()>0){
+        if(self.employeeSavingsNoDeductible()>0){
             return "You will Save: "
         }
         return "You will Lose: "

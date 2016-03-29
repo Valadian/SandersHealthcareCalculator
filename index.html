@@ -76,19 +76,29 @@
                          <div class="col-md-2">
                             <div class="row savings-spaceholder">
                                 <div class="savings-container">
-                                    <div class="col-md-12 col-xs-6 savings">
+                                    <div class="col-md-12 col-xs-4 savings">
                                         <div class="clearfix">
                                             <div class="savings-text" data-bind="text: employeeSavingsText(),
-                                            css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                                            css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
                                             </div>
                                         </div>
                                         <div class="clearfix">
-                                            <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
-                                                css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">
+                                            <div class="savings-amount" data-bind="text: employeeSavingsNoDeductibleFormatted(),
+                                                css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
-                                    <div class="col-md-12 col-xs-6 savings">
+                                    <div class="col-md-12 col-xs-4 savings">
+                                        <div class="clearfix">
+                                            <div class="savings-text" data-bind="
+                                                css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">OR WITH DEDUCTIBLE:</div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
+                                                css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xs-4 savings">
                                         <div class="clearfix">
                                             <div class="savings-text" data-bind="text: employerSavingsText(),
                                                 css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
@@ -220,8 +230,33 @@
                                             <div class="input-group">
                                                 <select data-bind="value: insured" class="form-control">
                                                     <option value="0">No</option>
-                                                    <option value="1">Yes</option>
+                                                    <option value="1">Yes, Employer Subsidized</option>
                                                     <option value="2">Yes, On someone else's plan</option>
+                                                    <option value="3">Yes, Marketplace</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="visible: insured()==3">
+                                            <label for="age">Age Group?:</label>
+                                            <div class="input-group">
+                                                <select data-bind="value: age" class="form-control">
+                                                    <option value="0">Under 35</option>
+                                                    <option value="1">35-45</option>
+                                                    <option value="2">45-55</option>
+                                                    <option value="3">Over 55</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="visible: insured()==3">
+                                            <label for="insuranceCategory">Marketplace Insurance Category?:</label>
+                                            <div class="input-group">
+                                                <select data-bind="value: insuranceCategory" class="form-control">
+                                                    <option value="0">Bronze</option>
+                                                    <option value="1">Silver</option>
+                                                    <option value="2">Gold</option>
+                                                    <option value="3">Platinum</option>
                                                 </select>
                                             </div>
                                         </fieldset>
@@ -289,16 +324,16 @@
                                             <!--</div>-->
                                         <!--</fieldset>-->
 
-                                        <fieldset class="form-group advanced">
-                                            <label for="includeVariableCosts">Include Variable Costs?:</label>
-                                            <div class="input-group">
-                                                <select data-bind="value: includeVariableCosts, enable: hasInsurance(),
-                                                    tooltip: {title: 'Deductibles and Co-pays', trigger: 'focus' }" class="form-control">
-                                                    <option value="0">No</option>
-                                                    <option value="1">Yes</option>
-                                                </select>
-                                            </div>
-                                        </fieldset>
+                                        <!--<fieldset class="form-group advanced">-->
+                                            <!--<label for="includeVariableCosts">Include Variable Costs?:</label>-->
+                                            <!--<div class="input-group">-->
+                                                <!--<select data-bind="value: includeVariableCosts, enable: hasInsurance(),-->
+                                                    <!--tooltip: {title: 'Deductibles and Co-pays', trigger: 'focus' }" class="form-control">-->
+                                                    <!--<option value="0">No</option>-->
+                                                    <!--<option value="1">Yes</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</fieldset>-->
                                     </div>
                                     <div class="panel-footer">
                                         <div class="advanced-toggle rounded pull-right">

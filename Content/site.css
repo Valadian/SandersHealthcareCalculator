@@ -72,6 +72,9 @@ h4 {
 .savings .savings-text {
     background-color: rgb(42, 179, 71);
 }
+.savings .savings-text.bg-danger {
+    background-color: rgb(130, 0, 0);
+}
 .savings .savings-amount{
     font-size: 150%;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
