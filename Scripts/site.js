@@ -18,6 +18,9 @@ $(function(){
         api.openPopup('facebook');
       }
     });
+    
+    // data-toggle tooltip
+    $('[data-toggle="tooltip"]').tooltip()
 
     ko.options.deferUpdates = true;
 	$('form').validate({
@@ -57,7 +60,7 @@ $(function(){
 	        $('.savings-container').css(
 	            { 'width':''})
 	    }
-        if($(window).scrollTop() > $('.social-container').offset().top - $('.navbar').height()){
+        if($(window).scrollTop() > $('.social-container').offset().top - $('.navbar').height() && $(window).width() >= 728){
             $('.social').addClass("floating");
             $('.social').css(
                 { 'width':$('.social-container').width()})

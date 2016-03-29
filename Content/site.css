@@ -31,18 +31,29 @@ a:focus {
 iframe {
     border: none;
 }
+h4 {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 18px;
+}
 .container-fluid {
     padding: 0;
 }
 .navbar-inverse{
     background-color: #147FD7;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
     border: none;
     height: 100px;
 }
 .navbar-inverse .navbar-brand {
     color: #fff;
     float: left;
+}
+.bernie-calc .navbar-inverse h1 {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 1.2px;
 }
 .savings-spaceholder {
     position: relative;
@@ -75,6 +86,14 @@ iframe {
 .copyLink {
     width:100%;
 }
+.disclaimer {
+    background-color: #fff;
+    /*box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);*/
+    padding: 15px;
+}
+.disclaimer a {
+    text-decoration: underline;
+}
 .savings > div:last-child {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -88,14 +107,14 @@ iframe {
     /*margin: 0 -15px;*/
 }
 @media (max-width: 990px){
-    body {
-        padding-top: 80px;
-    }
     .floating {
         margin: 0;
     }
 }
 @media (max-width: 480px) {
+    .bernie-calc {
+        padding-top: 65px;
+    }
     .savings {
         float: left !important;
     }
@@ -111,6 +130,9 @@ iframe {
     }
     .bernie-calc .navbar-brand {
         float: none;
+    }
+    .bernie-quote {
+        text-align: center;
     }
     .savings>div>div {
         font-size: 14px;
@@ -132,20 +154,82 @@ iframe {
     background-color: #185378;
     color: #fff;
     border-radius: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.bernie-calc .jumbotron img {
+    margin: 0 auto;
+    width: 80%; 
+}
+.bernie-calc .cta {
+    color: rgba(255,255,255,.6);
+}
+.bern-calc .cta a {
+    color #fff;
+}
+.bernie-calc .jumbotron.cta {
+    margin-bottom: 25px;
+}
+.bernie-calc .jumbotron.cta a {
+    color: #fff;
 }
 .bernie-calc .jumbotron .lead {
     padding: 15px 0;
 }
+.quote {
+    position: relative;
+    color: rgba(255,255,255,.6);
+    background-color: #147FD7;
+    padding: 70px 0;
+}
+.quote a {
+    color: #fff;
+}
+.quote .lead {
+    padding-left: 50px;
+}
+.bernie-quote {
+    font-weight: 100;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.lg-quote {
+    font-size: 150px;
+    line-height: 15px;
+    position: absolute;
+    left: 0;
+    top: 50px;
+}
 
+.bern-calc-body {
+    margin-top: 25px;
+}
+.bernie-calc .title {
+    font-size: 48px;
+    font-weight: 300;
+}
 .slider-selection {
 	background: #149bdf;
 }
 
 .advanced-toggle {
-	text-align: right;
+	text-align: left;
 	cursor: pointer;
 }
+.outline {
+    border-radius: 100%;
+    padding: 8px;
+    width: 35px;
+    height: 35px;
 
+    position: relative;
+    line-height: 1;
+    text-align: center;
+    background-color: #147FD7;
+    color: #fff;
+
+}
 
 .has_error>label{
 	color:#a94442;
@@ -160,6 +244,7 @@ div.rounded {
 .bernie-calc .panel {
     background-color: transparent;
     border: none;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
 }
 .bernie-calc .panel-body {
     border: none;
@@ -268,6 +353,7 @@ div.rounded {
 }
 .social {
     padding: 0;
+    z-index: 9999;
 }
 .social li {
     list-style: none;
@@ -332,7 +418,8 @@ div.rounded {
 .bernieNew.rounded-bottom{
     margin-bottom: 15px;
 }
-span.glyphicon.glyphicon-chevron-up {
+span.glyphicon.glyphicon-chevron-up,
+span.glyphicon.glyphicon-chevron-down {
     padding-left: 7px;
 }
 .dollarSign{
@@ -367,6 +454,9 @@ span.glyphicon.glyphicon-chevron-up {
     background-color: #45d363;
     /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
 }
+.text-danger {
+    color: #F55B5B;
+}
 .bg-danger {
     color: #fff;
     background-color: #F55B5B;
@@ -375,6 +465,9 @@ span.glyphicon.glyphicon-chevron-up {
 .btn {
     color: #fff; 
     background-color: #F55B5B;
+    border-radius: 0;
+    font-weight: 300;
+    text-transform: uppercase;
 }
 .btn:hover {
     color: #fff;
