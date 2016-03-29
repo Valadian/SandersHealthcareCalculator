@@ -120,7 +120,7 @@ $(function(){
 		copaysPeriod: 1,
 		deductible: 1318,
 		deductiblePercentage: 1,
-		includeVariableCosts: 1,
+		includeVariableCosts: 0,
 		age: 0,
 		insuranceCategory: 0
 	};
@@ -464,7 +464,7 @@ $(function(){
       if(+self.insured() == 0){
           return self.uninsuredPenalty();
       } else if(+self.insured() == 1 || +self.insured() == 3) {
-          return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod();
+          return self.premium() * self.premiumPeriod();
       } else{
           return 0;
       }
