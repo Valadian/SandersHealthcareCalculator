@@ -261,6 +261,15 @@
                                             </div>
                                         </fieldset>
 
+                                        <fieldset class="form-group" data-bind="visible: insured()==3">
+                                            <label for="acaSubsidy">Obamacare Subsidies:</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: acaSubsidy"
+                                                       class="form-control currency"
+                                                       name="acaSubsidy" />
+                                            </div>
+                                        </fieldset>
+
                                         <fieldset class="form-group">
                                             <label for="premium">Insurance Premiums:</label>
                                             <div class="input-group">

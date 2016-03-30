@@ -340,6 +340,48 @@ $(function(){
             {start: 10000000,   stop:null,      rate:0.52,  capGainsRate: 0.52}
         ]
 	];
+	var FPL = [
+	    0,
+	    11770,
+	    15930,
+	    20090,
+	    24250,
+	    28410,
+	    32570,
+	    36730,
+	    40890,
+	    40890+4160];
+	var maxPremiumTable = [
+        {min:0,     max:1.33,   premiumMin:0.02,    premiumMax:0.02},
+        {min:1.33,  max:1.5,    premiumMin:0.03,    premiumMax:0.04},
+        {min:1.5,   max:2,      premiumMin:0.04,    premiumMax:0.063},
+        {min:2,     max:2.5,    premiumMin:0.063,   premiumMax:0.0805},
+        {min:2.5,   max:3,      premiumMin:0.0805,  premiumMax:0.095},
+        {min:3,     max:4,      premiumMin:0.095,   premiumMax:0.095},
+        {min:4,     max:null,   premiumMin:null,    premiumMax:null},
+    ];
+	var calculateACASubsidy = function(taxableIncome, income, familySize, age){
+	    var ratio = taxableIncome/FPL[familySize];
+        for(var i=0, n=maxPremiumTable.length; i<n; i++){
+            ref = maxPremiumTable[i];
+            if(ref.max==null){
+                return null;
+            }
+            if(ref.min<ratio && ratio<=ref.max){
+                var ratioDiff = ref.max - ref.min;
+                var premiumDiff = ref.premiumMax - ref.premiumMin;
+
+                return Math.max(12*premiumTable[age][1] - income * (ref.premiumMin + (ratio-ref.min)/ratioDiff * premiumDiff),0);
+            }
+        }
+	}
+    self.acaSubsidy = ko.computed(function(){
+        if(self.insured() == 3){
+            return calculateACASubsidy(+self.taxableIncome(), +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains(), +self.adults() + +self.children(),self.age())
+        } else {
+            return 0;
+        }
+    },self);
 	var calculateFederalWithholding = function(taxable, array){
 	    var sum = 0;
         for(var i=0, n=array.length; i< n; i++){
@@ -464,7 +506,7 @@ $(function(){
       if(+self.insured() == 0){
           return self.uninsuredPenalty();
       } else if(+self.insured() == 1 || +self.insured() == 3) {
-          return self.premium() * self.premiumPeriod();
+          return self.premium() * self.premiumPeriod() - self.acaSubsidy();
       } else{
           return 0;
       }
@@ -474,7 +516,7 @@ $(function(){
         if(+self.insured() == 0){
             return self.uninsuredPenalty();
         } else if(+self.insured() == 1 || +self.insured() == 3) {
-            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage();
+            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage() - self.acaSubsidy();
         } else{
             return 0;
         }
