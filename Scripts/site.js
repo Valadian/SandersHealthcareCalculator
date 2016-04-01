@@ -98,6 +98,216 @@ $(function(){
 		$(this).closest('.panel').find('.panel-body').toggle();
 		 event.stopPropagation();
 	});
+
+    var chart = new Highcharts.Chart({
+        chart: {
+            type: 'bar',
+            renderTo: 'summaryHighchart'
+        },
+        title: {
+            text: 'Healthcare Cost Comparison'
+        },
+        xAxis: {
+            categories: ['Obamacare', 'Medicare For All'],
+            minPadding:0,
+            maxPadding:0
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Cost Breakdown'
+            }
+        },
+        legend: {
+            reversed: true
+        },
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+        series: [
+//        {
+//            id: 'employerCompensation',
+//            name: "employerCompensation",
+//            color: '#ff0000',
+//            type: 'area',
+//            fillOpacity: 0.3,
+//            data:[{x:-0.2,y:5000},{x:0.49,y:5000},{x:0.51,y:5000},{x:1.2,y:5000}]
+//        },  {
+//            id: 'incomeLine',
+//            name: "incomeLine",
+//            color: '#00ff00',
+//            type: 'area',
+//            fillOpacity: 0.3,
+//            data:[{x:-0.2,y:35000},{x:0.49,y:35000},{x:0.51,y:35000},{x:1.2,y:35000}]
+//            //tickmarkPlacement:'on'
+////            startOnTick:false,
+////            endOnTick:false
+//        },
+        {
+            id: 'taxation',
+            name: "Summary: Existing Taxation",
+            color: '#000000',
+            data:[0,0],
+            stack: 'grouping',
+            pointWidth:10,
+            visible: false
+        },
+        {
+            id: 'bernieTaxation',
+            name: "Summary: 'Medicare for All' Taxation",
+            color: '#147FD7',
+            data:[0,0],
+            stack: 'grouping',
+            pointWidth:10,
+            visible: false
+        },
+        {
+            id: 'healthcare',
+            name: "Summary: Healthcare Related Costs",
+            color: '#ED1B2E',
+            data:[0,0],
+            stack: 'grouping',
+            pointWidth:10,
+            visible: false
+        },  {
+            id: 'incomeGrouping',
+            name: "Summary: Remaining Income",
+            color: '#45d363',
+            data:[0,0],
+            stack: 'grouping',
+            pointWidth:10,
+            //borderColor: '#2ab347'
+            visible: false
+        },
+        {
+            id: 'empBernieTax',
+            name: 'Employer Medicare For All Payroll tax (6.2%)',
+            color: '#147FD7',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#ECB731',
+            borderColor: '#ffffff'
+        },
+//        {
+//            id: 'empTaxSavings',
+//            name: 'Employer Healthcare Related Tax Breaks',
+//            color: '#ff0000',
+//            data: [0, 0],
+//            showInLegend: false
+//        },
+        {
+            id: 'empPremiums',
+            name: 'Employer Premiums',
+            color: '#ED1B2E',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#ECB731'
+            borderColor: '#ffffff'
+        },
+        {
+            id: 'empMediTax',
+            name: 'Employer Medicare Tax',
+            color: '#006a39',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#ECB731'
+            borderColor: '#ffffff'
+        }, {
+            id: 'empSocSecTax',
+            name: 'Employer Social Security Payroll Tax',
+            color: '#1d3d56',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#ECB731'
+            borderColor: '#ffffff'
+        }, {
+            id: 'mediTax',
+            name: 'Employee Medicare Tax',
+            color: '#006a39',
+            data: [0, 0],
+            showInLegend: false,
+            borderColor: '#000000'
+        }, {
+            id: 'socSecTax',
+            name: 'Employee Social Security Payroll Tax',
+            color: '#1d3d56',
+            data: [0, 0],
+            showInLegend: false,
+            borderColor: '#000000'
+        }, {
+            id: 'withholdings',
+            name: 'Withholdings',
+            color: '#000000',
+            data: [0, 0],
+            showInLegend: false,
+            borderColor: '#000000'
+        }, {
+            id: 'bernieTax',
+            name: 'Medicare For All tax',
+            color: '#147FD7',
+            data: [0, 0],
+            //borderColor: '#185378',
+            borderColor: '#000000'
+        }, {
+            id: 'obamacarePenalty',
+            name: 'Obamacare Penalty',
+            color: '#cc0000',
+            data: [0, 0],
+            showInLegend: false,
+            borderColor: '#000000'
+        }, {
+            id: 'premiums',
+            name: 'Employee Premiums',
+            color: '#ED1B2E',
+            data: [0, 0],
+            //borderColor: '#aa0000'
+            borderColor: '#000000'
+        }, {
+            id: 'copays',
+            name: 'Copays',
+            color: '#cf3737',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#aa0000'
+            borderColor: '#000000'
+        }, {
+            id: 'deductible',
+            name: 'Deductible',
+            color: '#cf3737',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#aa0000'
+            borderColor: '#000000'
+        }, {
+            id: 'income',
+            name: 'Remaining Income',
+            color: '#45d363',
+            data: [0, 0],
+            //borderColor: '#2ab347'
+            borderColor: '#000000'
+        },
+//        {
+//            id: 'employerCompensation',
+//            name: "Employer Compensation",
+//            color: '#8B4513',
+//            data:[5000,5000],
+//            stack: 'employeeEmployer',
+//            pointWidth:10,
+//            showInLegend: false
+//        },  {
+//            id: 'salary',
+//            name: "Salary",
+//            color: '#004400',
+//            data:[35000,35000],
+//            stack: 'employeeEmployer',
+//            pointWidth:10,
+//            showInLegend: false
+//        }
+        ]
+    });
+
 	$('.currency').after("<div class='input-group-addon currency'>$</div>");
     //$('.currency').before("<div class='dollarSign'>$</div>");
 	var taxTable = [];
@@ -211,27 +421,46 @@ $(function(){
 	},self);
 
     //Source: https://www.healthpocket.com/individual-health-insurance/
-    var premiumTable = [
-        [258,312,381,483],//30
-        [290,351,429,544],//40
-        [405,491,599,760],//50
-        [615,745,909,1155],//60
+//    var premiumTable = [
+//        [258,312,381,483],//30
+//        [290,351,429,544],//40
+//        [405,491,599,760],//50
+//        [615,745,909,1155],//60
+//    ]
+    //Source: http://kff.org/interactive/subsidy-calculator
+    var premiumPerKid = [105,127,155,196];
+    var premiumTablePerAdult = [
+        [187,227,277,351],//30  312
+        [211,256,313,397],//40  351
+        [295,358,437,554],//50  491
+        [449,544,664,843],//60 745
     ]
     var singleDeductibleTable = [5731, 3177,1165,233]
     var familyDeductibleTable = [11601,6480,2535,468]
 
+    var costSharing
+    function calculateMetalInsurancePremium(level){
+        return premiumTablePerAdult[+self.age()][level] * self.adults() + premiumPerKid[level] * self.children()
+    }
     function updateACAPremiums(){
         if(self.insured() == 3){
-            self.premium(premiumTable[+self.age()][+self.insuranceCategory()]);
+            self.premium(calculateMetalInsurancePremium(+self.insuranceCategory()));
             self.premiumPeriod(12);
+
+
+            var totalIncome = +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
+            var costAssist = calculateCostAssistance(totalIncome, +self.adults()+ +self.children());
             if(self.filingStatus()==0){
-                self.deductible(singleDeductibleTable[+self.insuranceCategory()]);
+                self.deductible(singleDeductibleTable[+self.insuranceCategory()] - costAssist);
             } else {
-                self.deductible(familyDeductibleTable[+self.insuranceCategory()]);
+                self.deductible(familyDeductibleTable[+self.insuranceCategory()] - costAssist);
             }
         }
     }
+    self.income.subscribe(updateACAPremiums);
     self.filingStatus.subscribe(updateACAPremiums);
+    self.adults.subscribe(updateACAPremiums);
+    self.children.subscribe(updateACAPremiums);
     self.insured.subscribe(updateACAPremiums);
     self.age.subscribe(updateACAPremiums);
     self.insuranceCategory.subscribe(updateACAPremiums);
@@ -360,8 +589,25 @@ $(function(){
         {min:3,     max:4,      premiumMin:0.095,   premiumMax:0.095},
         {min:4,     max:null,   premiumMin:null,    premiumMax:null},
     ];
-	var calculateACASubsidy = function(taxableIncome, income, familySize, age){
-	    var ratio = taxableIncome/FPL[familySize];
+    var calculateCostAssistance = function(income,familySize){
+        var ratio = income/FPL[familySize];
+        var scalar = 1;
+        if(familySize>1){
+            scalar = 2;
+        }
+        if(ratio>1.33 && ratio <=1.5){
+            return 2000 * scalar;
+        } else if(ratio > 1.5 && ratio <=2.0){
+            return 1550 * scalar;
+        } else {
+            return 0;
+        }
+
+    }
+    // not taxableIncome? Total income according to kff.org?
+    // also using full income here: http://www.healthedeals.com/articles/your-guide-to-the-federal-poverty-level
+    var calculateACASubsidy = function(income, familySize, age){
+	    var ratio = income/FPL[familySize];
         for(var i=0, n=maxPremiumTable.length; i<n; i++){
             ref = maxPremiumTable[i];
             if(ref.max==null){
@@ -371,13 +617,14 @@ $(function(){
                 var ratioDiff = ref.max - ref.min;
                 var premiumDiff = ref.premiumMax - ref.premiumMin;
 
-                return Math.max(12*premiumTable[age][1] - income * (ref.premiumMin + (ratio-ref.min)/ratioDiff * premiumDiff),0);
+                return Math.max(12*calculateMetalInsurancePremium(1) - income * (ref.premiumMin + (ratio-ref.min)/ratioDiff * premiumDiff),0).toFixed(0);
             }
         }
 	}
     self.acaSubsidy = ko.computed(function(){
         if(self.insured() == 3){
-            return calculateACASubsidy(+self.taxableIncome(), +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains(), +self.adults() + +self.children(),self.age())
+            var totalIncome = +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
+            return calculateACASubsidy(totalIncome, +self.adults() + +self.children(),self.age());
         } else {
             return 0;
         }
@@ -404,7 +651,7 @@ $(function(){
         return sum;
 	}
 	self.federalWithholding = ko.computed(function(){
-	    return calculateFederalWithholding(self.taxableIncome(), taxTable2016[self.filingStatus()]);
+	    return calculateFederalWithholding(self.taxableIncome(), taxTable2016[self.filingStatus()]).toFixed(2);
 
 //	    var sum = 0;
 //	    var array = taxTable2016[self.filingStatus()];
@@ -496,10 +743,10 @@ $(function(){
 
     self.employeeHealthcareTaxBreak = ko.pureComputed(function(){
 
-        var oldTax = calculateFederalWithholding(self.taxableIncome(), taxTable2016[self.filingStatus()]);
+        var oldTax = calculateFederalWithholding(self.taxableIncome() + +self.acaSubsidy(), taxTable2016[self.filingStatus()]);
         var newTax = calculateFederalWithholding(self.newTaxableIncome(), taxTable2016[self.filingStatus()]);
 
-        return (newTax - oldTax).toFixed(0);;
+        return Math.max(0,(newTax - oldTax).toFixed(0));
     },self);
 
     self.employeeHealthCareCostNoDeductible = ko.computed(function(){
@@ -527,7 +774,7 @@ $(function(){
         if(self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
-            return (self.premiumEmployer() * self.premiumEmployerPeriod() * CORPORATE_TAX_RATE).toFixed(0);;
+            return (self.premiumEmployer() * self.premiumEmployerPeriod() * CORPORATE_TAX_RATE).toFixed(0);
         } else {
             return 0;
         }
@@ -537,7 +784,7 @@ $(function(){
         if(+self.insured()!=1 || self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
-            return self.premiumEmployer() * self.premiumEmployerPeriod();
+            return self.premiumEmployer() * self.premiumEmployerPeriod() - + self.employerHealthcareTaxBreak();
         } else {
             return 0;
         }
@@ -560,11 +807,11 @@ $(function(){
     },self);
 
     self.employeeSavingsNoDeductible = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax();// - + self.employeeHealthcareTaxBreak();
         return savings;
     },self);
     self.employeeSavings = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax();// - + self.employeeHealthcareTaxBreak();
         return savings;
     },self);
     self.employeeSavings.subscribe(function(savings) {
@@ -586,7 +833,7 @@ $(function(){
     //}
     });
     self.employerSavings = ko.pureComputed(function(){
-        return self.employerHealthCareCost() - + self.employerBernieCareTax() - + self.employerHealthcareTaxBreak();
+        return self.employerHealthCareCost() - + self.employerBernieCareTax();
     },self);
     self.employeeSavingsNoDeductibleFormatted = ko.pureComputed(function(){
         return formatCurrency(Math.abs(self.employeeSavingsNoDeductible()));
@@ -640,7 +887,100 @@ $(function(){
 //        }
         return text;
     },self);
+    self.updateHighchart = ko.computed(function(){
+        var totalIncome = parseFloat(self.income())+parseFloat(self.incomeLongCapGains()) + parseFloat(self.incomeShortCapGains());;
+        var oldIncome = totalIncome;
+        var newIncome = totalIncome;
 
+        var premium = 0;
+        if(self.insured()>0){
+            premium = parseFloat(self.employeeHealthCareCostNoDeductible());
+        }
+        oldIncome -= premium;
+        chart.get('premiums').setData([premium,0]);
+
+        var obamacarePenalty = 0;
+        if(self.insured()==0){
+            obamacarePenalty = parseFloat(self.uninsuredPenalty());
+        }
+        oldIncome -= obamacarePenalty;
+        chart.get('obamacarePenalty').setData([obamacarePenalty,0]);
+
+        var empPremium = parseFloat(self.employerHealthCareCost());
+//        oldIncome += empPremium;
+        chart.get('empPremiums').setData([empPremium,0]);
+
+//        var empTaxSavings = parseFloat(self.employerHealthcareTaxBreak());
+//        chart.get('empTaxSavings').setData([empTaxSavings,0]);
+
+        var deductible = 0;
+        if(self.insured()==1 || self.insured()==3){
+            deductible = parseFloat(self.deductible());
+        }
+        oldIncome -= deductible;
+        chart.get('deductible').setData([deductible,0]);
+
+        var copays = parseFloat(self.copays() * self.copaysPeriod());
+        oldIncome -= copays;
+        chart.get('copays').setData([copays,0]);
+
+        var bernieTax = parseFloat(self.employeeBernieCareTax());
+        newIncome -= bernieTax;
+        chart.get('bernieTax').setData([0,bernieTax]);
+
+        var empBernieTax = parseFloat(self.employerBernieCareTax());
+//        newIncome += bernieTax;
+        chart.get('empBernieTax').setData([0,empBernieTax]);
+
+        var oldWithholdings = parseFloat(self.federalWithholding());
+        oldIncome -= oldWithholdings;
+        var newWithholdings = parseFloat(self.newFederalWithholding());
+        newIncome -= newWithholdings;
+        chart.get('withholdings').setData([oldWithholdings, newWithholdings]);
+
+        var socSecTax = parseFloat(self.employeeSocSecTax());
+        oldIncome -= socSecTax;
+        newIncome -= socSecTax;
+        chart.get('socSecTax').setData([socSecTax,socSecTax]);
+
+        var mediTax = parseFloat(self.employeeMediTax());
+        oldIncome -= mediTax;
+        newIncome -= mediTax;
+        chart.get('mediTax').setData([mediTax,mediTax]);
+
+        var empSocSecTax = parseFloat(self.employerSocSecTax());
+//        oldIncome += empSocSecTax;
+//        newIncome += empSocSecTax;
+        chart.get('empSocSecTax').setData([empSocSecTax,empSocSecTax]);
+
+        var empMediTax = parseFloat(self.employerMediTax());
+        chart.get('empMediTax').setData([empMediTax,empMediTax]);
+
+        chart.get('income').setData([oldIncome,newIncome]);
+        chart.get('incomeGrouping').setData([oldIncome,newIncome]);
+        chart.get('healthcare').setData([deductible+copays+empPremium+premium+obamacarePenalty,0]);
+        chart.get('taxation').setData([oldWithholdings+socSecTax+mediTax+empSocSecTax+empMediTax,newWithholdings+socSecTax+mediTax+empSocSecTax+empMediTax]);
+        chart.get('bernieTaxation').setData([0,bernieTax+empBernieTax]);
+//        chart.get('incomeLine').setData([{x:-0.2,y:totalIncome},{x:0.49,y:totalIncome},{x:0.51,y:totalIncome},{x:1.2,y:totalIncome}]);
+//        chart.get('employerCompensation').setData([
+//            {x:-0.2,y:empSocSecTax+empMediTax+empPremium},
+//            {x:0.49,y:empSocSecTax+empMediTax+empPremium},
+//            {x:0.51,y:empSocSecTax+empMediTax+empBernieTax},
+//            {x:1.2,y:empSocSecTax+empMediTax+empBernieTax}]);
+//        chart.get('salary').setData([totalIncome,totalIncome]);
+//        chart.get('employerCompensation').setData([empSocSecTax+empMediTax+empPremium,
+//                                                   empSocSecTax+empMediTax+empBernieTax]);
+
+//        for (var i = 0; i < chart.series.length; i++) {
+//            var s = chart.series[i];
+//            if(s.data == [0,0]){
+//                s.visible = false;
+//            } else {
+//                s.visible = true;
+//            }
+//
+//        }
+    })
 	ko.bindingHandlers.tooltip = {
         init: function(element, valueAccessor) {
             var local = ko.utils.unwrapObservable(valueAccessor()),
