@@ -183,7 +183,7 @@ $(function(){
         },
         {
             id: 'empBernieTax',
-            name: 'Employer Medicare For All Payroll tax (6.2%)',
+            name: 'Employer Paid Medicare For All Payroll Tax',
             color: '#147FD7',
             data: [0, 0],
             showInLegend: false,
@@ -199,7 +199,7 @@ $(function(){
 //        },
         {
             id: 'empPremiums',
-            name: 'Employer Premiums',
+            name: 'Employer Paid Premiums',
             color: '#ED1B2E',
             data: [0, 0],
             showInLegend: false,
@@ -208,7 +208,7 @@ $(function(){
         },
         {
             id: 'empMediTax',
-            name: 'Employer Medicare Tax',
+            name: 'Employer Paid Medicare Tax',
             color: '#006a39',
             data: [0, 0],
             showInLegend: false,
@@ -216,7 +216,7 @@ $(function(){
             borderColor: '#ffffff'
         }, {
             id: 'empSocSecTax',
-            name: 'Employer Social Security Payroll Tax',
+            name: 'Employer Paid Social Security Payroll Tax',
             color: '#1d3d56',
             data: [0, 0],
             showInLegend: false,
@@ -224,14 +224,14 @@ $(function(){
             borderColor: '#ffffff'
         }, {
             id: 'mediTax',
-            name: 'Employee Medicare Tax',
+            name: 'Medicare Payroll Tax',
             color: '#006a39',
             data: [0, 0],
             showInLegend: false,
             borderColor: '#000000'
         }, {
             id: 'socSecTax',
-            name: 'Employee Social Security Payroll Tax',
+            name: 'Social Security Payroll Tax',
             color: '#1d3d56',
             data: [0, 0],
             showInLegend: false,
@@ -259,7 +259,7 @@ $(function(){
             borderColor: '#000000'
         }, {
             id: 'premiums',
-            name: 'Employee Premiums',
+            name: 'Premiums',
             color: '#ED1B2E',
             data: [0, 0],
             //borderColor: '#aa0000'
