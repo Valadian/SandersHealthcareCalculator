@@ -57,7 +57,6 @@ h4 {
 }
 .savings-spaceholder {
     position: relative;
-    margin-bottom: 100px;
 }
 .savings-spaceholder, .savings-container{
     z-index:9999;
@@ -80,7 +79,10 @@ h4 {
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
 }
 .savings>div:last-child {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+}
+.savings-nobottommargin>div:last-child{
+  margin-bottom: 0px !important;
 }
 .savings > div > div {
     text-transform: uppercase;

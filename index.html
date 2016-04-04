@@ -76,26 +76,31 @@
                          <div class="col-md-2">
                             <div class="row savings-spaceholder">
                                 <div class="savings-container">
-                                    <div class="col-md-12 col-xs-4 savings">
-                                        <div class="clearfix">
-                                            <div class="savings-text" data-bind="text: employeeSavingsText(),
-                                            css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
-                                            </div>
-                                        </div>
-                                        <div class="clearfix">
-                                            <div class="savings-amount" data-bind="text: employeeSavingsNoDeductibleFormatted(),
+                                    <div class="col-md-12 col-xs-8 ">
+                                        <div class="col-md-12 col-xs-6 nopadding savings savings-nobottommargin" style="">
+                                            <div class="clearfix">
+                                                <div class="savings-text" data-bind="text: employeeSavingsText(),
                                                 css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
+                                                </div>
                                             </div>
+                                            <div class="clearfix">
+                                                <div class="savings-amount" data-bind="text: employeeSavingsNoDeductibleFormatted(),
+                                                    css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </div>
-                                    <div class="col-md-12 col-xs-4 savings">
-                                        <div class="clearfix">
-                                            <div class="savings-text" data-bind="
-                                                css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">OR WITH DEDUCTIBLE:</div>
-                                        </div>
-                                        <div class="clearfix">
-                                            <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
-                                                css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-4 savings">-->
+                                        <div class="col-md-12 col-xs-6 nopadding savings">
+                                            <div class="clearfix" >
+                                                <div class="savings-text" data-bind="
+                                                    css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">WITH DEDUCTIBLE:</div>
+                                            </div>
+                                            <div class="clearfix">
+                                                <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
+                                                    css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xs-4 savings">
@@ -128,14 +133,6 @@
                         
                         <!-- Col 8 -->
                         <div class="col-md-8">
-                            <div class="row">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Summary</div>
-                                    <div class="panel-body">
-                                        <div id="summaryHighchart"/>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Income &amp; Tax information</div>
@@ -364,46 +361,48 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Result</div>
                                     <div class="panel-body">
-                                        <fieldset class="form-group">
-                                        <div class="col-md-6">
-                                            <div class="row bernieReplacing">
-                                                <h3 class="text-center">ObamaCare</h3>
-                                                <hr/>
-                                                <div class="col-xs-6 ">
-                                                    <div class="result-panel">
-                                                        <h4 class="result-panel-heading text-center">Employee</h4>
-                                                        <div class="result-panel-body text-center currency" class="text-center" data-bind="text: employeeHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }"></div>    
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <div class="result-panel">
-                                                        <h4 class="result-panel-heading text-center">Employer</h4>
-                                                        <div class="result-panel-body text-center currency" class="text-center" data-bind="text: employerHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }"></div>
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                            
-                                        <div class="col-md-6">
-                                            <div class="row bernieNew">
-                                                <h3 class="text-center">Medicare for All</h3>
-                                                <hr/>
-                                                <div class="col-xs-6">
-                                                    <div class="result-panel">
-                                                        <h4 class="result-panel-heading text-center">Employee</h4>
-                                                        <div class="result-panel-body text-center currency" data-bind="text: employeeBernieCareTax(),tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <div class="result-panel">
-                                                        <h4 class="result-panel-heading text-center">Employer</h4>
-                                                        <div class="result-panel-body text-center currency" data-bind="text: employerBernieCareTax(),tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }"></div>
-                                                    </div>
-                                                </div>
-                                            </div>    
-                                        </div>
-                                        </fieldset>
+
+                                        <div id="summaryHighchart"></div>
+                                        <!--<fieldset class="form-group">-->
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="row bernieReplacing">-->
+                                                <!--<h3 class="text-center">ObamaCare</h3>-->
+                                                <!--<hr/>-->
+                                                <!--<div class="col-xs-6 ">-->
+                                                    <!--<div class="result-panel">-->
+                                                        <!--<h4 class="result-panel-heading text-center">Employee</h4>-->
+                                                        <!--<div class="result-panel-body text-center currency" class="text-center" data-bind="text: employeeHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employee', trigger: 'focus' }"></div>    -->
+                                                    <!--</div>-->
+                                                    <!---->
+                                                <!--</div>-->
+                                                <!--<div class="col-xs-6">-->
+                                                    <!--<div class="result-panel">-->
+                                                        <!--<h4 class="result-panel-heading text-center">Employer</h4>-->
+                                                        <!--<div class="result-panel-body text-center currency" class="text-center" data-bind="text: employerHealthCareCost(), tooltip: {title: 'Average Insurance Premiums paid by Employer', trigger: 'focus' }"></div>-->
+                                                    <!--</div>-->
+                                                <!--</div>    -->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                            <!---->
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="row bernieNew">-->
+                                                <!--<h3 class="text-center">Medicare for All</h3>-->
+                                                <!--<hr/>-->
+                                                <!--<div class="col-xs-6">-->
+                                                    <!--<div class="result-panel">-->
+                                                        <!--<h4 class="result-panel-heading text-center">Employee</h4>-->
+                                                        <!--<div class="result-panel-body text-center currency" data-bind="text: employeeBernieCareTax(),tooltip: {title: '2.2% income tax on Taxable Income', trigger: 'focus' }"></div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-xs-6">-->
+                                                    <!--<div class="result-panel">-->
+                                                        <!--<h4 class="result-panel-heading text-center">Employer</h4>-->
+                                                        <!--<div class="result-panel-body text-center currency" data-bind="text: employerBernieCareTax(),tooltip: {title: '6.2% payroll tax on ALL income', trigger: 'focus' }"></div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>    -->
+                                        <!--</div>-->
+                                        <!--</fieldset>-->
 
 
 
@@ -569,27 +568,27 @@
                                 </div>
                             </div>
                         </div>
-                
-                <!-- Social Sidebar -->
-                <div class="col-md-2">
-                    <div class="social-container">
-                        <ul class="social">
-                            <li><a href="" id="facebook" data-title="<i id='fa-facebook' class='fa fa-lg fa-facebook'></i>" data-url="http://sandershealthcare.com"></a></li>
-                            <li>
-                                <div class="box">
-                                    <a id="twitter" data-bind="attr: { href: twitterUrl() }" href="#">
-                                        <div class="count">
-                                            Tweet #MedicareForAll
+
+                        <!-- Social Sidebar -->
+                        <div class="col-md-2">
+                            <div class="social-container">
+                                <ul class="social">
+                                    <li><a href="" id="facebook" data-title="<i id='fa-facebook' class='fa fa-lg fa-facebook'></i>" data-url="http://sandershealthcare.com"></a></li>
+                                    <li>
+                                        <div class="box">
+                                            <a id="twitter" data-bind="attr: { href: twitterUrl() }" href="#">
+                                                <div class="count">
+                                                    Tweet #MedicareForAll
+                                                </div>
+                                                <div class="share">
+                                                    <i class="fa fa-lg fa-twitter"></i>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="share">
-                                            <i class="fa fa-lg fa-twitter"></i>    
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                
