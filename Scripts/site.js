@@ -332,7 +332,8 @@ $(function(){
 		deductiblePercentage: 1,
 		includeVariableCosts: 0,
 		age: 0,
-		insuranceCategory: 0
+		insuranceCategory: 0,
+		acaSubsidy:0
 	};
 
 	if(location.search.length>1){
@@ -442,13 +443,14 @@ $(function(){
     function calculateMetalInsurancePremium(level){
         return premiumTablePerAdult[+self.age()][level] * self.adults() + premiumPerKid[level] * self.children()
     }
-    function updateACAPremiums(){
+    self.updateACAPremiums = function(){
         if(self.insured() == 3){
             self.premium(calculateMetalInsurancePremium(+self.insuranceCategory()));
             self.premiumPeriod(12);
 
 
             var totalIncome = +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
+            self.acaSubsidy(calculateACASubsidy(totalIncome, +self.adults() + +self.children(),self.age()));
             var costAssist = calculateCostAssistance(totalIncome, +self.adults()+ +self.children());
             if(self.filingStatus()==0){
                 self.deductible(singleDeductibleTable[+self.insuranceCategory()] - costAssist);
@@ -456,14 +458,14 @@ $(function(){
                 self.deductible(familyDeductibleTable[+self.insuranceCategory()] - costAssist);
             }
         }
-    }
-    self.income.subscribe(updateACAPremiums);
-    self.filingStatus.subscribe(updateACAPremiums);
-    self.adults.subscribe(updateACAPremiums);
-    self.children.subscribe(updateACAPremiums);
-    self.insured.subscribe(updateACAPremiums);
-    self.age.subscribe(updateACAPremiums);
-    self.insuranceCategory.subscribe(updateACAPremiums);
+    };
+//    self.income.subscribe(updateACAPremiums);
+//    self.filingStatus.subscribe(updateACAPremiums);
+//    self.adults.subscribe(updateACAPremiums);
+//    self.children.subscribe(updateACAPremiums);
+//    self.insured.subscribe(updateACAPremiums);
+//    self.age.subscribe(updateACAPremiums);
+//    self.insuranceCategory.subscribe(updateACAPremiums);
 	var taxTable2016 = [
 	    [//Single
 	        {start: 0,      stop:9275,      rate:0.10,  capGainsRate: 0},
@@ -621,14 +623,14 @@ $(function(){
             }
         }
 	}
-    self.acaSubsidy = ko.computed(function(){
-        if(self.insured() == 3){
-            var totalIncome = +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
-            return calculateACASubsidy(totalIncome, +self.adults() + +self.children(),self.age());
-        } else {
-            return 0;
-        }
-    },self);
+//    self.acaSubsidy = ko.computed(function(){
+//        if(self.insured() == 3){
+//            var totalIncome = +self.income() + +self.incomeShortCapGains() + +self.incomeLongCapGains();
+//            return calculateACASubsidy(totalIncome, +self.adults() + +self.children(),self.age());
+//        } else {
+//            return 0;
+//        }
+//    },self);
 	var calculateFederalWithholding = function(taxable, array){
 	    var sum = 0;
         for(var i=0, n=array.length; i< n; i++){

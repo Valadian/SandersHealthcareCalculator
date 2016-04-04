@@ -267,6 +267,15 @@
                                         </fieldset>
 
                                         <fieldset class="form-group" data-bind="visible: insured()==3">
+                                            <label for="calculatePremDed"></label>
+                                            <div class="input-group">
+                                                <button type="button" data-bind="click: function(){updateACAPremiums();}"
+                                                        class="form-control btn btn-success"
+                                                        name="calculatePremDed" id="calculatePremDed">Estimate Marketplace Premium/Deductible/Subsidy</button>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="visible: insured()==3">
                                             <label for="acaSubsidy">Obamacare Subsidies:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: acaSubsidy"

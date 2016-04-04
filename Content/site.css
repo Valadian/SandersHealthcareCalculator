@@ -480,6 +480,9 @@ span.glyphicon.glyphicon-chevron-down {
 .btn-info,.btn-info:hover {
     background-color: #147FD7;
 }
+.btn-success,.btn-success:hover {
+    background-color: rgb(42, 179, 71);
+}
 
 footer {
     padding: 15px 0;
