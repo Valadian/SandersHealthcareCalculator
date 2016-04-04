@@ -2,7 +2,7 @@ function clamp(num, min, max) {
   return num < min ? min : num > max && max!=null ? max : num;
 }
 function formatCurrency(value){
-    return "$ "+value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    return "$ "+value.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 }
 
 $(function(){
