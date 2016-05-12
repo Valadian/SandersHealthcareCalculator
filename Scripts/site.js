@@ -18,7 +18,7 @@ $(function(){
         api.openPopup('facebook');
       }
     });
-    
+
     // data-toggle tooltip
     $('[data-toggle="tooltip"]').tooltip()
 
@@ -70,7 +70,7 @@ $(function(){
                 { 'width':''})
         }
 	})
-	
+
 	$('#deductiblePercentage').slider({
 		formatter: function(value) {
 			return (value * 100).toFixed(0) + "%";
@@ -108,7 +108,7 @@ $(function(){
             text: 'Healthcare Cost Comparison'
         },
         xAxis: {
-            categories: ['Obamacare', 'Medicare For All'],
+            categories: ['Affordable Care Act', 'Medicare For All'],
             minPadding:0,
             maxPadding:0
         },
@@ -252,7 +252,7 @@ $(function(){
             borderColor: '#000000'
         }, {
             id: 'obamacarePenalty',
-            name: 'Obamacare Penalty',
+            name: 'Affordable Care Act Penalty',
             color: '#cc0000',
             data: [0, 0],
             showInLegend: false,
@@ -312,10 +312,10 @@ $(function(){
     //$('.currency').before("<div class='dollarSign'>$</div>");
 	var taxTable = [];
 
-	var jsModel = { 
-		income: 50000, 
-		incomeShortCapGains: 0, 
-		incomeLongCapGains: 0, 
+	var jsModel = {
+		income: 50000,
+		incomeShortCapGains: 0,
+		incomeLongCapGains: 0,
 		filingStatus:1,
 		selfEmployed: 0,
 		adults: 2,
