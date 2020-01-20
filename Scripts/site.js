@@ -108,7 +108,7 @@ $(function(){
             text: 'Healthcare Cost Comparison'
         },
         xAxis: {
-            categories: ['Obamacare', 'Medicare For All'],
+            categories: ['Affordable Care Act', 'Medicare For All'],
             minPadding:0,
             maxPadding:0
         },
@@ -333,7 +333,10 @@ $(function(){
 		includeVariableCosts: 0,
 		age: 0,
 		insuranceCategory: 0,
-		acaSubsidy:0
+        acaSubsidy:0,
+        hsa:0,
+        employerHsaContribution:0,
+        pretaxDeductions:0
 	};
 
 	if(location.search.length>1){
@@ -399,26 +402,51 @@ $(function(){
 	self.familySize = ko.pureComputed(function(){
         return +self.adults() + + self.children();
     },self);
-	var standardDeductionTable = [6300,12600,6300,9250]
+	var standardDeductionTable = [12400,24800,12400,18650]
 	self.standardDeduction = ko.computed(function(){
 	    return standardDeductionTable[self.filingStatus()];
 	},self);
 
 	self.exemptions = ko.computed(function(){
-        return 4000*self.familySize();
+        return 0*self.familySize();
     },self);
 
 	self.totalDeductions = ko.computed(function(){
 	    return Math.max(self.standardDeduction(),self.itemizedDeductions())+ +self.exemptions();
-	},self);
+    },self);
+
+    self.employerHsaTaxExemption = ko.computed(function(){
+        if(self.hsa()==1 && self.insured()==1){
+            return self.employerHsaContribution();
+        } else {
+            return 0;
+        }
+    },self)
+
+    self.oopCosts = ko.computed(function(){
+        return Math.max(0,self.copays() * self.copaysPeriod());
+    },self)
+    
+    self.hsaTaxExemption = ko.computed(function(){
+        if (self.hsa()==1){
+            if (self.filingStatus()==1){
+                return Math.max(0,Math.min(self.oopCosts(),7100) - self.employerHsaContribution())
+            } else {
+                return Math.max(0,Math.min(self.oopCosts(),3550) - self.employerHsaContribution())
+            }
+        } else {
+            return 0;
+        }
+    },self)
 
 	self.taxableIncome = ko.computed(function(){
-	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions() - (self.premium() * self.premiumPeriod()));
+        //2020/01/19 Premiums were never tax deductible? Seems that was a mistake
+	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions() - +self.pretaxDeductions() - +self.hsaTaxExemption());// - (self.premium() * self.premiumPeriod())
 	},self);
 
 
 	self.newTaxableIncome = ko.computed(function(){
-	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions());
+	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions() - +self.pretaxDeductions());
 	},self);
 
     //Source: https://www.healthpocket.com/individual-health-insurance/
@@ -429,15 +457,31 @@ $(function(){
 //        [615,745,909,1155],//60
 //    ]
     //Source: http://kff.org/interactive/subsidy-calculator
-    var premiumPerKid = [105,127,155,196];
+    var premiumPerKid = [158,178,239,302];
     var premiumTablePerAdult = [
-        [187,227,277,351],//30  312
-        [211,256,313,397],//40  351
-        [295,358,437,554],//50  491
-        [449,544,664,843],//60 745
+        //Molina Core Care Bronze 1 (207, 414, 653) (Bronze)
+        //Oscar Classic Bronze (280, 580, ) (Expanded Bronze)
+        //Blue Advantage Silver HMO 306 (380, 760, 999) (Silver)
+        //Molina Gold 3 (480,960) (Gold)
+        [207,280,380,480],//<=35  312 
+        //Molina Core Care Bronze 1 (289, 578, 706)
+        //Oscar Classic Bronze (334, 668, 850) (Expanded Bronze)
+        //Blue Advantage Silver HMO 306 (437,874,) (Silver)
+        //Molina Gold 3 (552, 1105,) (Gold)
+        [289,334,437,552],//<=45  351
+        //Molina Core Care Bronze 1 (441, 883, 1002)
+        //Oscar Classic Bronze (510, 1021, 1203) (Expanded Bronze)
+        //Blue Advantage Silver HMO 306 (668,1337,) (Silver)
+        //Molina Gold 3 (845, 1690,) (Gold)
+        [441,510,668,845],//<=55  491
+        //Molina Core Care Bronze 1 (610, 1221, 1380)
+        //Oscar Classic Bronze (717, 1434, 1617) (Expanded Bronze)
+        //Blue Advantage Silver HMO 306 (939,1878,) (Silver)
+        //Molina Gold 3 (1187, 2374,2678) (Gold)
+        [610,717,939,1187],//>55 745
     ]
-    var singleDeductibleTable = [5731, 3177,1165,233]
-    var familyDeductibleTable = [11601,6480,2535,468]
+    var singleDeductibleTable = [6800, 5500,2850,0]
+    var familyDeductibleTable = [13600,11000,5700,0]
 
     var costSharing
     function calculateMetalInsurancePremium(level){
@@ -466,122 +510,135 @@ $(function(){
 //    self.insured.subscribe(updateACAPremiums);
 //    self.age.subscribe(updateACAPremiums);
 //    self.insuranceCategory.subscribe(updateACAPremiums);
-	var taxTable2016 = [
+	var taxTable2020 = [
 	    [//Single
-	        {start: 0,      stop:9275,      rate:0.10,  capGainsRate: 0},
-	        {start: 9275,   stop:37650,     rate:0.15,  capGainsRate: 0},
-            {start: 37650,  stop:91150,     rate:0.25,  capGainsRate: 0.15},
-            {start: 91150,  stop:190150,    rate:0.28,  capGainsRate: 0.15},
-            {start: 190150, stop:413350,    rate:0.33,  capGainsRate: 0.15},
-            {start: 413350, stop:415050,    rate:0.35,  capGainsRate: 0.15},
-            {start: 415050, stop:null,      rate:0.396, capGainsRate: 0.20}
+	        {start: 0,      stop:9875,      rate:0.10,  capGainsRate: 0},
+	        {start: 9875,   stop:40000,     rate:0.12,  capGainsRate: 0},
+            {start: 40000,  stop:40125,     rate:0.12,  capGainsRate: 0.15},
+            {start: 40125,  stop:85525,     rate:0.22,  capGainsRate: 0.15},
+            {start: 85525,  stop:163301,    rate:0.24,  capGainsRate: 0.15},
+            {start: 163301, stop:207350,    rate:0.32,  capGainsRate: 0.15},
+            {start: 207350, stop:441451,    rate:0.35,  capGainsRate: 0.15},
+            {start: 441451, stop:518400,    rate:0.35,  capGainsRate: 0.20},
+            {start: 518400, stop:null,      rate:0.37, capGainsRate: 0.20}
 	    ],
 	    [//Married Filing Jointly
-	        {start: 0,      stop:18550,     rate:0.10,  capGainsRate: 0},
-	        {start: 18550,  stop:75300,     rate:0.15,  capGainsRate: 0},
-            {start: 75300,  stop:151900,    rate:0.25,  capGainsRate: 0.15},
-            {start: 151900, stop:231450,    rate:0.28,  capGainsRate: 0.15},
-            {start: 231450, stop:413350,    rate:0.33,  capGainsRate: 0.15},
-            {start: 413350, stop:466950,    rate:0.35,  capGainsRate: 0.15},
-            {start: 466950, stop:null,      rate:0.396, capGainsRate: 0.20}
+	        {start: 0,      stop:19750,     rate:0.10,  capGainsRate: 0},
+	        {start: 19750,  stop:80000,     rate:0.12,  capGainsRate: 0},
+	        {start: 80000,  stop:80250,     rate:0.12,  capGainsRate: 0.15},
+            {start: 80250,  stop:171050,    rate:0.22,  capGainsRate: 0.15},
+            {start: 171050, stop:326600,    rate:0.24,  capGainsRate: 0.15},
+            {start: 326600, stop:414700,    rate:0.32,  capGainsRate: 0.15},
+            {start: 414700, stop:496600,    rate:0.35,  capGainsRate: 0.15},
+            {start: 496600, stop:622050,    rate:0.35,  capGainsRate: 0.20},
+            {start: 622050, stop:null,      rate:0.37, capGainsRate: 0.20}
 	    ],
         [//Married Filing Separately
-            {start: 0,      stop:9275,      rate:0.10,  capGainsRate: 0},
-            {start: 9275,   stop:37650,     rate:0.15,  capGainsRate: 0},
-            {start: 37650,  stop:75950,     rate:0.25,  capGainsRate: 0.15},
-            {start: 75950,  stop:115725,    rate:0.28,  capGainsRate: 0.15},
-            {start: 115725, stop:206675,    rate:0.33,  capGainsRate: 0.15},
-            {start: 206675, stop:233475,    rate:0.35,  capGainsRate: 0.15},
-            {start: 233475, stop:null,      rate:0.396, capGainsRate: 0.20}
+            {start: 0,      stop:9875,      rate:0.10,  capGainsRate: 0},
+            {start: 9875,   stop:40000,     rate:0.12,  capGainsRate: 0},
+            {start: 40000,   stop:40125,     rate:0.12,  capGainsRate: 0.15},
+            {start: 40125,  stop:85525,     rate:0.22,  capGainsRate: 0.15},
+            {start: 85525,  stop:163300,    rate:0.24,  capGainsRate: 0.15},
+            {start: 163300, stop:207350,    rate:0.32,  capGainsRate: 0.15},
+            {start: 207350, stop:248300,    rate:0.35,  capGainsRate: 0.15},
+            {start: 248300, stop:311025,    rate:0.35,  capGainsRate: 0.20},
+            {start: 311025, stop:null,      rate:0.37, capGainsRate: 0.20}
         ],
         [//Head of Household
-            {start: 0,      stop:13250,     rate:0.10,  capGainsRate: 0},
-            {start: 13250,  stop:50400,     rate:0.15,  capGainsRate: 0},
-            {start: 50400,  stop:130150,    rate:0.25,  capGainsRate: 0.15},
-            {start: 130150, stop:210800,    rate:0.28,  capGainsRate: 0.15},
-            {start: 210800, stop:413350,    rate:0.33,  capGainsRate: 0.15},
-            {start: 413350, stop:441000,    rate:0.35,  capGainsRate: 0.15},
-            {start: 441000, stop:null,      rate:0.396, capGainsRate: 0.20}
+            {start: 0,      stop:14100,     rate:0.10,  capGainsRate: 0},
+            {start: 14100,  stop:53600,     rate:0.12,  capGainsRate: 0},
+            {start: 53600,  stop:53700,     rate:0.12,  capGainsRate: 0.15},
+            {start: 53700,  stop:85500,    rate:0.22,  capGainsRate: 0.15},
+            {start: 85500, stop:163300,    rate:0.24,  capGainsRate: 0.15},
+            {start: 163300, stop:207350,    rate:0.32,  capGainsRate: 0.15},
+            {start: 207350, stop:469050,    rate:0.35,  capGainsRate: 0.15},,
+            {start: 469050, stop:518400,    rate:0.35,  capGainsRate: 0.20},
+            {start: 518400, stop:null,      rate:0.37, capGainsRate: 0.20}
         ],
         [//Qualified Widow(er)
-            {start: 0,      stop:18550,     rate:0.10,  capGainsRate: 0},
-            {start: 18550,  stop:75300,     rate:0.15,  capGainsRate: 0},
-            {start: 75300,  stop:151900,    rate:0.25,  capGainsRate: 0.15},
-            {start: 151900, stop:231450,    rate:0.28,  capGainsRate: 0.15},
-            {start: 231450, stop:413350,    rate:0.33,  capGainsRate: 0.15},
-            {start: 413350, stop:466950,    rate:0.35,  capGainsRate: 0.15},
-            {start: 466950, stop:null,      rate:0.396, capGainsRate: 0.20}
+	        {start: 0,      stop:19750,     rate:0.10,  capGainsRate: 0},
+	        {start: 19750,  stop:80000,     rate:0.12,  capGainsRate: 0},
+	        {start: 80000,  stop:80250,     rate:0.12,  capGainsRate: 0.15},
+            {start: 80250,  stop:171050,    rate:0.22,  capGainsRate: 0.15},
+            {start: 171050, stop:326600,    rate:0.24,  capGainsRate: 0.15},
+            {start: 326600, stop:414700,    rate:0.32,  capGainsRate: 0.15},
+            {start: 414700, stop:496600,    rate:0.35,  capGainsRate: 0.15},
+            {start: 496600, stop:622050,    rate:0.35,  capGainsRate: 0.20},
+            {start: 622050, stop:null,      rate:0.37, capGainsRate: 0.20}
         ]
 	];
 
-	var taxTableBernie2016 = [
+	var taxTableBernie2020 = [
 	    [//Single
-	        {start: 0,          stop:9275,      rate:0.10,  capGainsRate: 0},
-	        {start: 9275,       stop:37650,     rate:0.15,  capGainsRate: 0},
-            {start: 37650,      stop:91150,     rate:0.25,  capGainsRate: 0.15},
-            {start: 91150,      stop:190150,    rate:0.28,  capGainsRate: 0.15},
-            {start: 190150,     stop:250000,    rate:0.33,  capGainsRate: 0.15},
-            {start: 250000,     stop:500000,    rate:0.37,  capGainsRate: 0.37},
-            {start: 500000,     stop:2000000,   rate:0.43,  capGainsRate: 0.43},
-            {start: 2000000,    stop:10000000,  rate:0.48,  capGainsRate: 0.48},
-            {start: 10000000,   stop:null,      rate:0.52,  capGainsRate: 0.52}
+	        {start: 0,      stop:9875,      rate:0.10,  capGainsRate: 0},
+	        {start: 9875,   stop:40000,     rate:0.12,  capGainsRate: 0},
+            {start: 40000,  stop:40125,     rate:0.12,  capGainsRate: 0.15},
+            {start: 40125,  stop:85525,     rate:0.22,  capGainsRate: 0.15},
+            {start: 85525,  stop:163301,    rate:0.24,  capGainsRate: 0.15},
+            {start: 163301, stop:200000,    rate:0.28,  capGainsRate: 0.15},
+            {start: 200000, stop:500000,    rate:0.40,  capGainsRate: 0.40},
+            {start: 500000, stop:2000000,    rate:0.45,  capGainsRate: 0.45},
+            {start: 2000000, stop:10000000,    rate:0.50,  capGainsRate: 0.50},
+            {start: 10000000, stop:null,    rate:0.52,  capGainsRate: 0.52},
 	    ],
 	    [//Married Filing Jointly
-	        {start: 0,          stop:18550,     rate:0.10,  capGainsRate: 0},
-	        {start: 18550,      stop:75300,     rate:0.15,  capGainsRate: 0},
-            {start: 75300,      stop:151900,    rate:0.25,  capGainsRate: 0.15},
-            {start: 151900,     stop:231450,    rate:0.28,  capGainsRate: 0.15},
-            {start: 231450,     stop:250000,    rate:0.33,  capGainsRate: 0.15},
-            {start: 250000,     stop:500000,    rate:0.37,  capGainsRate: 0.37},
-            {start: 500000,     stop:2000000,   rate:0.43,  capGainsRate: 0.43},
-            {start: 2000000,    stop:10000000,  rate:0.48,  capGainsRate: 0.48},
+	        {start: 0,      stop:19750,     rate:0.10,  capGainsRate: 0},
+	        {start: 19750,  stop:80000,     rate:0.12,  capGainsRate: 0},
+	        {start: 80000,  stop:80250,     rate:0.12,  capGainsRate: 0.15},
+            {start: 80250,  stop:171050,    rate:0.22,  capGainsRate: 0.15},
+            {start: 171050, stop:250000,    rate:0.24,  capGainsRate: 0.15},
+            {start: 250000,     stop:500000,    rate:0.40,  capGainsRate: 0.40},
+            {start: 500000,     stop:2000000,   rate:0.45,  capGainsRate: 0.45},
+            {start: 2000000,    stop:10000000,  rate:0.50,  capGainsRate: 0.50},
             {start: 10000000,   stop:null,      rate:0.52,  capGainsRate: 0.52}
 	    ],
         [//Married Filing Separately
-            {start: 0,          stop:9275,      rate:0.10,  capGainsRate: 0},
-            {start: 9275,       stop:37650,     rate:0.15,  capGainsRate: 0},
-            {start: 37650,      stop:75950,     rate:0.25,  capGainsRate: 0.15},
-            {start: 75950,      stop:115725,    rate:0.28,  capGainsRate: 0.15},
-            {start: 115725,     stop:206675,    rate:0.33,  capGainsRate: 0.15},
-            {start: 125000,     stop:250000,    rate:0.37,  capGainsRate: 0.37},
-            {start: 250000,     stop:500000,    rate:0.43,  capGainsRate: 0.43},
-            {start: 500000,     stop:5000000,   rate:0.48,  capGainsRate: 0.48},
-            {start: 5000000,    stop:null,      rate:0.52,  capGainsRate: 0.52}
+            {start: 0,      stop:9875,      rate:0.10,  capGainsRate: 0},
+            {start: 9875,   stop:40000,     rate:0.12,  capGainsRate: 0},
+            {start: 40000,   stop:40125,     rate:0.12,  capGainsRate: 0.15},
+            {start: 40125,  stop:85525,     rate:0.22,  capGainsRate: 0.15},
+            {start: 85525,  stop:163300,    rate:0.24,  capGainsRate: 0.15},
+            {start: 163300, stop:200000,    rate:0.28,  capGainsRate: 0.15},
+            {start: 200000,     stop:500000,    rate:0.40,  capGainsRate: 0.40},
+            {start: 500000,     stop:2000000,   rate:0.45,  capGainsRate: 0.45},
+            {start: 2000000,    stop:10000000,  rate:0.50,  capGainsRate: 0.50},
+            {start: 10000000,    stop:null,      rate:0.52,  capGainsRate: 0.52}
         ],
         [//Head of Household
-            {start: 0,          stop:13250,     rate:0.10,  capGainsRate: 0},
-            {start: 13250,      stop:50400,     rate:0.15,  capGainsRate: 0},
-            {start: 50400,      stop:130150,    rate:0.25,  capGainsRate: 0.15},
-            {start: 130150,     stop:210800,    rate:0.28,  capGainsRate: 0.15},
-            {start: 210800,     stop:250000,    rate:0.33,  capGainsRate: 0.15},
-            {start: 250000,     stop:500000,    rate:0.37,  capGainsRate: 0.37},
-            {start: 500000,     stop:2000000,   rate:0.43,  capGainsRate: 0.43},
-            {start: 2000000,    stop:10000000,  rate:0.48,  capGainsRate: 0.48},
-            {start: 10000000,   stop:null,      rate:0.52,  capGainsRate: 0.52}
+            {start: 0,      stop:14100,     rate:0.10,  capGainsRate: 0},
+            {start: 14100,  stop:53600,     rate:0.12,  capGainsRate: 0},
+            {start: 53600,  stop:53700,     rate:0.12,  capGainsRate: 0.15},
+            {start: 53700,  stop:85500,    rate:0.22,  capGainsRate: 0.15},
+            {start: 85500, stop:163300,    rate:0.24,  capGainsRate: 0.15},
+            {start: 163300, stop:200000,    rate:0.28,  capGainsRate: 0.15},
+            {start: 200000,     stop:500000,    rate:0.40,  capGainsRate: 0.40},
+            {start: 500000,     stop:2000000,   rate:0.45,  capGainsRate: 0.45},
+            {start: 2000000,    stop:10000000,  rate:0.50,  capGainsRate: 0.50},
+            {start: 10000000,    stop:null,      rate:0.52,  capGainsRate: 0.52}
         ],
         [//Qualified Widow(er)
-            {start: 0,          stop:18550,     rate:0.10,  capGainsRate: 0},
-            {start: 18550,      stop:75300,     rate:0.15,  capGainsRate: 0},
-            {start: 75300,      stop:151900,    rate:0.25,  capGainsRate: 0.15},
-            {start: 151900,     stop:231450,    rate:0.28,  capGainsRate: 0.15},
-            {start: 231450,     stop:250000,    rate:0.33,  capGainsRate: 0.15},
-            {start: 250000,     stop:500000,    rate:0.37,  capGainsRate: 0.37},
-            {start: 500000,     stop:2000000,   rate:0.43,  capGainsRate: 0.43},
-            {start: 2000000,    stop:10000000,  rate:0.48,  capGainsRate: 0.48},
-            {start: 10000000,   stop:null,      rate:0.52,  capGainsRate: 0.52}
+	        {start: 0,      stop:19750,     rate:0.10,  capGainsRate: 0},
+	        {start: 19750,  stop:80000,     rate:0.12,  capGainsRate: 0},
+	        {start: 80000,  stop:80250,     rate:0.12,  capGainsRate: 0.15},
+            {start: 80250,  stop:171050,    rate:0.22,  capGainsRate: 0.15},
+            {start: 171050, stop:250000,    rate:0.24,  capGainsRate: 0.15},
+            {start: 250000,     stop:500000,    rate:0.40,  capGainsRate: 0.40},
+            {start: 500000,     stop:2000000,   rate:0.45,  capGainsRate: 0.45},
+            {start: 2000000,    stop:10000000,  rate:0.50,  capGainsRate: 0.50},
+            {start: 10000000,    stop:null,      rate:0.52,  capGainsRate: 0.52}
         ]
 	];
 	var FPL = [
 	    0,
-	    11770,
-	    15930,
-	    20090,
-	    24250,
-	    28410,
-	    32570,
-	    36730,
-	    40890,
-	    40890+4160];
+	    12760,
+	    17240,
+	    21720,
+	    26200,
+	    30680,
+	    35160,
+	    39640,
+	    44120,
+	    44120+4160];
 	var maxPremiumTable = [
         {min:0,     max:1.33,   premiumMin:0.02,    premiumMax:0.02},
         {min:1.33,  max:1.5,    premiumMin:0.03,    premiumMax:0.04},
@@ -653,10 +710,10 @@ $(function(){
         return sum;
 	}
 	self.federalWithholding = ko.computed(function(){
-	    return calculateFederalWithholding(self.taxableIncome(), taxTable2016[self.filingStatus()]).toFixed(2);
+	    return calculateFederalWithholding(self.taxableIncome(), taxTable2020[self.filingStatus()]).toFixed(2);
 
 //	    var sum = 0;
-//	    var array = taxTable2016[self.filingStatus()];
+//	    var array = taxTable2020[self.filingStatus()];
 //	    for(var i=0, n=array.length; i< n; i++){
 //            curr = array[i];
 //            sum = sum + (clamp(self.taxableIncome(),curr.start,curr.stop) - curr.start) * curr.rate;
@@ -666,10 +723,10 @@ $(function(){
 
 
 	self.longCapGainsTax = ko.computed(function(){
-	    return calculateCapitalGains(self.taxableIncome(), taxTable2016[self.filingStatus()]);
+	    return calculateCapitalGains(self.taxableIncome(), taxTable2020[self.filingStatus()]);
 //	    var sum = 0
 //        var taxed = 0
-//        var array = taxTable2016[self.filingStatus()];
+//        var array = taxTable2020[self.filingStatus()];
 //        for(var i=0, n=array.length; i< n; i++){
 //            curr = array[i];
 //            var clampedIncome = clamp(self.taxableIncome(),curr.start,curr.stop);
@@ -686,10 +743,10 @@ $(function(){
     });
 
     self.newFederalWithholding = ko.computed(function(){
-        return calculateFederalWithholding(self.newTaxableIncome(), taxTableBernie2016[self.filingStatus()]);
+        return calculateFederalWithholding(self.newTaxableIncome(), taxTableBernie2020[self.filingStatus()]);
     });
     self.newLongCapGainsTax = ko.computed(function(){
-        return calculateCapitalGains(self.newTaxableIncome(), taxTableBernie2016[self.filingStatus()]);
+        return calculateCapitalGains(self.newTaxableIncome(), taxTableBernie2020[self.filingStatus()]);
     });
     self.newEffectiveTaxRate = ko.pureComputed(function(){
         return (100*(+self.newFederalWithholding() + +self.newLongCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax() + +self.employeeBernieCareTax())/self.allIncome()).toFixed(1) +"%";
@@ -711,7 +768,7 @@ $(function(){
         }
     },self);
 
-    var socSecTaxableMaximum = 118500;
+    var socSecTaxableMaximum = 137700;
     self.employeeSocSecTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
             return (0.9235 * Math.min(self.income(),socSecTaxableMaximum) * 0.062 * 2).toFixed(0);
@@ -733,20 +790,22 @@ $(function(){
     var filingThreshold = [10300,20600,4000,13250,16600]
     var avgBronze = 200 * 12;
     self.uninsuredPenalty = ko.pureComputed(function(){
-        if(!+self.insured()){
-            var percentage = Math.min((self.income()-filingThreshold[self.filingStatus()]) * 0.025, avgBronze);
-            var perPerson = Math.min(self.adults() * 695 + +self.children() * 347.5, 2085);
-            return Math.max(percentage, perPerson);
-        } else{
-            return 0;
-        }
+        return 0
+        // if(!+self.insured()){
+        //     var percentage = Math.min((self.income()-filingThreshold[self.filingStatus()]) * 0.025, avgBronze);
+        //     var perPerson = Math.min(self.adults() * 695 + +self.children() * 347.5, 2085);
+        //     return Math.max(percentage, perPerson);
+        // } else{
+        //     return 0;
+        // }
     },self);
 
 
     self.employeeHealthcareTaxBreak = ko.pureComputed(function(){
 
-        var oldTax = calculateFederalWithholding(self.taxableIncome() + +self.acaSubsidy(), taxTable2016[self.filingStatus()]);
-        var newTax = calculateFederalWithholding(self.newTaxableIncome(), taxTable2016[self.filingStatus()]);
+        //JB: 2020/01/19 I don't think acasubsidy counts as income.
+        var oldTax = calculateFederalWithholding(self.taxableIncome(), taxTable2020[self.filingStatus()]); // + +self.acaSubsidy()
+        var newTax = calculateFederalWithholding(self.newTaxableIncome(), taxTable2020[self.filingStatus()]);
 
         return Math.max(0,(newTax - oldTax).toFixed(0));
     },self);
@@ -761,22 +820,23 @@ $(function(){
       }
     },self);
 
+
     self.employeeHealthCareCost = ko.computed(function(){
         if(+self.insured() == 0){
             return self.uninsuredPenalty();
         } else if(+self.insured() == 1 || +self.insured() == 3) {
-            return self.premium() * self.premiumPeriod() + self.copays() * self.copaysPeriod() + self.deductible() * self.deductiblePercentage() - self.acaSubsidy();
+            return self.premium() * self.premiumPeriod() + Math.max(0, Math.max(self.copays() * self.copaysPeriod(), self.deductible() * self.deductiblePercentage()) - +self.employerHsaContribution()) - self.acaSubsidy();
         } else{
             return 0;
         }
     },self);
 
-    var CORPORATE_TAX_RATE = 0.15;
+    var CORPORATE_TAX_RATE = 0.21;
     self.employerHealthcareTaxBreak = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
-            return (self.premiumEmployer() * self.premiumEmployerPeriod() * CORPORATE_TAX_RATE).toFixed(0);
+            return ((self.premiumEmployer() * self.premiumEmployerPeriod()+ +self.employerHsaTaxExemption()) * CORPORATE_TAX_RATE).toFixed(0);
         } else {
             return 0;
         }
@@ -786,17 +846,19 @@ $(function(){
         if(+self.insured()!=1 || self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
-            return self.premiumEmployer() * self.premiumEmployerPeriod() - + self.employerHealthcareTaxBreak();
+            return self.premiumEmployer() * self.premiumEmployerPeriod() + + self.employerHsaContribution() - + self.employerHealthcareTaxBreak();
         } else {
             return 0;
         }
     },self);
 
+    var EMPLOYEE_M4A_TAX_RATE = .04
+    var EMPLOYER_M4A_TAX_RATE = .075
     self.employeeBernieCareTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
-            return (0.9235 * self.income() * 0.062 + self.newTaxableIncome() * 0.022).toFixed(0);
+            return (0.9235 * (+self.income()) * EMPLOYER_M4A_TAX_RATE + self.newTaxableIncome() * EMPLOYEE_M4A_TAX_RATE).toFixed(0);
         } else {
-            return +(self.newTaxableIncome() * 0.022).toFixed(0);
+            return +((+self.newTaxableIncome()) * EMPLOYEE_M4A_TAX_RATE).toFixed(0);
         }
     },self);
 
@@ -804,16 +866,16 @@ $(function(){
         if(self.selfEmployed()==1){
             return 0;
         } else {
-            return (self.income() * 0.062).toFixed(0);
+            return (self.income() * EMPLOYER_M4A_TAX_RATE).toFixed(0);
         }
     },self);
 
     self.employeeSavingsNoDeductible = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax();// - + self.employeeHealthcareTaxBreak();
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
         return savings;
     },self);
     self.employeeSavings = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax();// - + self.employeeHealthcareTaxBreak();
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
         return savings;
     },self);
     self.employeeSavings.subscribe(function(savings) {

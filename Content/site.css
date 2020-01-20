@@ -40,7 +40,7 @@ h4 {
     padding: 0;
 }
 .navbar-inverse{
-    background-color: #147FD7;
+    background-color: #fff;/*#147FD7;*/
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
     border: none;
     height: 100px;

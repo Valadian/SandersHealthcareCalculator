@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link href="Content/site.css" rel="stylesheet" />
         
-        <link rel="shortcut icon" href="https://berniesanders.com/wp-content/themes/berniesanders2016/favicon.ico">
+        <link rel="shortcut icon" href="https://cms-assets.berniesanders.com/static/img/favicon.png">
         
 
         <meta property="og:url"           content="valadian.github.io/SandersHealthcareCalculator" />
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <a class="navbar-brand" href="https://berniesanders.com">
-                            <img class="sanders-logo" src="Content/sanders-logo.svg#logo">
+                            <img class="sanders-logo" src="Content/bernie-logo.svg#logo">
                         </a>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="text-center title">Healthcare Calculator</h1><br />
+                            <h1 class="text-center title">2020 Healthcare Calculator</h1><br />
                             
                         </div>
                     </div>
@@ -211,6 +211,14 @@
                                                        placeholder="Enter Itemized Deductions" name="itemizedDeductions" />
                                             </div>
                                         </fieldset>
+
+                                        <fieldset class="form-group advanced">
+                                            <label for="pretaxDeductions">Pre-Tax Deductions:</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: pretaxDeductions, tooltip: {title: 'Sum of all Deductions towards taxable Income (such as 401k contributions).', trigger: 'focus' }" class="form-control currency"
+                                                       placeholder="Enter Pre-Tax Deductions (Such as 401k contributions)" name="pretaxDeductions" />
+                                            </div>
+                                        </fieldset>
                                     </div>
                                     <div class="panel-footer">
                                       
@@ -326,9 +334,10 @@
                                         </fieldset>
 
                                         <fieldset class="form-group advanced">
-                                            <label for="copays">Average Copays:</label>
+                                            <label for="copays">Total Out-of-Pocket:</label>
                                             <div class="input-group form-inline">
-                                                <input data-bind="value: copays, enable: hasInsurance()" class="form-control currency"
+                                                <input data-bind="value: copays, enable: hasInsurance(),
+                                                tooltip: {title: 'Total Out-of-Pocket Costs, including payments towards deductible', trigger: 'focus' }" class="form-control currency"
                                                        placeholder="Enter Average Copays" name="copays" />
                                                 <select class="form-control pull-right" data-bind="value: copaysPeriod, enable: hasInsurance()">
                                                     <option value="52">Weekly</option>
@@ -336,6 +345,24 @@
                                                     <option value="12">Monthly</option>
                                                     <option value="1">Yearly</option>
                                                 </select>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group advanced">
+                                            <label for="hsa">Health Savings Account:</label>
+                                            <div class="input-group">
+                                                <select data-bind="value: hsa, enable: employerPayingInsurance()" class="form-control">
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                        
+                                        <fieldset class="form-group advanced">
+                                            <label for="employerHsa">Employer HSA Contributions:</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: employerHsaContribution, enable: hasInsurance()" class="form-control currency"
+                                                       placeholder="Enter Employer HSA Contribution" name="employerHsa" />
                                             </div>
                                         </fieldset>
 
@@ -623,7 +650,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h3>Developer</h3>
-                        <p><strong>&copy; 2016 - Jesse Berger</strong>, <a href="https://www.reddit.com/user/valadian">/u/valadian</a><br />Need a web calculator? <a href="mailto:berger_jesse@yahoo.com">email me</a></p>
+                        <p><strong>&copy; 2020 - Jesse Berger</strong>, <a href="https://www.reddit.com/user/valadian">/u/valadian</a><br />Need a web calculator? <a href="mailto:admin@jesseberger.me">email me</a></p>
                     </div>
                     <div class="col-md-6">
                         <h3>Disclaimer</h3>
@@ -633,7 +660,14 @@
                             <a href="https://berniesanders.com/wp-content/uploads/2016/01/Medicare-for-All.pdf" target="_blank">
                                 Medicare for All PDF
                             </a> 
-                            Released by Bernie's campaign on 1/17/2016
+                            Released by Bernie's campaign on 1/17/2016, 
+                            <a href="https://www.sanders.senate.gov/download/options-to-finance-medicare-for-all?inline=file" target="_blank">
+                                OPTIONS TO FINANCE MEDICARE FOR ALL PDF
+                            </a> and 
+                            <a href="https://www.sanders.senate.gov/download/medicare-for-all-2019-financing" target="_blank">
+                                Financing Medicare for All PDF
+                            </a>
+                            Released on Bernie's Senate website
                         </p>
                     </div>
                 </div>
