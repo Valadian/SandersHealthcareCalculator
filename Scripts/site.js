@@ -887,9 +887,9 @@ $(function(){
         //var savings = self.employeeSavings();
         var text = "";
         if(savings>0){
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20http%3A%2F%2Fvaladian.github.io%2FSandersHealthcareCalculator%0D%0A%20";
         } else{
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20http%3A%2F%2Fvaladian.github.io%2FSandersHealthcareCalculator%0D%0A%20";
         }
         if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
             //$('#twitter-widget-0').attr('src',iframesrc);
