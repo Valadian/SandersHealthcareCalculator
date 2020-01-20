@@ -831,7 +831,7 @@ $(function(){
         } else if(+self.insured() == 1 || +self.insured() == 3) {
             //Just rely on OOP (which is in copays variable)
             //self.deductible() * self.deductiblePercentage()
-            return self.premium() * self.premiumPeriod() + Math.max(0, self.copays() * self.copaysPeriod() - +self.employerHsaContribution()) - self.acaSubsidy();
+            return self.premium() * self.premiumPeriod() + Math.max(0, self.copays() * self.copaysPeriod() - +self.employerHsaTaxExemption()) - self.acaSubsidy();
         } else{
             return self.copays() * self.copaysPeriod();
         }
@@ -852,7 +852,7 @@ $(function(){
         if(+self.insured()!=1 || self.selfEmployed()==1){
             return 0;
         } else if(+self.insured() == 1) {
-            return self.premiumEmployer() * self.premiumEmployerPeriod() + + self.employerHsaContribution() - + self.employerHealthcareTaxBreak();
+            return self.premiumEmployer() * self.premiumEmployerPeriod() + + self.employerHsaTaxExemption() - + self.employerHealthcareTaxBreak();
         } else {
             return 0;
         }
