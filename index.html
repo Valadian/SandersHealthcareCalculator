@@ -95,7 +95,7 @@
                                         <div class="col-md-12 col-xs-6 nopadding savings">
                                             <div class="clearfix" >
                                                 <div class="savings-text" data-bind="
-                                                    css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">WITH DEDUCTIBLE:</div>
+                                                    css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">WITH OUT OF POCKET:</div>
                                             </div>
                                             <div class="clearfix">
                                                 <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
@@ -325,7 +325,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group">
+                                        <fieldset class="form-group advanced">
                                             <label for="deductible">Deductible:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
@@ -333,8 +333,8 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group advanced">
-                                            <label for="copays">Total Out-of-Pocket:</label>
+                                        <fieldset class="form-group">
+                                            <label for="copays">Total Out-of-Pocket Spending:</label>
                                             <div class="input-group form-inline">
                                                 <input data-bind="value: copays, enable: hasInsurance(),
                                                 tooltip: {title: 'Total Out-of-Pocket Costs, including payments towards deductible', trigger: 'focus' }" class="form-control currency"

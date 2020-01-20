@@ -251,13 +251,13 @@ $(function(){
             //borderColor: '#185378',
             borderColor: '#000000'
         }, {
-            id: 'obamacarePenalty',
-            name: 'Obamacare Penalty',
-            color: '#cc0000',
-            data: [0, 0],
-            showInLegend: false,
-            borderColor: '#000000'
-        }, {
+        //     id: 'obamacarePenalty',
+        //     name: 'Obamacare Penalty',
+        //     color: '#cc0000',
+        //     data: [0, 0],
+        //     showInLegend: false,
+        //     borderColor: '#000000'
+        // }, {
             id: 'premiums',
             name: 'Premiums',
             color: '#ED1B2E',
@@ -265,16 +265,16 @@ $(function(){
             //borderColor: '#aa0000'
             borderColor: '#000000'
         }, {
-            id: 'copays',
-            name: 'Copays',
-            color: '#cf3737',
-            data: [0, 0],
-            showInLegend: false,
-            //borderColor: '#aa0000'
-            borderColor: '#000000'
-        }, {
+        //     id: 'copays',
+        //     name: 'Copays',
+        //     color: '#cf3737',
+        //     data: [0, 0],
+        //     showInLegend: false,
+        //     //borderColor: '#aa0000'
+        //     borderColor: '#000000'
+        // }, {
             id: 'deductible',
-            name: 'Deductible',
+            name: 'Total Out of Pocket Costs',
             color: '#cf3737',
             data: [0, 0],
             showInLegend: false,
@@ -326,7 +326,7 @@ $(function(){
 		premiumPeriod: 1,
 		premiumEmployer: 12591,
 		premiumEmployerPeriod: 1,
-		copays: 0,
+		copays: 1318,
 		copaysPeriod: 1,
 		deductible: 1318,
 		deductiblePercentage: 1,
@@ -708,7 +708,11 @@ $(function(){
             taxed = taxed + +taxableLongGains;
         }
         return sum;
-	}
+    }
+    self.federalWithholdingNoOOP = ko.computed(function(){
+	    return calculateFederalWithholding(self.taxableIncome()+ +self.hsaTaxExemption(), taxTable2020[self.filingStatus()]).toFixed(2);
+    },self);
+
 	self.federalWithholding = ko.computed(function(){
 	    return calculateFederalWithholding(self.taxableIncome(), taxTable2020[self.filingStatus()]).toFixed(2);
 
@@ -871,7 +875,7 @@ $(function(){
     },self);
 
     self.employeeSavingsNoDeductible = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
+        var savings = + self.federalWithholdingNoOOP() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
         return savings;
     },self);
     self.employeeSavings = ko.computed(function(){
@@ -964,11 +968,11 @@ $(function(){
         chart.get('premiums').setData([premium,0]);
 
         var obamacarePenalty = 0;
-        if(self.insured()==0){
-            obamacarePenalty = parseFloat(self.uninsuredPenalty());
-        }
-        oldIncome -= obamacarePenalty;
-        chart.get('obamacarePenalty').setData([obamacarePenalty,0]);
+        // if(self.insured()==0){
+        //     obamacarePenalty = parseFloat(self.uninsuredPenalty());
+        // }
+        // oldIncome -= obamacarePenalty;
+        // chart.get('obamacarePenalty').setData([obamacarePenalty,0]);
 
         var empPremium = parseFloat(self.employerHealthCareCost());
 //        oldIncome += empPremium;
@@ -979,14 +983,15 @@ $(function(){
 
         var deductible = 0;
         if(self.insured()==1 || self.insured()==3){
-            deductible = parseFloat(self.deductible());
+            deductible = Math.max(parseFloat(self.deductible()),parseFloat(self.copays())*parseFloat(self.copaysPeriod()));
         }
         oldIncome -= deductible;
         chart.get('deductible').setData([deductible,0]);
 
-        var copays = parseFloat(self.copays() * self.copaysPeriod());
-        oldIncome -= copays;
-        chart.get('copays').setData([copays,0]);
+        var copays = 0
+        // var copays = parseFloat(self.copays() * self.copaysPeriod());
+        // oldIncome -= copays;
+        // chart.get('copays').setData([copays,0]);
 
         var bernieTax = parseFloat(self.employeeBernieCareTax());
         newIncome -= bernieTax;
