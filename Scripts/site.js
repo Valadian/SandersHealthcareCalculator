@@ -827,11 +827,13 @@ $(function(){
 
     self.employeeHealthCareCost = ko.computed(function(){
         if(+self.insured() == 0){
-            return self.uninsuredPenalty();
+            return self.uninsuredPenalty() + +self.copays() * self.copaysPeriod();
         } else if(+self.insured() == 1 || +self.insured() == 3) {
-            return self.premium() * self.premiumPeriod() + Math.max(0, Math.max(self.copays() * self.copaysPeriod(), self.deductible() * self.deductiblePercentage()) - +self.employerHsaContribution()) - self.acaSubsidy();
+            //Just rely on OOP (which is in copays variable)
+            //self.deductible() * self.deductiblePercentage()
+            return self.premium() * self.premiumPeriod() + Math.max(0, self.copays() * self.copaysPeriod() - +self.employerHsaContribution()) - self.acaSubsidy();
         } else{
-            return 0;
+            return self.copays() * self.copaysPeriod();
         }
     },self);
 
@@ -860,7 +862,9 @@ $(function(){
     var EMPLOYER_M4A_TAX_RATE = .075
     self.employeeBernieCareTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
-            return (0.9235 * (+self.income()) * EMPLOYER_M4A_TAX_RATE + self.newTaxableIncome() * EMPLOYEE_M4A_TAX_RATE).toFixed(0);
+            //FIrst 2 million is exempted
+            //0.9235 * (+self.income()) * EMPLOYER_M4A_TAX_RATE + 
+            return (self.newTaxableIncome() * EMPLOYEE_M4A_TAX_RATE).toFixed(0);
         } else {
             return +((+self.newTaxableIncome()) * EMPLOYEE_M4A_TAX_RATE).toFixed(0);
         }
@@ -887,9 +891,9 @@ $(function(){
         //var savings = self.employeeSavings();
         var text = "";
         if(savings>0){
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20http%3A%2F%2Fvaladian.github.io%2FSandersHealthcareCalculator%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
         } else{
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20http%3A%2F%2Fvaladian.github.io%2FSandersHealthcareCalculator%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
         }
         if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
             //$('#twitter-widget-0').attr('src',iframesrc);
@@ -941,9 +945,9 @@ $(function(){
     self.twitterUrl = ko.pureComputed(function() {
         var text = "";
         if(self.employeeSavings()>0){
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
         } else{
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20http%3A%2F%2Fsandershealthcare.com%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
         }
         //var iframesrc = "https://platform.twitter.com/widgets/tweet_button.baa54ded21a982344c4ced326592f3de.en.html#button_hashtag=MedicareForAll&dnt=false&id=twitter-widget-0&lang=en&original_referer=file%3A%2F%2F%2FC%3A%2FUsers%2FJesse%2FDocuments%2FGitHub%2FSandersHealthcareCalculator%2Findex.html&size=m&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie's%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%3F%0D%0A%20&time=1453419200680&type=hashtag"
 //        if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
@@ -983,7 +987,7 @@ $(function(){
 
         var deductible = 0;
         if(self.insured()==1 || self.insured()==3){
-            deductible = Math.max(parseFloat(self.deductible()),parseFloat(self.copays())*parseFloat(self.copaysPeriod()));
+            deductible = parseFloat(self.copays())*parseFloat(self.copaysPeriod());//Math.max(parseFloat(self.deductible()),
         }
         oldIncome -= deductible;
         chart.get('deductible').setData([deductible,0]);
