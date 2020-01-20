@@ -198,6 +198,16 @@ $(function(){
 //            showInLegend: false
 //        },
         {
+            id: 'employerHealthcareTaxBreak',
+            name: 'Employer Tax Breaks',
+            color: '#cccccc',
+            textColor: '#000000',
+            data: [0, 0],
+            showInLegend: false,
+            //borderColor: '#ECB731'
+            borderColor: '#cccccc'
+        },
+        {
             id: 'empPremiums',
             name: 'Employer Paid Premiums',
             color: '#ED1B2E',
@@ -279,6 +289,20 @@ $(function(){
             data: [0, 0],
             showInLegend: false,
             //borderColor: '#aa0000'
+            borderColor: '#000000'
+        },{
+            id: 'employerHsaContribution',
+            name: 'Employer HSA Contribution',
+            color: '#45d363',
+            data: [0, 0],
+            //borderColor: '#2ab347'
+            borderColor: '#000000'
+        },{
+            id: 'hsaTaxSavings',
+            name: 'HSA Tax Savings',
+            color: '#45d363',
+            data: [0, 0],
+            //borderColor: '#2ab347'
             borderColor: '#000000'
         }, {
             id: 'income',
@@ -428,7 +452,7 @@ $(function(){
     },self)
     
     self.hsaTaxExemption = ko.computed(function(){
-        if (self.hsa()==1){
+        if (self.hsa()==1 && (self.insured()==1 || self.insured()==3)){
             if (self.filingStatus()==1){
                 return Math.max(0,Math.min(self.oopCosts(),7100) - self.employerHsaContribution())
             } else {
@@ -709,6 +733,16 @@ $(function(){
         }
         return sum;
     }
+    self.hsaTaxSavings = ko.computed(function(){
+        if (self.insured()==1 || self.insured()==3){
+            var no_hsa = calculateFederalWithholding(self.taxableIncome()+ +self.hsaTaxExemption(), taxTable2020[self.filingStatus()]).toFixed(2);
+            var hsa = calculateFederalWithholding(self.taxableIncome(), taxTable2020[self.filingStatus()]).toFixed(2);
+            return no_hsa-hsa;
+        } else {
+            return 0;
+        }
+    },self);
+
     self.federalWithholdingNoOOP = ko.computed(function(){
 	    return calculateFederalWithholding(self.taxableIncome()+ +self.hsaTaxExemption(), taxTable2020[self.filingStatus()]).toFixed(2);
     },self);
@@ -960,13 +994,13 @@ $(function(){
         return text;
     },self);
     self.updateHighchart = ko.computed(function(){
-        var totalIncome = parseFloat(self.income())+parseFloat(self.incomeLongCapGains()) + parseFloat(self.incomeShortCapGains());;
+        var totalIncome = parseInt(self.income())+parseFloat(self.incomeLongCapGains()) + parseFloat(self.incomeShortCapGains());;
         var oldIncome = totalIncome;
         var newIncome = totalIncome;
 
         var premium = 0;
         if(self.insured()>0){
-            premium = parseFloat(self.employeeHealthCareCostNoDeductible());
+            premium = parseInt(self.employeeHealthCareCostNoDeductible());
         }
         oldIncome -= premium;
         chart.get('premiums').setData([premium,0]);
@@ -977,8 +1011,10 @@ $(function(){
         // }
         // oldIncome -= obamacarePenalty;
         // chart.get('obamacarePenalty').setData([obamacarePenalty,0]);
+        var employerHealthcareTaxBreak = parseInt(self.employerHealthcareTaxBreak());
+        chart.get('employerHealthcareTaxBreak').setData([employerHealthcareTaxBreak,0]);
 
-        var empPremium = parseFloat(self.employerHealthCareCost());
+        var empPremium = parseInt(self.employerHealthCareCost());
 //        oldIncome += empPremium;
         chart.get('empPremiums').setData([empPremium,0]);
 
@@ -987,7 +1023,7 @@ $(function(){
 
         var deductible = 0;
         if(self.insured()==1 || self.insured()==3){
-            deductible = parseFloat(self.copays())*parseFloat(self.copaysPeriod());//Math.max(parseFloat(self.deductible()),
+            deductible = Math.max(0,parseInt(self.copays())*parseFloat(self.copaysPeriod()) - + self.employerHsaContribution()- + self.hsaTaxSavings());//Math.max(parseFloat(self.deductible()),
         }
         oldIncome -= deductible;
         chart.get('deductible').setData([deductible,0]);
@@ -997,41 +1033,49 @@ $(function(){
         // oldIncome -= copays;
         // chart.get('copays').setData([copays,0]);
 
-        var bernieTax = parseFloat(self.employeeBernieCareTax());
+        var bernieTax = parseInt(self.employeeBernieCareTax());
         newIncome -= bernieTax;
         chart.get('bernieTax').setData([0,bernieTax]);
 
-        var empBernieTax = parseFloat(self.employerBernieCareTax());
+        var empBernieTax = parseInt(self.employerBernieCareTax());
 //        newIncome += bernieTax;
         chart.get('empBernieTax').setData([0,empBernieTax]);
 
-        var oldWithholdings = parseFloat(self.federalWithholding());
+        var oldWithholdings = parseInt(self.federalWithholding());
         oldIncome -= oldWithholdings;
-        var newWithholdings = parseFloat(self.newFederalWithholding());
+        var newWithholdings = parseInt(self.newFederalWithholding());
         newIncome -= newWithholdings;
         chart.get('withholdings').setData([oldWithholdings, newWithholdings]);
 
-        var socSecTax = parseFloat(self.employeeSocSecTax());
+        var socSecTax = parseInt(self.employeeSocSecTax());
         oldIncome -= socSecTax;
         newIncome -= socSecTax;
         chart.get('socSecTax').setData([socSecTax,socSecTax]);
 
-        var mediTax = parseFloat(self.employeeMediTax());
+        var mediTax = parseInt(self.employeeMediTax());
         oldIncome -= mediTax;
         newIncome -= mediTax;
         chart.get('mediTax').setData([mediTax,mediTax]);
 
-        var empSocSecTax = parseFloat(self.employerSocSecTax());
+        var hsaTaxSavings = parseInt(self.hsaTaxSavings())
+        chart.get('hsaTaxSavings').setData([hsaTaxSavings,0]);
+        oldIncome -= hsaTaxSavings;
+
+        var employerHsaContribution = parseInt(self.employerHsaContribution())
+        chart.get('employerHsaContribution').setData([employerHsaContribution,0]);
+        oldIncome -= employerHsaContribution;
+
+        var empSocSecTax = parseInt(self.employerSocSecTax());
 //        oldIncome += empSocSecTax;
 //        newIncome += empSocSecTax;
         chart.get('empSocSecTax').setData([empSocSecTax,empSocSecTax]);
 
-        var empMediTax = parseFloat(self.employerMediTax());
+        var empMediTax = parseInt(self.employerMediTax());
         chart.get('empMediTax').setData([empMediTax,empMediTax]);
 
-        chart.get('income').setData([oldIncome,newIncome]);
+        chart.get('income').setData([oldIncome+hsaTaxSavings+employerHsaContribution,newIncome]);
         chart.get('incomeGrouping').setData([oldIncome,newIncome]);
-        chart.get('healthcare').setData([deductible+copays+empPremium+premium+obamacarePenalty,0]);
+        chart.get('healthcare').setData([copays+empPremium+premium+obamacarePenalty-hsaTaxSavings,0]);
         chart.get('taxation').setData([oldWithholdings+socSecTax+mediTax+empSocSecTax+empMediTax,newWithholdings+socSecTax+mediTax+empSocSecTax+empMediTax]);
         chart.get('bernieTaxation').setData([0,bernieTax+empBernieTax]);
 //        chart.get('incomeLine').setData([{x:-0.2,y:totalIncome},{x:0.49,y:totalIncome},{x:0.51,y:totalIncome},{x:1.2,y:totalIncome}]);
