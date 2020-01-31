@@ -363,7 +363,7 @@ $(function(){
         pretaxDeductions:0
 	};
 
-	self.getUrlParameter = function(sParam) {
+	getUrlParameter = function(sParam) {
 	    var sPageURL = window.location.search.substring(1),
 		sURLVariables = sPageURL.split('&'),
 		sParameterName,
@@ -378,7 +378,7 @@ $(function(){
 	    }
 	};
 	
-	data = self.getUrlParameter('data')
+	data = getUrlParameter('data')
 	if(data){
 	    var values = atob(data).split(","); //location.search.substring(6)
 	    Object.keys(jsModel).forEach(function(key,index) {
