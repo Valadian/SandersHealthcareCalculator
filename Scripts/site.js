@@ -363,16 +363,6 @@ $(function(){
         pretaxDeductions:0
 	};
 
-	data = getUrlParameter('data')
-	if(data){
-	    var values = atob(data).split(","); //location.search.substring(6)
-	    Object.keys(jsModel).forEach(function(key,index) {
-	        jsModel[key] = values[index];
-        });
-	}
-
-	var self = ko.mapping.fromJS(jsModel);
-
 	self.getUrlParameter = function(sParam) {
 	    var sPageURL = window.location.search.substring(1),
 		sURLVariables = sPageURL.split('&'),
@@ -387,6 +377,17 @@ $(function(){
 		}
 	    }
 	};
+	
+	data = self.getUrlParameter('data')
+	if(data){
+	    var values = atob(data).split(","); //location.search.substring(6)
+	    Object.keys(jsModel).forEach(function(key,index) {
+	        jsModel[key] = values[index];
+        });
+	}
+
+	var self = ko.mapping.fromJS(jsModel);
+
     self.copyShareLink = function(){
         target = $('#shareLink')[0];
         target.focus();
