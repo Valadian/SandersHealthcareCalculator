@@ -363,8 +363,9 @@ $(function(){
         pretaxDeductions:0
 	};
 
-	if(location.search.length>1){
-	    var values = atob(location.search.substring(6)).split(",");
+	data = getUrlParameter('data')
+	if(data){
+	    var values = atob(data).split(","); //location.search.substring(6)
 	    Object.keys(jsModel).forEach(function(key,index) {
 	        jsModel[key] = values[index];
         });
@@ -372,6 +373,20 @@ $(function(){
 
 	var self = ko.mapping.fromJS(jsModel);
 
+	self.getUrlParameter = function(sParam) {
+	    var sPageURL = window.location.search.substring(1),
+		sURLVariables = sPageURL.split('&'),
+		sParameterName,
+		i;
+
+	    for (i = 0; i < sURLVariables.length; i++) {
+		sParameterName = sURLVariables[i].split('=');
+
+		if (sParameterName[0] === sParam) {
+		    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+		}
+	    }
+	};
     self.copyShareLink = function(){
         target = $('#shareLink')[0];
         target.focus();
