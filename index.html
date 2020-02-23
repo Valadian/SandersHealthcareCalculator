@@ -5,7 +5,9 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" /> -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.5/css/bootstrap-slider.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" />
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,300,400,600,700' rel='stylesheet' type='text/css'>
@@ -36,19 +38,43 @@
     </head>
 	<body class="bernie-calc">
         
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse fixed-top navbar-light navbar-expand ">
             
-            <div class="container">
+            <!-- <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12"> -->
                         <a class="navbar-brand" href="https://berniesanders.com">
                             <img class="sanders-logo" src="Content/bernie-logo.svg#logo">
                         </a>
-                    </div>
+                    <!-- </div>
                 </div>
+            </div> -->
+            <!-- <div class="navbar-collapse collapse"> -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="nav navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item">
+                        <a href="#" data-bind="click: facebookShare" class="btn btn-social-icon rounded-circle btn-facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bind="attr: { href: twitterUrl() }" href="#" class="btn btn-social-icon rounded-circle btn-twitter" >
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bind="click: copyShareLink" href="#" class="btn btn-social-icon rounded-circle btn-sharelink" >
+                            <i class="fa fa-link"></i>
+                            <input data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
+                        </a>
+                    </li>
+                </ul>
             </div>
-            
-        </div>
+              <!-- </div> -->
+        </nav>
         <div class="body-content">
             <form>
                 <div class="container-fluid">
@@ -71,9 +97,9 @@
                 </div>
                 
                 <div class="container-fluid bern-calc-body">
-                    <div class="clearfix">
+                    <div class="clearfix row">
                         <!-- Col 2 -->
-                         <div class="col-md-2">
+                         <div class="col-md-3 col-lg-2 d-none d-md-block">
                             <div class="row savings-spaceholder">
                                 <div class="savings-container">
                                     <div class="col-md-12 col-xs-8 ">
@@ -120,9 +146,9 @@
                                     </div>
 
                                     <div class="col-md-12 hidden-sm hidden-xs savings">
-                                        <div data-bind="click: copyShareLink()" class="btn copyLink">
+                                        <div data-bind="click: copyShareLink" class="btn copyLink">
                                                 <i class="fa fa-fw fa-link"></i> Link your Results
-                                            <input id="shareLink" data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
+                                            <input data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
                                         </div>
                                     </div>
 
@@ -132,11 +158,11 @@
                         </div>
                         
                         <!-- Col 8 -->
-                        <div class="col-md-8">
+                        <div class="col-md-9 col-lg-8">
                             <div class="row">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Income &amp; Tax information</div>
-                                    <div class="panel-body">
+                                <div class="card panel panel-default">
+                                    <div class="card-header panel-heading">Income &amp; Tax information</div>
+                                    <div class="card-body panel-body">
                                         <fieldset class="form-group">
                                             <label for="income">Wage Income:</label>
                                             <div class="input-group">
@@ -163,13 +189,13 @@
                                             <div class="input-group">
                                                 <div class="col-lg-6 nopadding">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon whoLabel">Adults</div>
+                                                        <div class="input-group-prepend input-group-text whoLabel">Adults</div>
                                                         <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
                                                     </div>
                                                 </div>
-                                                <div class=" col-lg-5 col-lg-offset-1 nopadding">
+                                                <div class=" col-lg-5 offset-lg-1 nopadding">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon whoLabel">Children</div>
+                                                        <div class="input-group-prepend input-group-text whoLabel">Children</div>
                                                         <input data-bind="value: children" class="form-control naturalNumber" name="children" />
                                                     </div>
                                                 </div>
@@ -220,7 +246,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="panel-footer">
+                                    <div class="card-footer panel-footer">
                                       
                                         <div class="advanced-toggle rounded pull-right">
                                             Advanced
@@ -235,9 +261,9 @@
 
 
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Insurance information</div>
-                                    <div class="panel-body">
+                                <div class="card panel panel-default">
+                                    <div class="card-header panel-heading">Insurance information</div>
+                                    <div class="card-body panel-body">
                                         <fieldset class="form-group">
                                             <label for="insured">Have Insurance?:</label>
                                             <div class="input-group">
@@ -295,7 +321,7 @@
                                         <fieldset class="form-group">
                                             <label for="premium">Insurance Premiums:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon info whoLabel">Employee</div>
+                                                <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
                                                 <input data-bind="value: premium, enable: hasInsurance(),
                                                     tooltip: {title: 'Premiums paid by YOU minus any Obamacare subsidies', trigger: 'focus' }"
                                                        class="form-control currency" placeholder="Enter Insurance Premium"
@@ -311,7 +337,7 @@
 
                                         <fieldset class="form-group advanced">
                                             <div class="input-group">
-                                                <div class="input-group-addon success whoLabel">Employer</div>
+                                                <div class="input-group-prepend input-group-text success whoLabel">Employer</div>
                                                 <input data-bind="value: premiumEmployer, enable: employerPayingInsurance()"
                                                        class="form-control currency" placeholder="Enter Employer paid Insurance Premium"
                                                        name="premiumEmployer" />
@@ -385,7 +411,7 @@
                                             <!--</div>-->
                                         <!--</fieldset>-->
                                     </div>
-                                    <div class="panel-footer">
+                                    <div class="card-footer panel-footer">
                                         <div class="advanced-toggle rounded pull-right">
                                             Advanced
                                             <span class="glyphicon glyphicon-chevron-down"></span>
@@ -393,12 +419,63 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Result</div>
-                                    <div class="panel-body">
-
-                                        <div id="summaryHighchart"></div>
+                                
+                                <div class="card panel panel-default result">
+                                    <div class="card-header panel-heading">Result</div>
+                                    <div class="card-body panel-body">
+                                        <div class="row d-md-none">
+                                            <div class="col-8 row">
+                                                <div class="col-6 nopadding savings savings-nobottommargin" style="">
+                                                    <div class="clearfix">
+                                                        <div class="savings-text" data-bind="text: employeeSavingsText(),
+                                                        css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                        <div class="savings-amount" data-bind="text: employeeSavingsNoDeductibleFormatted(),
+                                                            css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
+                                                        </div>
+                                                    </div>
+        
+                                                </div>
+                                            <!--</div>-->
+                                            <!--<div class="col-md-12 col-xs-4 savings">-->
+                                                <div class="col-6 nopadding savings">
+                                                    <div class="clearfix" >
+                                                        <div class="savings-text" data-bind="
+                                                            css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">WITH OUT OF POCKET:</div>
+                                                    </div>
+                                                    <div class="clearfix">
+                                                        <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
+                                                            css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 savings">
+                                                <div class="clearfix">
+                                                    <div class="savings-text" data-bind="text: employerSavingsText(),
+                                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                                    <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
+                                                </div>
+                                                <div class="clearfix">
+                                                    <div class="savings-amount" data-bind="text: employerSavingsFormatted(),
+                                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                                    <!--<div class="col-xs-3" style="height:30px">-->
+                                                        <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
+                                                            <!--data-on-text="Yes" data-off-text="No">-->
+                                                    <!--</div>-->
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-md-12 hidden-sm hidden-xs savings">
+                                                <div data-bind="click: copyShareLink" class="btn copyLink">
+                                                        <i class="fa fa-fw fa-link"></i> Link your Results
+                                                    <input id="shareLink" data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="advanced" />
+                                        <div id="summaryHighchart" class="d-none d-md-block"></div>
                                         <!--<fieldset class="form-group">-->
                                         <!--<div class="col-md-6">-->
                                             <!--<div class="row bernieReplacing">-->
@@ -442,7 +519,6 @@
 
 
 
-                                        <hr class="advanced" />
 
 
 
@@ -471,13 +547,13 @@
                                         <fieldset class="form-group advanced">
                                             <label for="employeeMediTax">Medicare Taxes:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon info whoLabel">Employee</div>
+                                                <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
                                                 <input data-bind="value: employeeMediTax(),
                                                         tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
                                                        class="form-control currency" name="employeeMediTax" readonly />
                                             </div>
                                             <div class="input-group">
-                                                <div class="input-group-addon success whoLabel">Employer</div>
+                                                <div class="input-group-prepend input-group-text success whoLabel">Employer</div>
                                                 <input data-bind="value: employerMediTax(),
                                                         tooltip: {title: '1.45% of ALL Income', trigger: 'focus'}"
                                                        class="form-control currency" name="employerMediTax" readonly />
@@ -486,13 +562,13 @@
                                         <fieldset class="form-group advanced">
                                             <label for="employeeSocSecTax">Social Security Taxes:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon info whoLabel">Employee</div>
+                                                <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
                                                 <input data-bind="value: employeeSocSecTax(),
                                                     tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
                                                        class="form-control currency" name="employeeSocSecTax" readonly />
                                             </div>
                                             <div class="input-group">
-                                                <div class="input-group-addon success whoLabel">Employer</div>
+                                                <div class="input-group-prepend input-group-text success whoLabel">Employer</div>
                                                 <input data-bind="value: employerSocSecTax(),
                                                     tooltip: {title: '6.2% of Income up to $118,500', trigger: 'focus'}"
                                                        class="form-control currency" name="employerSocSecTax" readonly />
@@ -529,12 +605,12 @@
                                         <fieldset class="form-group advanced bernieReplacing">
                                             <label for="employerHealthcareTaxBreak">Old Healthcare Tax Break:</label>
                                             <div class="input-group">
-                                                <div class="input-group-addon info whoLabel">Employee</div>
+                                                <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
                                                 <input data-bind="value: employeeHealthcareTaxBreak()" class="form-control currency"
                                                        name="employerHealthcareTaxBreak" readonly/>
                                             </div>
                                             <div class="input-group">
-                                                <div class="input-group-addon success whoLabel">Employer</div>
+                                                <div class="input-group-prepend input-group-text success whoLabel">Employer</div>
                                                 <input data-bind="value: employerHealthcareTaxBreak()" class="form-control currency"
                                                        name="employerHealthcareTaxBreak" readonly/>
                                             </div>
@@ -576,7 +652,7 @@
                                         </fieldset>
 
                                     </div>
-                                    <div class="panel-footer">
+                                    <div class="card-footer panel-footer">
                                         <div class="advanced-toggle rounded pull-right">
                                             Advanced
                                             <span class="glyphicon glyphicon-chevron-down"></span>
@@ -585,9 +661,9 @@
                                     </div>
 
                                 </div>
-                                <div class="panel panel-default" style="display:none;">
-                                    <div class="panel-heading changelog-toggle">ChangeLog</div>
-                                    <div class="panel-body">
+                                <div class="card panel panel-default" style="display:none;">
+                                    <div class="card-header panel-heading changelog-toggle">ChangeLog</div>
+                                    <div class="card-body panel-body">
                                         <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/65e67ecdd4eb609a050509bf6b5578304a7178bf">
                                             2016.01.18.1849</a> v0.1.0 Initial Release</p>
                                         <p><a href="https://github.com/Valadian/SandersHealthcareCalculator/commit/3c90a44c4532c49a28b8df41858097a06dcd1214">
@@ -608,13 +684,24 @@
                         </div>
 
                         <!-- Social Sidebar -->
-                        <div class="col-md-2">
+                        <div class="col-md-2 d-none d-lg-block">
                             <div class="social-container">
                                 <ul class="social">
-                                    <li><a href="" id="facebook" data-title="<i id='fa-facebook' class='fa fa-lg fa-facebook'></i>" data-url="https://www.sandershealthcare2020.com/"></a></li>
                                     <li>
                                         <div class="box">
-                                            <a id="twitter" data-bind="attr: { href: twitterUrl() }" href="#">
+                                            <a data-bind="click: facebookShare" href="#">
+                                                <div class="count">
+                                                    Share to facebook
+                                                </div>
+                                                <div class="share">
+                                                    <i class="fa fa-lg fa-facebook"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- <a href="#" data-bind="click: facebookShare" id="facebook" data-title="<i id='fa-facebook' class='fa fa-lg fa-facebook'></i>" data-url="https://www.sandershealthcare2020.com/"></a></li> -->
+                                    <li>
+                                        <div class="box">
+                                            <a data-bind="attr: { href: twitterUrl() }" href="#">
                                                 <div class="count">
                                                     Tweet #MedicareForAll
                                                 </div>
@@ -681,18 +768,20 @@
         </footer>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         <!-- Load Facebook SDK for JavaScript -->
-        <script>(function(d, s, id) {
+        <!-- <script>(function(d, s, id) {
                   var js, fjs = d.getElementsByTagName(s)[0];
                   if (d.getElementById(id)) return;
                   js = d.createElement(s); js.id = id;
                   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
                   fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));
-        </script>
+        </script> -->
 
         <!-- Scripts added to reduce page-blocking scripts -->
         <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
@@ -701,9 +790,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script src="Scripts/bootstrap-notify.min.js"></script>
-        <script src="Scripts/jquery.sharrre.min.js"></script>
+        <!-- <script src="Scripts/jquery.sharrre.min.js"></script> -->
         <script src="https://code.highcharts.com/2.2/highcharts.js"></script>
         <script src="Scripts/site.js"></script>
+        <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 	</body>
 </html>

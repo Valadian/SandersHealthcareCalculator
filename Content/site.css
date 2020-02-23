@@ -24,7 +24,7 @@ img {
 }
 a,
 a:hover,
-a:visited,
+/* a:visited, */
 a:focus {
     color: #0076d7;
 }
@@ -35,6 +35,9 @@ h4 {
     text-transform: uppercase;
     font-weight: 300;
     font-size: 18px;
+}
+label,b,strong {
+    font-weight: 700;
 }
 .container-fluid {
     padding: 0;
@@ -250,6 +253,7 @@ div.rounded {
     background-color: transparent;
     border: none;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.06);
+    width: 100%;
 }
 .bernie-calc .panel-body {
     border: none;
@@ -288,9 +292,13 @@ div.rounded {
     padding: 5px;
     font-size: 26px;
 }
-.bernie-calc .result-panel .input-group-addon.currency {
-    background-color: #7c7c7c;
-    border-color: #7c7c7c;
+.input-group-append.currency {
+    background-color: rgb(42, 179, 71);
+    color: white;
+}
+.bernie-calc .result-panel .input-group-append.input-group-text.currency {
+    background-color: #7c7c7c !important;
+    border-color: #7c7c7c !important;
 }
 
 .bernie-calc .bernieNew .result-panel-heading {
@@ -299,12 +307,16 @@ div.rounded {
 .bernie-calc .bernieNew .result-panel-body {
     background-color: #1271c0;
 }
-.bernie-calc .bernieNew .result-panel .input-group-addon.currency {
+.bernie-calc .bernieNew .result-panel .input-group-append.currency {
     background-color: #147FD7;
     border-color: #147FD7;
 }
 .bernie-calc .bernieNew .result-panel {
     border: 1px solid #ddd;
+}
+.form-group{
+    margin-right: 10px;
+    margin-left:10px;
 }
 .input-group,.form-group>input {
 	width: 100%;
@@ -316,7 +328,7 @@ div.rounded {
 	.advanced {
 		display:none;
 	}
-	.form-group { margin-right:5px }
+	.form-group { margin-right:15px }
 
 	.form-group label { line-height:29px; }
 
@@ -327,20 +339,20 @@ div.rounded {
 		width: calc(100% - 250px);
 	}
 }
-.input-group-addon {
+.input-group-prepend,.input-group-append {
     border-radius: 0;
 }
-.input-group-addon.success {
+.input-group-prepend.success,.input-group-append.success {
     color: rgb(255, 255, 255);
     background-color: rgb(69, 211, 99);
     border-color: rgb(42, 179, 71);
 }
-.input-group-addon.info {
+.input-group-prepend.info,.input-group-append.info {
     color: #fff;
     background-color: #1271c0;
     border-color: #147FD7;
 }
-.input-group-addon.currency {
+.input-group-prepend.currency,.input-group-append.info {
     color: rgb(255, 255, 255);
     background-color: rgb(42, 179, 71);
     border-color: rgb(42, 179, 71);
@@ -366,9 +378,6 @@ div.rounded {
 #fa-facebook {
     color: #3a5795;
 }
-#twitter .count {
-    font-size: 13px;
-}
 .social .box{
     width: 100%;
     display: block;
@@ -378,7 +387,7 @@ div.rounded {
 .social .count {
     color: #fff;
     display: block;
-    font-size: 24px;
+    font-size: 13px;
     padding: 10px 0;
     position: relative;
     text-align: center;
@@ -454,9 +463,22 @@ span.glyphicon.glyphicon-chevron-down {
     stroke: #fff;
     stroke-width: 0;
 }
-.bg-success,.alert-bg-success {
+.savings-amount.bg-success {
+    background-color: #45d363 !important;
+}
+.savings-amount.bg-danger {
+    background-color: #F55B5B !important;
+}
+
+.alert-success{
+    background-color: #f40634 !important; /*#185378*/
+}
+.alert{
+    width:250px;
+    /* right: 100px; */
+}
+.bg-success,.alert-success {
     color: #fff;
-    background-color: #45d363;
     /*text-shadow: 0 2px 24px rgba(7, 8, 8, 0.75);*/
 }
 .text-danger {
@@ -497,3 +519,76 @@ footer p {
 .nopadding {
     padding: 0 !important;
  }
+
+ 
+/*SOCIAL MEDIA BUTTONS*/
+.btn-tw {
+    color: #fff;
+    background-color: #55acee !important;
+}
+.btn-floating {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 0;
+    margin: 10px;
+    overflow: hidden;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    width: 47px;
+    height: 47px;
+}
+.waves-effect {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.btn-floating.btn-lg i {
+    font-size: 1.625rem;
+    line-height: 61.1px;
+}
+.btn-floating i {
+    display: inline-block;
+    width: inherit;
+    color: #fff;
+    text-align: center;
+}
+.btn-facebook{
+    background-color: #fff;
+    color:#4267b2;
+}
+.btn-twitter{
+    background-color: #fff;
+    color:rgba(29,161,242,1.00);
+}
+.btn-facebook:hover{
+    background-color: #4267b2;
+    color:#fff;
+}
+.btn-twitter:hover{
+    background-color: rgba(29,161,242,1.00);
+    color:#fff;
+}
+.btn-social-icon{
+    width:38px;
+    margin-right:10px;
+}
+.btn-sharelink{
+    background-color: #fff;
+    color:#f40634;
+}
+.btn-sharelink:hover{
+
+    background-color: #f40634;
+    color:#fff;
+}

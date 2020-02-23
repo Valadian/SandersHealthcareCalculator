@@ -7,17 +7,17 @@ function formatCurrency(value){
 
 $(function(){
     // Share icons
-    $('#facebook').sharrre({
-      share: {
-        facebook: true
-      },
-      enableHover: false,
-      enableTracking: true,
-      click: function(api, options){
-        api.simulateClick();
-        api.openPopup('facebook');
-      }
-    });
+    // $('#facebook').sharrre({
+    //   share: {
+    //     facebook: true
+    //   },
+    //   enableHover: false,
+    //   enableTracking: true,
+    //   click: function(api, options){
+    //     api.simulateClick();
+    //     api.openPopup('facebook');
+    //   }
+    // });
     
     // data-toggle tooltip
     $('[data-toggle="tooltip"]').tooltip()
@@ -332,7 +332,7 @@ $(function(){
         ]
     });
 
-	$('.currency').after("<div class='input-group-addon currency'>$</div>");
+	$('.currency').after("<div class='input-group-append input-group-text currency'>$</div>");
     //$('.currency').before("<div class='dollarSign'>$</div>");
 	var taxTable = [];
 
@@ -371,10 +371,40 @@ $(function(){
 	}
 
 	var self = ko.mapping.fromJS(jsModel);
-
-    self.copyShareLink = function(){
-        target = $('#shareLink')[0];
-        target.focus();
+    self.cursorFocus = function(elem) {
+        var x, y;
+        // More sources for scroll x, y offset.
+        if (typeof(window.pageXOffset) !== 'undefined') {
+            x = window.pageXOffset;
+            y = window.pageYOffset;
+        } else if (typeof(window.scrollX) !== 'undefined') {
+            x = window.scrollX;
+            y = window.scrollY;
+        } else if (document.documentElement && typeof(document.documentElement.scrollLeft) !== 'undefined') {
+            x = document.documentElement.scrollLeft;
+            y = document.documentElement.scrollTop;
+        } else {
+            x = document.body.scrollLeft;
+            y = document.body.scrollTop;
+        }
+      
+        elem.focus();
+      
+        window.scrollTo(x, y);
+        if (typeof x !== 'undefined') {
+            // In some cases IE9 does not seem to catch instant scrollTo request.
+            setTimeout(function() { window.scrollTo(x, y); }, 10);
+        }
+    }
+    self.copyShareLink = function(model, event){
+        if(typeof(event)=="undefined" || typeof(event.toElement)=="undefined"){ //|| typeof(element.value)=="undefined"
+            return;
+        }
+        target = $(event.toElement).find("input")[0]; //$('#shareLink')[0];
+        if(typeof(target)=="undefined" || typeof(target.value)=="undefined"){
+            return;
+        }
+        self.cursorFocus(target)
         target.setSelectionRange(0, target.value.length);
 
         // copy the selection
@@ -389,12 +419,16 @@ $(function(){
                     target: '_blank'
                   },{
                     // settings
-                    type: 'bg-success',
+                    type: 'success',
 	                delay: 3000,
                     animate: {
-                       enter: 'animated fadeInRight',
-                       exit: 'animated fadeOutRight'
-                    }
+                       enter: 'animated fadeInDown',
+                       exit: 'animated fadeOutUp'
+                    },
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
                   });
               }
         } catch(e) {
@@ -920,24 +954,24 @@ $(function(){
         var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
         return savings;
     },self);
-    self.employeeSavings.subscribe(function(savings) {
-    //self.updateTweetButton = function(){
-        //var savings = self.employeeSavings();
-        var text = "";
-        if(savings>0){
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
-        } else{
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
-        }
-        if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
-            //$('#twitter-widget-0').attr('src',iframesrc);
-            $('[id^=twitter-widget]').before("<a id='twitterButton' href='"+text+"' class='twitter-hashtag-button'>Tweet #BernieCare</a>")
-            $('[id^=twitter-widget]').remove();
-            //ko.applyBindings(self,$('#twitterButton')[0])
-            twttr.widgets.load()
-        }
-    //}
-    });
+    // self.employeeSavings.subscribe(function(savings) {
+    // //self.updateTweetButton = function(){
+    //     //var savings = self.employeeSavings();
+    //     var text = "";
+    //     if(savings>0){
+    //         text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll,bernie2020,berniesanders,bernie&text=I%20will%20save%20%24" + savings.toFixed(0) + "%20with%20%23Bernie%20%27s%20%23MedicareForAll.%20See%20how%20much%20will%20you%20save%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
+    //     } else{
+    //         text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll,bernie2020,berniesanders,bernie&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
+    //     }
+    //     if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
+    //         //$('#twitter-widget-0').attr('src',iframesrc);
+    //         $('[id^=twitter-widget]').before("<a id='twitterButton' href='"+text+"' class='twitter-hashtag-button'>Tweet #BernieCare</a>")
+    //         $('[id^=twitter-widget]').remove();
+    //         //ko.applyBindings(self,$('#twitterButton')[0])
+    //         twttr.widgets.load()
+    //     }
+    // //}
+    // });
     self.employerSavings = ko.pureComputed(function(){
         return self.employerHealthCareCost() - + self.employerBernieCareTax();
     },self);
@@ -976,12 +1010,41 @@ $(function(){
         return "danger"
     },self);
 
+    self.facebookShare = function(){
+        FB.init({
+            appId      : '3111602342183158',
+            status     : true,
+            xfbml      : true,
+            version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
+          });
+        message = "See how much will you save with Bernie's Medicare For All at https://www.sandershealthcare2020.com";
+        if(self.employeeSavings()>0){
+            message = "I will save $" + self.employeeSavings() + " with Bernie's Medicare For All. See how much will you save at https://www.sandershealthcare2020.com"
+        }
+        FB.ui(
+            {
+              method: 'feed',
+              name: 'Facebook Dialogs',
+              link: 'sandershealthcare2020.com',
+              picture: 'https://cms-assets.berniesanders.com/static/img/fob-sap-social.png',
+              caption: 'Medicare For All',
+              quote: message
+            },
+            function(response) {
+              if (response && response.post_id) {
+                alert('Post was published.');
+              } else {
+                alert('Post was not published.');
+              }
+            }
+          );
+    }
     self.twitterUrl = ko.pureComputed(function() {
         var text = "";
         if(self.employeeSavings()>0){
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll%20%23bernie2020%20%23berniesanders%20%23bernie&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie%27s%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20%0A";
         } else{
-            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20";
+            text = "https://twitter.com/intent/tweet?button_hashtag=MedicareForAll%20%23bernie2020%20%23berniesanders%20%23bernie&text=See%20how%20much%20will%20you%20save%20with%20Bernie%27s%20Medicare%20For%20All%20at%20https%3A%2F%2Fwww.sandershealthcare2020.com%0D%0A%20%0A";
         }
         //var iframesrc = "https://platform.twitter.com/widgets/tweet_button.baa54ded21a982344c4ced326592f3de.en.html#button_hashtag=MedicareForAll&dnt=false&id=twitter-widget-0&lang=en&original_referer=file%3A%2F%2F%2FC%3A%2FUsers%2FJesse%2FDocuments%2FGitHub%2FSandersHealthcareCalculator%2Findex.html&size=m&text=I%20will%20save%20%24" + self.employeeSavings() + "%20with%20Bernie's%20Medicare%20For%20All.%20See%20how%20much%20will%20you%20save%3F%0D%0A%20&time=1453419200680&type=hashtag"
 //        if($('[id^=twitter-widget]')!=null && typeof twttr !== 'undefined'){
