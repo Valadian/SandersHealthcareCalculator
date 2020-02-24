@@ -70,12 +70,13 @@ label,b,strong {
 /*    margin-left: -15px;
     margin-right: -15px;*/
     text-align: center;
+    font-weight: 400;
 }
-.savings .savings-text {
-    background-color: rgb(42, 179, 71);
+.savings .savings-text.bg-success {
+    background-color: rgb(21, 79, 36) !important; 
 }
 .savings .savings-text.bg-danger {
-    background-color: rgb(130, 0, 0);
+    background-color: rgb(65, 0, 0) !important;
 }
 .savings .savings-amount{
     font-size: 150%;
@@ -464,10 +465,10 @@ span.glyphicon.glyphicon-chevron-down {
     stroke-width: 0;
 }
 .savings-amount.bg-success {
-    background-color: #45d363 !important;
+    /*background-color: #45d363 !important;*/
 }
 .savings-amount.bg-danger {
-    background-color: #F55B5B !important;
+    /*background-color: #F55B5B !important;*/
 }
 
 .alert-success{

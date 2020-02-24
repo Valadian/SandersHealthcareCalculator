@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 
-                <div class="container">
+                <div class="container d-none d-md-block">
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="text-center title">2020 Healthcare Calculator</h1><br />
@@ -101,8 +101,8 @@
                         <!-- Col 2 -->
                          <div class="col-md-3 col-lg-2 d-none d-md-block">
                             <div class="row savings-spaceholder">
-                                <div class="savings-container">
-                                    <div class="col-md-12 col-xs-8 ">
+                                <div class="savings-container row">
+                                    <div class="col-md-12 col-xs-8 row nopadding" style="padding: 0 0 0 45px !important">
                                         <div class="col-md-12 col-xs-6 nopadding savings savings-nobottommargin" style="">
                                             <div class="clearfix">
                                                 <div class="savings-text" data-bind="text: employeeSavingsText(),
@@ -158,7 +158,7 @@
                         </div>
                         
                         <!-- Col 8 -->
-                        <div class="col-md-9 col-lg-8">
+                        <div class="col-md-8">
                             <div class="row">
                                 <div class="card panel panel-default">
                                     <div class="card-header panel-heading">Income &amp; Tax information</div>
@@ -424,8 +424,8 @@
                                     <div class="card-header panel-heading">Result</div>
                                     <div class="card-body panel-body">
                                         <div class="row d-md-none">
-                                            <div class="col-8 row">
-                                                <div class="col-6 nopadding savings savings-nobottommargin" style="">
+                                            <div class="col-12 row" style="padding-right:0px">
+                                                <div class="col-4 nopadding savings savings-nobottommargin" style="">
                                                     <div class="clearfix">
                                                         <div class="savings-text" data-bind="text: employeeSavingsText(),
                                                         css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
@@ -440,7 +440,7 @@
                                                 </div>
                                             <!--</div>-->
                                             <!--<div class="col-md-12 col-xs-4 savings">-->
-                                                <div class="col-6 nopadding savings">
+                                                <div class="col-4 nopadding savings">
                                                     <div class="clearfix" >
                                                         <div class="savings-text" data-bind="
                                                             css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">WITH OUT OF POCKET:</div>
@@ -450,23 +450,25 @@
                                                             css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
                                                     </div>
                                                 </div>
+                                                <div class="col-4 nopadding savings" style="padding-left: 15px !important;">
+                                                        <div class="clearfix">
+                                                            <div class="savings-text" data-bind="text: employerSavingsText(),
+                                                                css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                                            <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
+                                                        </div>
+                                                        <div class="clearfix">
+                                                            <div class="savings-amount" data-bind="text: employerSavingsFormatted(),
+                                                                css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                                            <!--<div class="col-xs-3" style="height:30px">-->
+                                                                <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
+                                                                    <!--data-on-text="Yes" data-off-text="No">-->
+                                                            <!--</div>-->
+                                                        </div>
+                                                    </div>
                                             </div>
-                                            <div class="col-4 savings">
-                                                <div class="clearfix">
-                                                    <div class="savings-text" data-bind="text: employerSavingsText(),
-                                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                                                    <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
-                                                </div>
-                                                <div class="clearfix">
-                                                    <div class="savings-amount" data-bind="text: employerSavingsFormatted(),
-                                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                                                    <!--<div class="col-xs-3" style="height:30px">-->
-                                                        <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
-                                                            <!--data-on-text="Yes" data-off-text="No">-->
-                                                    <!--</div>-->
-                                                </div>
-                                            </div>
-        
+                                            
+                                        </div>
+                                        <div class="row d-md-none">
                                             <div class="col-md-12 hidden-sm hidden-xs savings">
                                                 <div data-bind="click: copyShareLink" class="btn copyLink">
                                                         <i class="fa fa-fw fa-link"></i> Link your Results
