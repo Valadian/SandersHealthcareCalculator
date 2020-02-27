@@ -66,9 +66,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a data-bind="click: copyShareLink" href="#" class="btn btn-social-icon rounded-circle btn-sharelink" >
+                        <a data-bind="href: copyShareLink" href="#" class="btn btn-social-icon rounded-circle btn-sharelink" >
                             <i class="fa fa-link"></i>
                             <input data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bind="attr: { href: mailto }" href="#" target="_blank" class="btn btn-social-icon rounded-circle btn-email" >
+                            <i class="fa fa-envelope"></i>
                         </a>
                     </li>
                 </ul>
@@ -87,10 +92,10 @@
                     </div>
                 </div>
                 
-                <div class="container d-none d-md-block">
+                <div class="container d-none "><!--d-md-block-->
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="text-center title">2020 Healthcare Calculator</h1><br />
+                            <h1 class="text-center title"><b>2020 Healthcare Calculator</b></h1><br />
                             
                         </div>
                     </div>
@@ -100,7 +105,49 @@
                     <div class="clearfix row">
                         <!-- Col 2 -->
                          <div class="col-md-3 col-lg-2 d-none d-md-block">
-                            <div class="row savings-spaceholder">
+                            <div class="savings-spaceholder">
+                                <div class="savings-container">
+                                    <ul class="result">
+                                        <li>
+                                            <div class="box">
+                                                <div class="savings">
+                                                    <div class="savings-text" data-bind="text: employeeSavingsText(),
+                                                    css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
+                                                    </div>
+                                                    <div class="savings-amount" data-bind="text: employeeSavingsNoDeductibleFormatted(),
+                                                        css: { 'bg-success': employeeSavingsNoDeductible()>=0, 'bg-danger': employeeSavingsNoDeductible()<0 }">
+                                                    </div>
+                                                </div>
+                                                <div class="savings">
+                                                    <div class="savings-text" data-bind="
+                                                        css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }">WITH OUT OF POCKET:</div>
+                                                    <div class="savings-amount" data-bind="text: employeeSavingsFormatted(),
+                                                        css: { 'bg-success': employeeSavings()>=0, 'bg-danger': employeeSavings()<0 }"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="box">
+                                                <div class="savings">
+                                                    <div class="savings-text" data-bind="text: employerSavingsText(),
+                                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                                    <div class="savings-amount" data-bind="text: employerSavingsFormatted(),
+                                                        css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="box savings">
+                                                <div data-bind="click: copyShareLink" class="btn copyLink">
+                                                        <i class="fa fa-fw fa-link"></i> Link your Results
+                                                    <input data-bind="value: shareLink()" class="form-control" style="position:absolute; left:-9999px;top:0">
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <div class="row savings-spaceholder">
                                 <div class="savings-container row">
                                     <div class="col-md-12 col-xs-8 row nopadding" style="padding: 0 0 0 45px !important">
                                         <div class="col-md-12 col-xs-6 nopadding savings savings-nobottommargin" style="">
@@ -116,8 +163,6 @@
                                             </div>
 
                                         </div>
-                                    <!--</div>-->
-                                    <!--<div class="col-md-12 col-xs-4 savings">-->
                                         <div class="col-md-12 col-xs-6 nopadding savings">
                                             <div class="clearfix" >
                                                 <div class="savings-text" data-bind="
@@ -133,15 +178,10 @@
                                         <div class="clearfix">
                                             <div class="savings-text" data-bind="text: employerSavingsText(),
                                                 css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                                            <!--<div class="col-xs-3" style="font-size:80%"><nobr>Self-Employed?</nobr></div>-->
                                         </div>
                                         <div class="clearfix">
                                             <div class="savings-amount" data-bind="text: employerSavingsFormatted(),
                                                 css: { 'bg-success': employerSavings()>=0, 'bg-danger': employerSavings()<0 }"></div>
-                                            <!--<div class="col-xs-3" style="height:30px">-->
-                                                <!--<input type="checkbox" name="selfEmployedSwitch" data-bind="checked: selfEmployed"-->
-                                                    <!--data-on-text="Yes" data-off-text="No">-->
-                                            <!--</div>-->
                                         </div>
                                     </div>
 
@@ -154,7 +194,7 @@
 
 
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         
                         <!-- Col 8 -->
@@ -184,27 +224,9 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group">
-                                            <label for="familySize">Family Size:</label>
-                                            <div class="input-group">
-                                                <div class="col-lg-6 nopadding">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend input-group-text whoLabel">Adults</div>
-                                                        <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
-                                                    </div>
-                                                </div>
-                                                <div class=" col-lg-5 offset-lg-1 nopadding">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend input-group-text whoLabel">Children</div>
-                                                        <input data-bind="value: children" class="form-control naturalNumber" name="children" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+                                        <hr data-bind="fadeVisible: incomeAdvanced" />
 
-                                        <hr class="advanced" />
-
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: incomeAdvanced">
                                             <label for="selfEmployed">Self-Employed/Retired:</label>
                                             <div class="input-group">
                                                 <select data-bind="value: selfEmployed" class="form-control">
@@ -214,7 +236,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: incomeAdvanced">
                                             <label for="incomeShortCapGains">Non-Wage Income:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: incomeShortCapGains, tooltip: {title: 'Short term capital gains, 401k distributions, and other non-wage income', trigger: 'focus' }" class="form-control currency"
@@ -222,7 +244,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: incomeAdvanced">
                                             <label for="incomeLongCapGains">Long Term Capital Gains:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: incomeLongCapGains, tooltip: {title: 'Profits from selling assets held for over a year', trigger: 'focus' }" class="form-control currency"
@@ -230,7 +252,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: incomeAdvanced">
                                             <label for="itemizedDeductions">Itemized Deductions:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: itemizedDeductions, tooltip: {title: 'Sum of all Itemized Deductions. Will be used if larger than standard deduction.', trigger: 'focus' }" class="form-control currency"
@@ -238,7 +260,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: incomeAdvanced">
                                             <label for="pretaxDeductions">Pre-Tax Deductions:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: pretaxDeductions, tooltip: {title: 'Sum of all Deductions towards taxable Income (such as 401k contributions).', trigger: 'focus' }" class="form-control currency"
@@ -247,11 +269,10 @@
                                         </fieldset>
                                     </div>
                                     <div class="card-footer panel-footer">
-                                      
-                                        <div class="advanced-toggle rounded pull-right">
+                                        <div class="rounded pull-right" data-bind="click: toggleIncomeAdvanced">
                                             Advanced
-                                            <span class="glyphicon glyphicon-chevron-down"></span>
-                                            <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
+                                            <span class="fa fa-chevron-down" data-bind="css: {'fa-chevron-up': incomeAdvanced(),
+                                                                                              'fa-chevron-down': !incomeAdvanced()}"></span>
                                         </div>
                                         <div class="text-left outline" data-toggle="tooltip" data-placement="right" title="Self-Employed/Retired? Click on the 'Advanced' button"><i class="fa fa-lg fa-question"></i></div>
 
@@ -271,62 +292,22 @@
                                                     <option value="0">No</option>
                                                     <option value="1">Yes, Employer Subsidized</option>
                                                     <option value="2">Yes, On someone else's plan</option>
-                                                    <option value="3">Yes, Marketplace</option>
+                                                    <option value="3">Yes, Marketplace (Or Self funded)</option>
+                                                    <option value="4">Yes, Medicare</option>
+                                                    <option value="5">Yes, Medicaid</option>
                                                 </select>
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group" data-bind="visible: insured()==3">
-                                            <label for="age">Age Group?:</label>
-                                            <div class="input-group">
-                                                <select data-bind="value: age" class="form-control">
-                                                    <option value="0">Under 35</option>
-                                                    <option value="1">35-45</option>
-                                                    <option value="2">45-55</option>
-                                                    <option value="3">Over 55</option>
-                                                </select>
-                                            </div>
-                                        </fieldset>
-
-                                        <fieldset class="form-group" data-bind="visible: insured()==3">
-                                            <label for="insuranceCategory">Marketplace Insurance Category?:</label>
-                                            <div class="input-group">
-                                                <select data-bind="value: insuranceCategory" class="form-control">
-                                                    <option value="0">Bronze</option>
-                                                    <option value="1">Silver</option>
-                                                    <option value="2">Gold</option>
-                                                    <option value="3">Platinum</option>
-                                                </select>
-                                            </div>
-                                        </fieldset>
-
-                                        <fieldset class="form-group" data-bind="visible: insured()==3">
-                                            <label for="calculatePremDed"></label>
-                                            <div class="input-group">
-                                                <button type="button" data-bind="click: function(){updateACAPremiums();}"
-                                                        class="form-control btn btn-success"
-                                                        name="calculatePremDed" id="calculatePremDed">Estimate Marketplace Premium/Deductible/Subsidy</button>
-                                            </div>
-                                        </fieldset>
-
-                                        <fieldset class="form-group" data-bind="visible: insured()==3">
-                                            <label for="acaSubsidy">Obamacare Subsidies:</label>
-                                            <div class="input-group">
-                                                <input data-bind="value: acaSubsidy"
-                                                       class="form-control currency"
-                                                       name="acaSubsidy" />
-                                            </div>
-                                        </fieldset>
-
-                                        <fieldset class="form-group">
+                                        <fieldset class="form-group" data-bind="fadeVisible: hasInsurance() && insured()!=4 && insured()!=5">
                                             <label for="premium">Insurance Premiums:</label>
                                             <div class="input-group">
-                                                <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
-                                                <input data-bind="value: premium, enable: hasInsurance(),
-                                                    tooltip: {title: 'Premiums paid by YOU minus any Obamacare subsidies', trigger: 'focus' }"
+                                                <div class="input-group-prepend input-group-text info whoLabel" data-bind="visible: insured()==1">Employee</div>
+                                                <input data-bind="value: premium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
                                                        class="form-control currency" placeholder="Enter Insurance Premium"
                                                        name="premium" />
-                                                <select class="form-control" data-bind="value: premiumPeriod, enable: hasInsurance()">
+                                                <select class="form-control" data-bind="value: premiumPeriod">
                                                     <option value="52">Weekly</option>
                                                     <option value="26">Biweekly</option>
                                                     <option value="12">Monthly</option>
@@ -334,8 +315,7 @@
                                                 </select>
                                             </div>
                                         </fieldset>
-
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: insuranceAdvanced() && employerPayingInsurance()">
                                             <div class="input-group">
                                                 <div class="input-group-prepend input-group-text success whoLabel">Employer</div>
                                                 <input data-bind="value: premiumEmployer, enable: employerPayingInsurance()"
@@ -350,22 +330,102 @@
                                                 </select>
                                             </div>
                                         </fieldset>
+                                        
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==4">
+                                                <label for="medC">Have Medicare Part C?</label>
+                                                <div class="input-group">
+                                                    <select data-bind="value: hasMedC" class="form-control">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
 
-                                        <fieldset class="form-group advanced">
-                                            <label for="deductible">Deductible:</label>
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==4 && hasMedC()==0">
+                                            <label for="premium">Medicare Part A Premiums (Hospital Insurance):</label>
                                             <div class="input-group">
-                                                <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
-                                                       placeholder="Enter Deductible" name="deductible" />
+                                                <input data-bind="value: medApremium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
+                                                        class="form-control currency" placeholder="Enter Insurance Premium"
+                                                        name="premium" />
+                                                <select class="form-control" data-bind="value: medApremiumPeriod">
+                                                    <option value="52">Weekly</option>
+                                                    <option value="26">Biweekly</option>
+                                                    <option value="12">Monthly</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
                                             </div>
                                         </fieldset>
-
-                                        <fieldset class="form-group">
-                                            <label for="copays">Total Out-of-Pocket Spending:</label>
-                                            <div class="input-group form-inline">
-                                                <input data-bind="value: copays,
-                                                tooltip: {title: 'Total Out-of-Pocket Costs, including payments towards deductible', trigger: 'focus' }" class="form-control currency"
-                                                       placeholder="Enter Average Copays" name="copays" />
-                                                <select class="form-control pull-right" data-bind="value: copaysPeriod, enable: hasInsurance()">
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==4">
+                                            <label for="premium">Medicare Part B Premiums (Medical Insurance):</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: medBpremium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
+                                                        class="form-control currency" placeholder="Enter Insurance Premium"
+                                                        name="premium" />
+                                                <select class="form-control" data-bind="value: medBpremiumPeriod">
+                                                    <option value="52">Weekly</option>
+                                                    <option value="26">Biweekly</option>
+                                                    <option value="12">Monthly</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==4 && hasMedC()==1">
+                                            <label for="premium">Medicare Part C Premiums (Medicare Advantage Plan):</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: medCpremium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
+                                                        class="form-control currency" placeholder="Enter Insurance Premium"
+                                                        name="premium" />
+                                                <select class="form-control" data-bind="value: medCpremiumPeriod">
+                                                    <option value="52">Weekly</option>
+                                                    <option value="26">Biweekly</option>
+                                                    <option value="12">Monthly</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==4 && hasMedC()==0">
+                                            <label for="premium">Medicare Part D Premiums (Drug Coverage):</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: medDpremium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
+                                                        class="form-control currency" placeholder="Enter Insurance Premium"
+                                                        name="premium" />
+                                                <select class="form-control" data-bind="value: medDpremiumPeriod">
+                                                    <option value="52">Weekly</option>
+                                                    <option value="26">Biweekly</option>
+                                                    <option value="12">Monthly</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group" data-bind="fadeVisible: hasInsurance() && insuranceAdvanced()">
+                                            <label for="premium">Dental Insurance Premiums:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend input-group-text info whoLabel" data-bind="visible: insured()==1">Employee</div>
+                                                <input data-bind="value: dentalPremium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
+                                                       class="form-control currency" placeholder="Enter Insurance Premium"
+                                                       name="premium" />
+                                                <select class="form-control" data-bind="value: dentalPremiumPeriod">
+                                                    <option value="52">Weekly</option>
+                                                    <option value="26">Biweekly</option>
+                                                    <option value="12">Monthly</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group" data-bind="fadeVisible: hasInsurance() && insuranceAdvanced()">
+                                            <label for="premium">Vision Insurance Premiums:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend input-group-text info whoLabel" data-bind="visible: insured()==1">Employee</div>
+                                                <input data-bind="value: visionPremium,
+                                                    tooltip: {title: 'Premiums paid by YOU', trigger: 'focus' }"
+                                                       class="form-control currency" placeholder="Enter Insurance Premium"
+                                                       name="premium" />
+                                                <select class="form-control" data-bind="value: visionPremiumPeriod">
                                                     <option value="52">Weekly</option>
                                                     <option value="26">Biweekly</option>
                                                     <option value="12">Monthly</option>
@@ -374,21 +434,113 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="form-group advanced">
+                                        <!-- <fieldset class="form-group" data-bind="fadeVisible: insuranceAdvanced">
+                                            <label for="deductible">Deductible:</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: deductible, enable: hasInsurance()" class="form-control currency"
+                                                       placeholder="Enter Deductible" name="deductible" />
+                                            </div>
+                                        </fieldset> -->
+
+                                        <fieldset class="form-group">
+                                            <label for="copays">Total Out-of-Pocket Spending:</label>
+                                            <div class="input-group form-inline">
+                                                <input data-bind="value: copays,
+                                                tooltip: {title: 'Total Out-of-Pocket Costs, including payments towards deductible', trigger: 'focus' }" class="form-control currency"
+                                                       placeholder="Enter Average Copays" name="copays" />
+                                                <select class="form-control pull-right" data-bind="value: copaysPeriod">
+                                                    <option value="52">Weekly</option>
+                                                    <option value="26">Biweekly</option>
+                                                    <option value="12">Monthly</option>
+                                                    <option value="1">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==3">
+                                            <label for="acaSubsidy">Obamacare Subsidies:</label>
+                                            <div class="input-group">
+                                                <input data-bind="value: acaSubsidy"
+                                                       class="form-control currency"
+                                                       name="acaSubsidy" />
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="fadeVisible: insuranceAdvanced() && hsaEligible()">
                                             <label for="hsa">Health Savings Account:</label>
                                             <div class="input-group">
-                                                <select data-bind="value: hsa, enable: employerPayingInsurance()" class="form-control">
+                                                <select data-bind="value: hsa" class="form-control">
                                                 <option value="0">No</option>
                                                 <option value="1">Yes</option>
                                                 </select>
                                             </div>
                                         </fieldset>
                                         
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: hsa()==1 && employerPayingInsurance() && insuranceAdvanced()">
                                             <label for="employerHsa">Employer HSA Contributions:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: employerHsaContribution, enable: hasInsurance()" class="form-control currency"
                                                        placeholder="Enter Employer HSA Contribution" name="employerHsa" />
+                                            </div>
+                                        </fieldset>
+                                        
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==3">
+                                            <div class="rounded pull-right" data-bind="click: toggleMarketPlaceHelp">
+                                                Marketplace Estimate
+                                                <span class="fa fa-chevron-down" data-bind="css: {'fa-chevron-up': marketplaceHelp(),
+                                                                                                'fa-chevron-down': !marketplaceHelp()}"></span>
+                                            </div>
+                                        </fieldset>
+
+
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==3 && marketplaceHelp()">
+                                            <label for="familySize">Family Size:</label>
+                                            <div class="input-group">
+                                                <div class="col-lg-6 nopadding">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend input-group-text whoLabel">Adults</div>
+                                                        <input data-bind="value: adults" class="form-control naturalNumber" name="adults" />
+                                                    </div>
+                                                </div>
+                                                <div class=" col-lg-5 offset-lg-1 nopadding">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend input-group-text whoLabel">Children</div>
+                                                        <input data-bind="value: children" class="form-control naturalNumber" name="children" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==3 && marketplaceHelp()">
+                                            <label for="age">Age Group?:</label>
+                                            <div class="input-group">
+                                                <select data-bind="value: age" class="form-control">
+                                                    <option value="0">Under 35</option>
+                                                    <option value="1">35-45</option>
+                                                    <option value="2">45-55</option>
+                                                    <option value="3">Over 55</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==3 && marketplaceHelp()">
+                                            <label for="insuranceCategory">Marketplace Insurance Category?:</label>
+                                            <div class="input-group">
+                                                <select data-bind="value: insuranceCategory" class="form-control">
+                                                    <option value="0">Bronze</option>
+                                                    <option value="1">Silver</option>
+                                                    <option value="2">Gold</option>
+                                                    <option value="3">Platinum</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group" data-bind="fadeVisible: insured()==3 && marketplaceHelp()">
+                                            <label for="calculatePremDed"></label>
+                                            <div class="input-group">
+                                                <button type="button" data-bind="click: function(){updateACAPremiums();}"
+                                                        class="form-control btn btn-success"
+                                                        name="calculatePremDed" id="calculatePremDed">Estimate Marketplace Premium/Deductible/Subsidy</button>
                                             </div>
                                         </fieldset>
 
@@ -412,19 +564,19 @@
                                         <!--</fieldset>-->
                                     </div>
                                     <div class="card-footer panel-footer">
-                                        <div class="advanced-toggle rounded pull-right">
+                                        <div class="rounded pull-right" data-bind="click: toggleInsuranceAdvanced">
                                             Advanced
-                                            <span class="glyphicon glyphicon-chevron-down"></span>
-                                            <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
+                                            <span class="fa fa-chevron-down" data-bind="css: {'fa-chevron-up': insuranceAdvanced(),
+                                                                                              'fa-chevron-down': !insuranceAdvanced()}"></span>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div class="card panel panel-default result">
+                                <div class="card panel panel-default">
                                     <div class="card-header panel-heading">Result</div>
                                     <div class="card-body panel-body">
                                         <div class="row d-md-none">
-                                            <div class="col-12 row" style="padding-right:0px">
+                                            <div class="col-12 row" style="padding-right:0px; padding-bottom:15px;">
                                                 <div class="col-4 nopadding savings savings-nobottommargin" style="">
                                                     <div class="clearfix">
                                                         <div class="savings-text" data-bind="text: employeeSavingsText(),
@@ -476,8 +628,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr class="advanced" />
                                         <div id="summaryHighchart" class="d-none d-md-block"></div>
+
+                                        <hr  data-bind="fadeVisible: resultAdvanced" />
                                         <!--<fieldset class="form-group">-->
                                         <!--<div class="col-md-6">-->
                                             <!--<div class="row bernieReplacing">-->
@@ -524,14 +677,14 @@
 
 
 
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: resultAdvanced">
                                             <label for="standardDeduction">Standard Deduction:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: standardDeduction()" class="form-control currency"
                                                        name="standardDeduction" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: resultAdvanced">
                                             <label for="exemptions">Exemptions:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: exemptions(),
@@ -539,14 +692,14 @@
                                                        class="form-control currency" name="exemptions" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: resultAdvanced">
                                             <label for="totalDeductions">Total Deductions:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: totalDeductions()" class="form-control currency"
                                                        name="totalDeductions" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: resultAdvanced">
                                             <label for="employeeMediTax">Medicare Taxes:</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
@@ -561,7 +714,7 @@
                                                        class="form-control currency" name="employerMediTax" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: resultAdvanced">
                                             <label for="employeeSocSecTax">Social Security Taxes:</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
@@ -576,35 +729,35 @@
                                                        class="form-control currency" name="employerSocSecTax" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieReplacing">
+                                        <fieldset class="form-group bernieReplacing" data-bind="fadeVisible: resultAdvanced">
                                             <label for="taxableIncome">Old Taxable Income:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: taxableIncome()" class="form-control currency"
                                                        name="taxableIncome" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group  advanced bernieReplacing rounded-top">
+                                        <fieldset class="form-group  bernieReplacing rounded-top" data-bind="fadeVisible: resultAdvanced">
                                             <label for="federalWithholding">Old Federal Withholding:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: federalWithholding()" class="form-control currency"
                                                        name="federalWithholding" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieReplacing">
+                                        <fieldset class="form-group bernieReplacing" data-bind="fadeVisible: resultAdvanced">
                                             <label for="longCapGainsTax">Old Long Term Cap Gains Taxes:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: longCapGainsTax()" class="form-control currency"
                                                        name="longCapGainsTax" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieReplacing">
+                                        <fieldset class="form-group bernieReplacing" data-bind="fadeVisible: resultAdvanced">
                                             <label for="effectiveTaxRate">Old Effective Tax Rate:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: effectiveTaxRate()" class="form-control"
                                                        name="effectiveTaxRate" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieReplacing">
+                                        <fieldset class="form-group bernieReplacing" data-bind="fadeVisible: resultAdvanced">
                                             <label for="employerHealthcareTaxBreak">Old Healthcare Tax Break:</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend input-group-text info whoLabel">Employee</div>
@@ -617,35 +770,35 @@
                                                        name="employerHealthcareTaxBreak" readonly/>
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieNew">
+                                        <fieldset class="form-group bernieNew" data-bind="fadeVisible: resultAdvanced">
                                             <label for="taxableIncome">New Taxable Income:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: newTaxableIncome()" class="form-control currency"
                                                        name="taxableIncome" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group  advanced bernieNew">
+                                        <fieldset class="form-group bernieNew" data-bind="fadeVisible: resultAdvanced">
                                             <label for="newFederalWithholding">New Federal Withholding:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: newFederalWithholding()" class="form-control currency"
                                                        name="newFederalWithholding" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieNew">
+                                        <fieldset class="form-group bernieNew" data-bind="fadeVisible: resultAdvanced">
                                             <label for="newLongCapGainsTax">New Long Term Cap Gains Taxes:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: newLongCapGainsTax()" class="form-control currency"
                                                        name="newLongCapGainsTax" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced bernieNew rounded-bottom">
+                                        <fieldset class="form-group bernieNew rounded-bottom" data-bind="fadeVisible: resultAdvanced">
                                             <label for="newEffectiveTaxRate">New Effective Tax Rate:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: newEffectiveTaxRate()" class="form-control"
                                                        name="newEffectiveTaxRate" readonly />
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group advanced">
+                                        <fieldset class="form-group" data-bind="fadeVisible: resultAdvanced">
                                             <label for="uninsuredPenalty">Uninsured penalty:</label>
                                             <div class="input-group">
                                                 <input data-bind="value: uninsuredPenalty" class="form-control currency"
@@ -655,10 +808,11 @@
 
                                     </div>
                                     <div class="card-footer panel-footer">
-                                        <div class="advanced-toggle rounded pull-right">
+                                        <div class="rounded pull-right" data-bind="click: toggleResultAdvanced"> <!--advanced-toggle -->
                                             Advanced
-                                            <span class="glyphicon glyphicon-chevron-down"></span>
-                                            <span class="glyphicon glyphicon-chevron-up" style="display:none;"></span>
+                                            <span class="fa fa-chevron-down" data-bind="css: {'fa-chevron-up': resultAdvanced(),
+                                                                                              'fa-chevron-down': !resultAdvanced()}"></span>
+                                            <!-- <span class="fa fa-chevron-up" style="display:none;"></span> -->
                                         </div>
                                     </div>
 
@@ -687,33 +841,35 @@
 
                         <!-- Social Sidebar -->
                         <div class="col-md-2 d-none d-lg-block">
-                            <div class="social-container">
-                                <ul class="social">
-                                    <li>
-                                        <div class="box">
-                                            <a data-bind="click: facebookShare" href="#">
-                                                <div class="count">
-                                                    Share to facebook
-                                                </div>
-                                                <div class="share">
-                                                    <i class="fa fa-lg fa-facebook"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <!-- <a href="#" data-bind="click: facebookShare" id="facebook" data-title="<i id='fa-facebook' class='fa fa-lg fa-facebook'></i>" data-url="https://www.sandershealthcare2020.com/"></a></li> -->
-                                    <li>
-                                        <div class="box">
-                                            <a data-bind="attr: { href: twitterUrl() }" href="#">
-                                                <div class="count">
-                                                    Tweet #MedicareForAll
-                                                </div>
-                                                <div class="share">
-                                                    <i class="fa fa-lg fa-twitter"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <div class="social-spaceholder">
+                                <div class="social-container">
+                                    <ul class="social">
+                                        <li>
+                                            <div class="box">
+                                                <a data-bind="click: facebookShare" href="#">
+                                                    <div class="count">
+                                                        Share to facebook
+                                                    </div>
+                                                    <div class="share">
+                                                        <i class="fa fa-lg fa-facebook"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <!-- <a href="#" data-bind="click: facebookShare" id="facebook" data-title="<i id='fa-facebook' class='fa fa-lg fa-facebook'></i>" data-url="https://www.sandershealthcare2020.com/"></a></li> -->
+                                        <li>
+                                            <div class="box">
+                                                <a data-bind="attr: { href: twitterUrl() }" href="#">
+                                                    <div class="count">
+                                                        Tweet #MedicareForAll
+                                                    </div>
+                                                    <div class="share">
+                                                        <i class="fa fa-lg fa-twitter"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

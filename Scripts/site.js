@@ -51,22 +51,22 @@ $(function(){
 	});
 
 	$(window).scroll(function(){
-	    if($(window).scrollTop() > $('.savings-spaceholder').offset().top - $('.navbar').height()){
+	    if($(window).scrollTop() > $('.savings-spaceholder').offset().top - $('.navbar').height() -16){
 	        $('.savings-container').addClass("floating");
 	        $('.savings-container').css(
-	            { 'width':$('.savings-spaceholder').width()})
+	            { 'width':Math.max($('.savings-spaceholder').width(),140)})
 	    } else {
 	        $('.savings-container').removeClass("floating");
 	        $('.savings-container').css(
 	            { 'width':''})
 	    }
-        if($(window).scrollTop() > $('.social-container').offset().top - $('.navbar').height() && $(window).width() >= 728){
-            $('.social').addClass("floating");
-            $('.social').css(
-                { 'width':$('.social-container').width()})
+        if($(window).scrollTop() > $('.social-spaceholder').offset().top - $('.navbar').height() -16 && $(window).width() >= 728){
+            $('.social-container').addClass("floating");
+            $('.social-container').css(
+                { 'width':Math.max($('.social-spaceholder').width(),140)})
         } else {
-            $('.social').removeClass("floating");
-            $('.social').css(
+            $('.social-container').removeClass("floating");
+            $('.social-container').css(
                 { 'width':''})
         }
 	})
@@ -346,10 +346,10 @@ $(function(){
 		children: 2,
 		itemizedDeductions: 0,
 		insured: 1,
-		premium: 4955,
-		premiumPeriod: 1,
-		premiumEmployer: 12591,
-		premiumEmployerPeriod: 1,
+		premium: Math.round(4955/12),
+		premiumPeriod: 12,
+		premiumEmployer: Math.round(12591/12),
+		premiumEmployerPeriod: 12,
 		copays: 1318,
 		copaysPeriod: 1,
 		deductible: 1318,
@@ -360,7 +360,20 @@ $(function(){
         acaSubsidy:0,
         hsa:0,
         employerHsaContribution:0,
-        pretaxDeductions:0
+        pretaxDeductions:0,
+        dentalPremium: 0,
+        dentalPremiumPeriod: 12,
+        visionPremium: 0,
+        visionPremiumPeriod: 12,
+        hasMedC: 0,
+        medApremium: 0,
+        medApremiumPeriod: 12,
+        medBpremium: 144.6,
+        medBpremiumPeriod: 12,
+        medCpremium: 28,
+        medCpremiumPeriod: 12,
+        medDpremium: 20,
+        medDpremiumPeriod: 12,
 	};
 
 	if(location.search.length>1){
@@ -435,7 +448,23 @@ $(function(){
             succeed = false;
         }
     };
-
+    self.incomeAdvanced = ko.observable(false);
+    self.toggleIncomeAdvanced = function(){
+        self.incomeAdvanced(!self.incomeAdvanced())
+    }
+    self.insuranceAdvanced = ko.observable(false);
+    self.toggleInsuranceAdvanced = function(){
+        self.insuranceAdvanced(!self.insuranceAdvanced())
+    }
+    self.resultAdvanced = ko.observable(false);
+    self.toggleResultAdvanced = function(){
+        self.resultAdvanced(!self.resultAdvanced())
+    }
+    self.marketplaceHelp = ko.observable(false);
+    self.toggleMarketPlaceHelp = function(){
+        self.marketplaceHelp(!self.marketplaceHelp())
+    }
+    
     self.shareLink = ko.computed(function(){
         var model = ko.mapping.toJS(self);
         var str = "";
@@ -454,8 +483,11 @@ $(function(){
     self.employerPayingInsurance = ko.pureComputed(function(){
         return (self.selfEmployed()==0 && self.insured() == 1);
     });
-    self.hasInsurance = ko.pureComputed(function(){
+    self.hsaEligible = ko.pureComputed(function(){
         return self.insured() == 1 || self.insured() == 3;
+    });
+    self.hasInsurance = ko.pureComputed(function(){
+        return self.insured() == 1 || self.insured() == 3 || self.insured() == 4 || self.insured() == 5;
     });
 	self.familySize = ko.pureComputed(function(){
         return +self.adults() + + self.children();
@@ -882,27 +914,48 @@ $(function(){
         return Math.max(0,(newTax - oldTax).toFixed(0));
     },self);
 
+    self.premiumCost = ko.computed(function(){
+        if (self.hasInsurance()){
+            if(self.insured()==1){
+                return self.premium() * self.premiumPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod()
+            }
+            else if(self.insured()==3){
+                return self.premium() * self.premiumPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod() - self.acaSubsidy();
+            }
+            else if(self.insured()==4){
+                if (self.hasMedC()==1){
+                    return +self.medBpremium()* +self.medBpremiumPeriod()+ +self.medCpremium()* +self.medCpremiumPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod()
+                } else {
+                    return +self.medApremium()* +self.medApremiumPeriod() + +self.medBpremium()* +self.medBpremiumPeriod()+ +self.medDpremium()* +self.medDpremiumPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod()
+                }
+            } 
+        } else{
+            return 0;
+        }
+    }, self);
     self.employeeHealthCareCostNoDeductible = ko.computed(function(){
-      if(+self.insured() == 0){
-          return self.uninsuredPenalty();
-      } else if(+self.insured() == 1 || +self.insured() == 3) {
-          return self.premium() * self.premiumPeriod() - self.acaSubsidy();
-      } else{
-          return 0;
-      }
+        return self.premiumCost();
+    //   if(+self.insured() == 0){
+    //       return self.uninsuredPenalty();
+    //   } else if(+self.hasInsurance()) {
+    //       return self.premium() * self.premiumPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod() - self.acaSubsidy();
+    //   } else{
+    //       return 0;
+    //   }
     },self);
 
 
     self.employeeHealthCareCost = ko.computed(function(){
-        if(+self.insured() == 0){
-            return self.uninsuredPenalty() + +self.copays() * self.copaysPeriod();
-        } else if(+self.insured() == 1 || +self.insured() == 3) {
-            //Just rely on OOP (which is in copays variable)
-            //self.deductible() * self.deductiblePercentage()
-            return self.premium() * self.premiumPeriod() + Math.max(0, self.copays() * self.copaysPeriod() - +self.employerHsaTaxExemption()) - self.acaSubsidy();
-        } else{
-            return self.copays() * self.copaysPeriod();
-        }
+        return self.premiumCost() + +self.copays() * +self.copaysPeriod();
+        // if(+self.insured() == 0){
+        //     return self.uninsuredPenalty() + +self.copays() * self.copaysPeriod();
+        // } else if(+self.hasInsurance()) {
+        //     //Just rely on OOP (which is in copays variable)
+        //     //self.deductible() * self.deductiblePercentage()
+        //     return self.premium() * self.premiumPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod() + Math.max(0, self.copays() * self.copaysPeriod() - +self.employerHsaTaxExemption()) - self.acaSubsidy();
+        // } else{
+        //     return self.copays() * self.copaysPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod();
+        // }
     },self);
 
     var CORPORATE_TAX_RATE = 0.21;
@@ -953,6 +1006,15 @@ $(function(){
     self.employeeSavings = ko.computed(function(){
         var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
         return savings;
+    },self);
+    
+    self.mailto = ko.computed(function(){
+        subject = "Bernie's Medicare for All"
+        body = "See how much will you save with Bernie's Medicare For All at https://www.sandershealthcare2020.com";
+        if(self.employeeSavings()>0){
+            body = "I will save $" + self.employeeSavings() + " with Bernie's Medicare For All. See how much will you save at https://www.sandershealthcare2020.com"
+        }
+        return "mailto:?subject="+encodeURI(subject)+"&body="+encodeURI(body)
     },self);
     // self.employeeSavings.subscribe(function(savings) {
     // //self.updateTweetButton = function(){
@@ -1177,6 +1239,18 @@ $(function(){
         },
         options: {
             trigger: "click"
+        }
+    };
+    ko.bindingHandlers.fadeVisible = {
+        init: function(element, valueAccessor) {
+            // Initially set the element to be instantly visible/hidden depending on the value
+            var value = valueAccessor();
+            $(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+        },
+        update: function(element, valueAccessor) {
+            // Whenever the value subsequently changes, slowly fade the element in or out
+            var value = valueAccessor();
+            ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
         }
     };
 	ko.applyBindings(self);
