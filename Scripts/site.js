@@ -507,19 +507,19 @@ $(function(){
     });
 	self.familySize = ko.pureComputed(function(){
         return +self.adults() + + self.children();
-    },self);
+    });
 	var standardDeductionTable = [12400,24800,12400,18650]
 	self.standardDeduction = ko.computed(function(){
 	    return standardDeductionTable[self.filingStatus()];
-	},self);
+	});
 
 	self.exemptions = ko.computed(function(){
         return 0*self.familySize();
-    },self);
+    });
 
 	self.totalDeductions = ko.computed(function(){
 	    return Math.max(self.standardDeduction(),self.itemizedDeductions())+ +self.exemptions();
-    },self);
+    });
 
     self.employerHsaTaxExemption = ko.computed(function(){
         if(self.hsa()==1 && self.insured()==1){
@@ -548,12 +548,11 @@ $(function(){
 	self.taxableIncome = ko.computed(function(){
         //2020/01/19 Premiums were never tax deductible? Seems that was a mistake
 	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions() - +self.pretaxDeductions() - +self.hsaTaxExemption());// - (self.premium() * self.premiumPeriod())
-	},self);
-
+	});
 
 	self.newTaxableIncome = ko.computed(function(){
 	    return Math.max(0,+self.income() + +self.incomeShortCapGains() - +self.totalDeductions() - +self.pretaxDeductions());
-	},self);
+	});
 
     //Source: https://www.healthpocket.com/individual-health-insurance/
 //    var premiumTable = [
@@ -793,7 +792,7 @@ $(function(){
 //        } else {
 //            return 0;
 //        }
-//    },self);
+//    });
 	var calculateFederalWithholding = function(taxable, array){
 	    var sum = 0;
         for(var i=0, n=array.length; i< n; i++){
@@ -823,11 +822,11 @@ $(function(){
         } else {
             return 0;
         }
-    },self);
+    });
 
     self.federalWithholdingNoOOP = ko.computed(function(){
 	    return calculateFederalWithholding(self.taxableIncome()+ +self.hsaTaxExemption(), taxTable2020[self.filingStatus()]).toFixed(2);
-    },self);
+    });
 
 	self.federalWithholding = ko.computed(function(){
 	    return calculateFederalWithholding(self.taxableIncome(), taxTable2020[self.filingStatus()]).toFixed(2);
@@ -839,7 +838,7 @@ $(function(){
 //            sum = sum + (clamp(self.taxableIncome(),curr.start,curr.stop) - curr.start) * curr.rate;
 //        }
 //        return sum;
-    },self);
+    });
 
 
 	self.longCapGainsTax = ko.computed(function(){
@@ -856,7 +855,7 @@ $(function(){
 //            taxed = taxed + +taxableLongGains;
 //        }
 //        return sum;
-    },self);
+    });
 
     self.effectiveTaxRate = ko.pureComputed(function(){
         return (100*(+self.federalWithholding() + +self.longCapGainsTax() + +self.employeeSocSecTax() + +self.employeeMediTax())/self.allIncome()).toFixed(1) +"%";
@@ -878,7 +877,7 @@ $(function(){
         else{
             return (self.income() * 0.0145).toFixed(0);
         }
-    },self);
+    });
 
     self.employerMediTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
@@ -886,7 +885,7 @@ $(function(){
         } else {
             return (self.income() * 0.0145).toFixed(0);
         }
-    },self);
+    });
 
     var socSecTaxableMaximum = 137700;
     self.employeeSocSecTax = ko.pureComputed(function(){
@@ -896,7 +895,7 @@ $(function(){
         else{
             return (Math.min(self.income(),socSecTaxableMaximum) * 0.062).toFixed(0);
         }
-    },self);
+    });
 
     self.employerSocSecTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
@@ -904,7 +903,7 @@ $(function(){
         } else {
             return (Math.min(self.income(),socSecTaxableMaximum) * 0.062).toFixed(0);
         }
-    },self);
+    });
 
 
     var filingThreshold = [10300,20600,4000,13250,16600]
@@ -918,7 +917,7 @@ $(function(){
         // } else{
         //     return 0;
         // }
-    },self);
+    });
 
 
     self.employeeHealthcareTaxBreak = ko.pureComputed(function(){
@@ -928,7 +927,7 @@ $(function(){
         var newTax = calculateFederalWithholding(self.newTaxableIncome(), taxTable2020[self.filingStatus()]);
 
         return Math.max(0,(newTax - oldTax).toFixed(0));
-    },self);
+    });
 
     self.premiumCost = ko.computed(function(){
         if (self.hasInsurance()){
@@ -958,7 +957,7 @@ $(function(){
     //   } else{
     //       return 0;
     //   }
-    },self);
+    });
 
 
     self.employeeHealthCareCost = ko.computed(function(){
@@ -972,7 +971,7 @@ $(function(){
         // } else{
         //     return self.copays() * self.copaysPeriod() + +self.dentalPremium() * +self.dentalPremiumPeriod() + +self.visionPremium() * +self.visionPremiumPeriod();
         // }
-    },self);
+    });
 
     var CORPORATE_TAX_RATE = 0.21;
     self.employerHealthcareTaxBreak = ko.pureComputed(function(){
@@ -983,7 +982,7 @@ $(function(){
         } else {
             return 0;
         }
-    },self);
+    });
 
     self.employerHealthCareCost = ko.pureComputed(function(){
         if(+self.insured()!=1 || self.selfEmployed()==1){
@@ -993,7 +992,7 @@ $(function(){
         } else {
             return 0;
         }
-    },self);
+    });
 
     var EMPLOYEE_M4A_TAX_RATE = .04
     var EMPLOYER_M4A_TAX_RATE = .075
@@ -1005,7 +1004,7 @@ $(function(){
         } else {
             return +((+self.newTaxableIncome()) * EMPLOYEE_M4A_TAX_RATE).toFixed(0);
         }
-    },self);
+    });
 
     self.employerBernieCareTax = ko.pureComputed(function(){
         if(self.selfEmployed()==1){
@@ -1013,16 +1012,16 @@ $(function(){
         } else {
             return (self.income() * EMPLOYER_M4A_TAX_RATE).toFixed(0);
         }
-    },self);
+    });
 
     self.employeeSavingsNoDeductible = ko.computed(function(){
-        var savings = + self.federalWithholdingNoOOP() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
+        var savings = + self.federalWithholdingNoOOP() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCostNoDeductible() - + self.employeeBernieCareTax();// - + self.employeeHealthcareTaxBreak() ;
         return savings;
-    },self);
+    });
     self.employeeSavings = ko.computed(function(){
-        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax() - + self.employeeHealthcareTaxBreak();// ;
+        var savings = + self.federalWithholding() - +self.newFederalWithholding() + + self.longCapGainsTax() - +self.newLongCapGainsTax() + +self.employeeHealthCareCost() - + self.employeeBernieCareTax();// - + self.employeeHealthcareTaxBreak() ;
         return savings;
-    },self);
+    });
     
     self.mailto = ko.computed(function(){
         subject = "Bernie's Medicare for All"
@@ -1031,7 +1030,7 @@ $(function(){
             body = "I will save $" + self.employeeSavings() + " with Bernie's Medicare For All. See how much will you save at https://www.sandershealthcare2020.com"
         }
         return "mailto:?subject="+encodeURI(subject)+"&body="+encodeURI(body)
-    },self);
+    });
     // self.employeeSavings.subscribe(function(savings) {
     // //self.updateTweetButton = function(){
     //     //var savings = self.employeeSavings();
@@ -1052,41 +1051,41 @@ $(function(){
     // });
     self.employerSavings = ko.pureComputed(function(){
         return self.employerHealthCareCost() - + self.employerBernieCareTax();
-    },self);
+    });
     self.employeeSavingsNoDeductibleFormatted = ko.pureComputed(function(){
         return formatCurrency(Math.abs(self.employeeSavingsNoDeductible()));
-    },self);
+    });
     self.employeeSavingsFormatted = ko.pureComputed(function(){
         return formatCurrency(Math.abs(self.employeeSavings()));
-    },self);
+    });
     self.employerSavingsFormatted = ko.pureComputed(function(){
         return formatCurrency(Math.abs(self.employerSavings()));
-    },self);
+    });
     self.employeeSavingsText = ko.pureComputed(function(){
         if(self.employeeSavingsNoDeductible()>0){
             return "You will Save: "
         }
         return "You will Lose: "
-    },self);
+    });
     self.employerSavingsText = ko.pureComputed(function(){
         if(self.employerSavings()>0){
             return "Employer Saves: "
         }
         return "Employer Loses: "
-    },self);
+    });
 
     self.employeeSavingsClass = ko.pureComputed(function(){
         if(self.employeeSavings()>0){
             return "success"
         }
         return "danger"
-    },self);
+    });
     self.employerSavingsClass = ko.pureComputed(function(){
         if(self.employerSavings()>0){
             return "success"
         }
         return "danger"
-    },self);
+    });
 
     self.facebookShare = function(){
         FB.init({
@@ -1133,7 +1132,7 @@ $(function(){
 //            twttr.widgets.load()
 //        }
         return text;
-    },self);
+    });
     self.updateHighchart = ko.computed(function(){
         var totalIncome = parseInt(self.income())+parseFloat(self.incomeLongCapGains()) + parseFloat(self.incomeShortCapGains());;
         var oldIncome = totalIncome;
