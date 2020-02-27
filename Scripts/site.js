@@ -429,7 +429,7 @@ $(function(){
         if(typeof(event)=="undefined" || typeof(event.toElement)=="undefined"){ //|| typeof(element.value)=="undefined"
             return;
         }
-        target = $(event.toElement).find("input")[0]; //$('#shareLink')[0];
+        target = $(event.toElement).parent().find("input")[0]; //$('#shareLink')[0];
         if(typeof(target)=="undefined" || typeof(target.value)=="undefined"){
             return;
         }
